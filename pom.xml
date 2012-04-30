@@ -387,13 +387,13 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
-					<execution>
+					<!-- <execution>
 						<id>install</id>
 						<phase>install</phase>
 						<goals>
 							<goal>sources</goal>
 						</goals>
-					</execution>
+					</execution> -->
                     <execution>
                     	<id>package</id>
                         <phase>package</phase>
