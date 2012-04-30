@@ -421,18 +421,18 @@
 						            <version>2.2.3</version>
                                     <destFileName>el-impl.jar</destFileName>
 						        </artifactItem>
-								<dependency>
+								<artifactItem>
 									<groupId>javax.servlet</groupId>
 									<artifactId>com.springsource.javax.servlet.jsp.jstl</artifactId>
 									<version>1.2.0</version>
 									<destFileName>jstl.jar</destFileName>
-								</dependency>
-								<dependency>
+								</artifactItem>
+								<artifactItem>
 									<groupId>org.apache.taglibs</groupId>
 									<artifactId>com.springsource.org.apache.taglibs.standard</artifactId>
 									<version>1.1.2</version>
 									<destFileName>standard.jar</destFileName>
-								</dependency>
+								</artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>
