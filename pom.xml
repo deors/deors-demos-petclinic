@@ -488,7 +488,7 @@
             <id>heroku</id>
 			<activation>
             	<file>
-                    <exists>.maven/bin/mvn</exists>
+                    <exists>/app/tmp/repo.git/.cache/.maven/bin/mvn</exists>
                 </file>
             </activation>
             <build>
