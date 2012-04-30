@@ -1,5 +1,5 @@
-cd ..\..\petclinic-rhc\workspace
-git remote add openshift ssh://355f7bd93f4144248e010ed4f0fb7665@petclinic-sdcassets.rhcloud.com/~/git/petclinic.git/
+cd ..\..\petclinic-heroku\workspace
+git remote add heroku ssh://xxxxx
 git checkout master
 git pull origin
-git push openshift
+git push heroku

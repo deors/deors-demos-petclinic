@@ -19,14 +19,18 @@
         <property name="searchSystemEnvironment" value="true" />
     </bean>
 
+    <bean class="java.net.URI" id="dbUrl">
+        <constructor-arg value="${DATABASE_URL}"/>
+    </bean>
+
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://${OPENSHIFT_DB_HOST}:${OPENSHIFT_DB_PORT}/${OPENSHIFT_APP_NAME}" />
-        <property name="username" value="${OPENSHIFT_DB_USERNAME}" />
-        <property name="password" value="${OPENSHIFT_DB_PASSWORD}" />
-        <property name="maxWait" value="5000" />
-        <property name="maxActive" value="15" />
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="#{'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath()}"/>
+        <property name="username" value="#{@dbUrl.getUserInfo().split(':')[0]}"/>
+        <property name="password" value="#{@dbUrl.getUserInfo().split(':')[1]}"/>
+        <property name="maxWait" value="5000"/>
+        <property name="maxActive" value="15"/>
     </bean>
 
 	<!-- Configurer that replaces ${...} placeholders with values from a properties file -->

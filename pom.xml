@@ -100,12 +100,19 @@
 			<scope>runtime</scope>
 		</dependency>
 		<!-- MySQL JDBC Connector -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.mysql.jdbc</groupId>
 			<artifactId>com.springsource.com.mysql.jdbc</artifactId>
 			<version>5.1.6</version>
 			<scope>runtime</scope>
-		</dependency>
+		</dependency> -->
+		<!-- PostgreSQL JDB Connector -->
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901.jdbc4</version>
+            <scope>runtime</scope>
+        </dependency>
 
 		<!-- Hibernate -->
 		<dependency>
@@ -387,6 +394,37 @@
 							<goal>sources</goal>
 						</goals>
 					</execution>
+                    <execution>
+                    	<id>package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.mortbay.jetty</groupId>
+                                    <artifactId>jetty-runner</artifactId>
+                                    <version>8.0.4.v20111024</version>
+                                    <destFileName>jetty-runner.jar</destFileName>
+                                </artifactItem>
+                                <!-- not available in jetty 8.0.4 -->
+                                <artifactItem>
+                                    <groupId>javax.el</groupId>
+                                    <artifactId>el-api</artifactId>
+                                    <version>2.2</version>
+                                    <destFileName>el-api.jar</destFileName>
+                                </artifactItem>
+						        <!-- not available in jetty 8.0.4 -->
+						        <artifactItem>
+						            <groupId>org.glassfish.web</groupId>
+						            <artifactId>javax.el</artifactId>
+						            <version>2.2.3</version>
+                                    <destFileName>el-impl.jar</destFileName>
+						        </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
 				</executions>
 			</plugin>
 		</plugins>
@@ -445,12 +483,14 @@
         </plugins>
     </reporting>
     <profiles>
+    	<!-- the 'heroku' profile is activated only when building on Heroku -->
         <profile>
-            <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
-            <!-- Use this profile for any OpenShift specific customization your app will need. -->
-            <!-- By default that is to put the resulting archive into the 'deployments' folder. -->
-            <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
-            <id>openshift</id>
+            <id>heroku</id>
+			<activation>
+            	<file>
+                    <exists>.maven/bin/mvn</exists>
+                </file>
+            </activation>
             <build>
                 <finalName>petclinic</finalName>
                 <plugins>
@@ -458,12 +498,10 @@
                         <artifactId>maven-war-plugin</artifactId>
                         <version>2.1.1</version>
                         <configuration>
-                            <outputDirectory>deployments</outputDirectory>
-                            <warName>ROOT</warName>
                             <webResources>
 				            	<resource>
 				              		<!-- this is relative to the pom.xml directory -->
-				              		<directory>src/main/resources/openshift</directory>
+				              		<directory>src/main/resources/heroku</directory>
 				              		<targetPath>WEB-INF/classes</targetPath>
 				            	</resource>
 				          	</webResources>
