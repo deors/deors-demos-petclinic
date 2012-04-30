@@ -324,7 +324,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
                 <version>1.2.1</version>
@@ -341,7 +341,7 @@
                             <cargo.tomcat.ajp.port>8109</cargo.tomcat.ajp.port>
                             <cargo.jvmargs>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/0.5.5.201112152213/org.jacoco.agent-0.5.5.201112152213-runtime.jar=destfile=${project.build.directory}/itest.jacoco</cargo.jvmargs>
                         </properties>
-                    </configuration>
+                    </configuration> -->
                     <!--
                     <container>
                         <containerId>jboss71x</containerId>
@@ -356,18 +356,18 @@
                         </properties>
                     </configuration>
                     -->
-                </configuration>
-                <executions>
+                <!-- </configuration>
+                <executions> -->
                     <!-- start server before integration tests -->
-                    <execution>
+                    <!-- <execution>
                         <id>start-container</id>
                         <phase>pre-integration-test</phase>
                         <goals>
                             <goal>start</goal>
                         </goals>
-                    </execution>
+                    </execution> -->
                     <!-- stop server after integration tests -->
-                    <execution>
+                    <!-- <execution>
                         <id>stop-container</id>
                         <phase>post-integration-test</phase>
                         <goals>
@@ -375,7 +375,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
