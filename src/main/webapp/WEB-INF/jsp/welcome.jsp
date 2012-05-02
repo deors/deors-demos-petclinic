@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 
 <img src="<spring:url value="/static/images/pets.png" htmlEscape="true" />" align="right" style="position:relative;right:30px;">
-<h2><fmt:message key="welcome"/> to Heroku DEMO</h2>
+<h2><fmt:message key="welcome"/> to Heroku</h2>
 
 <ul>
   <li><a href="<spring:url value="/owners/search" htmlEscape="true" />">Find owner</a></li>
