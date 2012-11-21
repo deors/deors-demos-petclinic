@@ -339,4 +339,10 @@ public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
         }
     }
 
+	@Override
+	public void deleteVisit(int id) throws DataAccessException {
+		this.simpleJdbcTemplate.update("DELETE FROM visits WHERE id=?", id);
+
+	}
+
 }

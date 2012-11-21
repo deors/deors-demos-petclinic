@@ -36,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class HibernateClinic implements Clinic {
 
 	private SessionFactory sessionFactory;
-	
+
 	@Autowired
 	public HibernateClinic(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -93,6 +93,17 @@ public class HibernateClinic implements Clinic {
 	public void deletePet(int id) throws DataAccessException {
 		Pet pet = loadPet(id);
 		sessionFactory.getCurrentSession().delete(pet);
+	}
+
+	@Transactional(readOnly = true)
+	public Visit loadVisit(int id) {
+		return (Visit) sessionFactory.getCurrentSession().load(Visit.class, id);
+	}
+
+	@Override
+	public void deleteVisit(int id) throws DataAccessException {
+		Visit visit = loadVisit(id);
+		sessionFactory.getCurrentSession().delete(visit);
 	}
 
 }

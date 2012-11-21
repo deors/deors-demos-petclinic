@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.springframework.samples</groupId>
-    <artifactId>org.springframework.samples.petclinic-heroku</artifactId>
-    <name>petclinic</name>
-    <packaging>war</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+
+	<groupId>org.springframework.samples</groupId>
+	<artifactId>org.springframework.samples.petclinic-heroku</artifactId>
+	<name>petclinic</name>
+	<packaging>war</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+
     <properties>
         <spring.version>3.0.6.RELEASE</spring.version>
         <slf4j.version>1.5.6</slf4j.version>
+        <jacoco.version>0.5.5.201112152213</jacoco.version>
         <sonar.jacoco.itReportPath>${project.build.directory}/itest.jacoco</sonar.jacoco.itReportPath>
+        <org.sonar.plugins.jmeter.jtlpath>${project.build.directory}/jmeter/results/petclinic.jtl</org.sonar.plugins.jmeter.jtlpath>
     </properties>
-    <dependencies>
 
+    <dependencies>
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -94,7 +98,7 @@
             <version>1.5.3</version>
             <scope>runtime</scope>
         </dependency>
-        <!--  HSQLDB JDBC Connector -->
+        <!-- HSQLDB JDBC Connector -->
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>com.springsource.org.hsqldb</artifactId>
@@ -171,6 +175,11 @@
                     <groupId>org.apache.commons</groupId>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
                 </exclusion>
+                <!-- Exclude Commons Lang 2.1 dependency so HtmlUnit can use 2.6 -->
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>com.springsource.org.apache.commons.lang</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -223,7 +232,7 @@
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>org.jacoco.agent</artifactId>
-            <version>0.5.5.201112152213</version>
+            <version>${jacoco.version}</version>
             <type>jar</type>
             <classifier>runtime</classifier>
             <scope>test</scope>
@@ -241,6 +250,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>net.sourceforge.htmlunit</groupId>
+            <artifactId>htmlunit</artifactId>
+            <version>2.9</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.test</artifactId>
             <version>${spring.version}</version>
@@ -252,8 +267,8 @@
             <version>1.1.0</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
+
     <repositories>
         <repository>
             <id>com.springsource.repository.bundles.release</id>
@@ -276,6 +291,7 @@
             <url>http://repository.springsource.com/maven/bundles/snapshot</url>
         </repository>
     </repositories>
+
     <build>
         <finalName>petclinic</finalName>
         <plugins>
@@ -304,31 +320,8 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.8.1</version>
-                <configuration>
-                    <includes>
-                        <include>**/it/*IT.java</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>integration-test</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>verify</id>
-                        <goals>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
                 <configuration>
                     <warName>petclinic</warName>
                 </configuration>
@@ -336,7 +329,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.4</version>
                 <executions>
+                    <execution>
+                        <id>install</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>sources</goal>
+                        </goals>
+                    </execution>
                     <execution>
                         <id>package</id>
                         <phase>package</phase>
@@ -371,6 +372,8 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- using Sonar instead of reporting plugins
     <reporting>
         <plugins>
             <plugin>
@@ -424,9 +427,11 @@
             </plugin>
         </plugins>
     </reporting>
+    -->
+
     <profiles>
-        <!-- the 'heroku' profile is activated only when building on Heroku -->
         <profile>
+            <!-- Activated only when building on Heroku -->
             <id>heroku</id>
             <activation>
                 <file>
@@ -442,24 +447,28 @@
                         <configuration>
                             <webResources>
                                 <resource>
-                                      <!-- this is relative to the pom.xml directory -->
-                                      <directory>src/main/resources/heroku</directory>
-                                      <targetPath>WEB-INF/classes</targetPath>
+                                    <!-- copy heorku specific resources -->
+                                    <!-- this is relative to the pom.xml directory -->
+                                    <directory>src/main/resources/heroku</directory>
+                                    <targetPath>WEB-INF/classes</targetPath>
                                 </resource>
-                              </webResources>
+                            </webResources>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
         <!-- profile for local/ci builds - configures embedded runtime with cargo -->
         <profile>
-            <id>local</id>
-            <activation>
+            <!-- Cargo configuration to execute integration tests -->
+            <!-- in an ad-hoc provisioned Jetty container -->
+            <id>cargo-jetty</id>
+            <!-- <activation>
                 <file>
                     <missing>/app/tmp/repo.git/.cache/.maven/bin/mvn</missing>
                 </file>
-            </activation>
+            </activation> -->
             <build>
                 <plugins>
                     <plugin>
@@ -502,6 +511,59 @@
                 </plugins>
             </build>
         </profile>
-    </profiles>
 
+        <profile>
+            <!-- add Selenium integration tests -->
+            <id>selenium-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>2.8.1</version>
+                        <configuration>
+                            <includes>
+                                <include>**/it/*IT.java</include>
+                            </includes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>integration-test</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- add JMeter integration tests -->
+            <id>jmeter-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.lazerycode.jmeter</groupId>
+                        <artifactId>jmeter-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <configuration>
+                            <testResultsTimestamp>false</testResultsTimestamp>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>integration-test</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>jmeter</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

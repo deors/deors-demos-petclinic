@@ -93,4 +93,15 @@ public class EntityManagerClinic implements Clinic {
 		this.em.remove(pet);
 	}
 
+	@Transactional(readOnly = true)
+	public Visit loadVisit(int id) {
+		return this.em.find(Visit.class, id);
+	}
+
+	@Override
+	public void deleteVisit(int id) throws DataAccessException {
+		Visit visit = loadVisit(id);
+		this.em.remove(visit);
+	}
+
 }
