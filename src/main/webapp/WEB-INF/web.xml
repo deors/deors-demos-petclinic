@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name>Spring PetClinic</display-name>
+  <description>Spring PetClinic sample application</description>
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>petclinic.root</param-value>
+  </context-param>
+  <context-param>
+    <param-name>log4jConfigLocation</param-name>
+    <param-value>/WEB-INF/classes/log4j.properties</param-value>
+  </context-param>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/classes/applicationContext-jdbc.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>petclinic</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>petclinic</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>httpMethodFilter</filter-name>
+    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>httpMethodFilter</filter-name>
+    <servlet-name>petclinic</servlet-name>
+  </filter-mapping>
+  <session-config>
+    <session-timeout>10</session-timeout>
+  </session-config>
+  <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/WEB-INF/jsp/uncaughtException.jsp</location>
+  </error-page>
+  <welcome-file-list>
+    <welcome-file></welcome-file>
+  </welcome-file-list>
+</web-app>
