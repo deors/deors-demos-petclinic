@@ -1,7 +1,0 @@
-analyseLocally=false
-eclipse.preferences.version=1
-extraProperties=sonar.jdbc.password\=sonarsonar\r\nsonar.host.url\=http\://localhost\:9000\r\nsonar.jdbc.username\=sonar\r\nsonar.jdbc.url\=jdbc\:mysql\://localhost\:3306/sonar?useUnicode\=true&characterEncoding\=utf8\r\nsonar.jdbc.driver\=com.mysql.jdbc.Driver\r\nsonar.jacoco.itReportPath\=C\:\\projects\\deors.demos\\petclinic\\deors.demos.petclinic\\target/jacoco.itest
-lastAnalysisDate=1381247349000
-projectKey=deors.demos\:deors.demos.petclinic
-serverUrl=http\://localhost\:9000
-version=2
