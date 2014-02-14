@@ -417,11 +417,6 @@
         <profile>
             <!-- Activated only when building on Heroku -->
             <id>heroku</id>
-            <activation>
-                <file>
-                    <exists>/app/.jdk/bin/java</exists>
-                </file>
-            </activation>
             <build>
                 <finalName>petclinic</finalName>
                 <plugins>
