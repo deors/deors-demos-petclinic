@@ -216,10 +216,10 @@ public class NewPetFirstVisitIT {
         try {
             // wait for the application to get fully loaded
             WebElement findOwnerLink = (new WebDriverWait(driver, 5)).until(new ExpectedCondition<WebElement>() {
-            	public WebElement apply(WebDriver d) {
-            		d.get(baseUrl);
-            		return d.findElement(By.linkText("Find owner"));
-            	}
+                public WebElement apply(WebDriver d) {
+                    d.get(baseUrl);
+                    return d.findElement(By.linkText("Find owner"));
+                }
             });
 
             findOwnerLink.click();
@@ -237,7 +237,7 @@ public class NewPetFirstVisitIT {
 
             (new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
                 public Boolean apply(WebDriver d) {
-                    return d.getCurrentUrl().startsWith(baseUrl + "/owners/9");
+                    return d.getCurrentUrl().equals(baseUrl + "/owners/9");
                 }
             });
 
@@ -246,7 +246,7 @@ public class NewPetFirstVisitIT {
 
             (new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
                 public Boolean apply(WebDriver d) {
-                    return d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets/new");
+                    return d.getCurrentUrl().equals(baseUrl + "/owners/9/pets/new");
                 }
             });
 
@@ -303,6 +303,12 @@ public class NewPetFirstVisitIT {
             });
 
             driver.findElement(By.id("deletepet")).click();
+
+            (new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
+                public Boolean apply(WebDriver d) {
+                    return d.getCurrentUrl().equals(baseUrl + "/owners/9");
+                }
+            });
 
         } finally {
             if (driver != null) {

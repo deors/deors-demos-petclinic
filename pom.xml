@@ -55,7 +55,7 @@
         <jacoco.agentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.report}</jacoco.agentConfig>
 
         <junit.version>4.10</junit.version>
-        <selenium.version>2.33.0</selenium.version>
+        <selenium.version>2.39.0</selenium.version>
         <htmlunit.version>2.12</htmlunit.version>
 
         <sonar.jacoco.itReportPath>${jacoco.report}</sonar.jacoco.itReportPath>
