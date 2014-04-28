@@ -107,14 +107,14 @@ public class NewPetFirstVisitIT {
         TARGET_SERVER_URL = getConfigurationProperty(
             "TARGET_SERVER_URL",
             "test.target.server.url",
-            "http://localhost:8180/petclinic");
+            "http://localhost:58080/petclinic");
 
         logger.info("using target server at: " + TARGET_SERVER_URL);
 
         TARGET_SERVER_URL_ANDROID = getConfigurationProperty(
             "TARGET_SERVER_URL_ANDROID",
             "test.target.server.url.android",
-            "http://localhost:8180/petclinic");
+            "http://localhost:58080/petclinic");
 
         logger.info("using target server for Android at: " + TARGET_SERVER_URL_ANDROID);
     }

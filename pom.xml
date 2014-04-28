@@ -55,7 +55,7 @@
         <jacoco.agentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.report}</jacoco.agentConfig>
 
         <jacoco-listeners.version>2.0</jacoco-listeners.version>
-        
+
         <junit.version>4.11</junit.version>
         <selenium.version>2.39.0</selenium.version>
         <htmlunit.version>2.13</htmlunit.version>
@@ -487,8 +487,8 @@
                             </container>
                             <configuration>
                                 <properties>
-                                    <cargo.servlet.port>8180</cargo.servlet.port>
-                                    <cargo.tomcat.ajp.port>8109</cargo.tomcat.ajp.port>
+                                    <cargo.servlet.port>58080</cargo.servlet.port>
+                                    <cargo.tomcat.ajp.port>58009</cargo.tomcat.ajp.port>
                                     <cargo.jvmargs>${jacoco.agentConfig}</cargo.jvmargs>
                                 </properties>
                             </configuration>
@@ -535,7 +535,7 @@
                             </container>
                             <configuration>
                                 <properties>
-                                    <cargo.servlet.port>8180</cargo.servlet.port>
+                                    <cargo.servlet.port>58080</cargo.servlet.port>
                                     <cargo.jvmargs>${jacoco.agentConfig}</cargo.jvmargs>
                                 </properties>
                             </configuration>
@@ -582,7 +582,7 @@
                             </container>
                             <configuration>
                                 <properties>
-                                    <cargo.servlet.port>8180</cargo.servlet.port>
+                                    <cargo.servlet.port>58080</cargo.servlet.port>
                                     <cargo.jvmargs>${jacoco.agentConfig}</cargo.jvmargs>
                                 </properties>
                             </configuration>
@@ -647,7 +647,7 @@
                 </dependency>
             </dependencies>
         </profile>
-        
+
         <profile>
             <!-- add Selenium integration tests -->
             <id>selenium-tests</id>
