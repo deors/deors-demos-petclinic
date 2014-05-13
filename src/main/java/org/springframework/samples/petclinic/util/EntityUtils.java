@@ -35,7 +35,7 @@ public abstract class EntityUtils {
 				return entity;
 			}
 		}
-		throw new ObjectRetrievalFailureException(entityClass, entityId);
+		throw new ObjectRetrievalFailureException(entityClass, Integer.valueOf(entityId));
 	}
 
 }

@@ -419,7 +419,7 @@
                         <configuration>
                             <webResources>
                                 <resource>
-                                    <!-- copy Heorku specific resources -->
+                                    <!-- copy Heroku specific resources -->
                                     <!-- this is relative to where the pom.xml file is -->
                                     <directory>src/main/resources/heroku</directory>
                                     <targetPath>WEB-INF/classes</targetPath>
