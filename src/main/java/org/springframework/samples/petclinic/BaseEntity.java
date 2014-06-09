@@ -9,19 +9,22 @@ package org.springframework.samples.petclinic;
  */
 public class BaseEntity {
 
-	private Integer id;
+    private Integer id;
 
+    public BaseEntity() {
+        super();
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public boolean isNew() {
-		return (this.id == null);
-	}
+    public boolean isNew() {
+        return (this.id == null);
+    }
 
 }
