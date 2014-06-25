@@ -21,36 +21,37 @@ import oracle.toplink.essentials.queryframework.ValueReadQuery;
  */
 public class EssentialsHSQLPlatformWithNativeSequence extends HSQLPlatform {
 
-	private static final long serialVersionUID = -55658009691346735L;
+    private static final long serialVersionUID = -55658009691346735L;
 
 
-	public EssentialsHSQLPlatformWithNativeSequence() {
-		// setUsesNativeSequencing(true);
-	}
+    public EssentialsHSQLPlatformWithNativeSequence() {
+        super();
+        // setUsesNativeSequencing(true);
+    }
 
-	@Override
-	public boolean supportsNativeSequenceNumbers() {
-		return true;
-	}
+    @Override
+    public boolean supportsNativeSequenceNumbers() {
+        return true;
+    }
 
-	@Override
-	public boolean shouldNativeSequenceAcquireValueAfterInsert() {
-		return true;
-	}
+    @Override
+    public boolean shouldNativeSequenceAcquireValueAfterInsert() {
+        return true;
+    }
 
-	@Override
-	public ValueReadQuery buildSelectQueryForNativeSequence() {
-		return new ValueReadQuery("CALL IDENTITY()");
-	}
+    @Override
+    public ValueReadQuery buildSelectQueryForNativeSequence() {
+        return new ValueReadQuery("CALL IDENTITY()");
+    }
 
-	@Override
-	public void printFieldIdentityClause(Writer writer) throws ValidationException {
-		try {
-			writer.write(" IDENTITY");
-		}
-		catch (IOException ex) {
-			throw ValidationException.fileError(ex);
-		}
-	}
+    @Override
+    public void printFieldIdentityClause(Writer writer) throws ValidationException {
+        try {
+            writer.write(" IDENTITY");
+        }
+        catch (IOException ex) {
+            throw ValidationException.fileError(ex);
+        }
+    }
 
 }
