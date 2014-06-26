@@ -30,17 +30,18 @@ public class OwnerValidator {
             errors.rejectValue("city", "required", "required");
         }
 
+        // validate that telephone number only contains digits
         String telephone = owner.getTelephone();
-        if (!StringUtils.hasLength(telephone)) {
-            errors.rejectValue("telephone", "required", "required");
-        }
-        else {
+        if (StringUtils.hasLength(telephone)) {
             for (int i = 0; i < telephone.length(); ++i) {
                 if (!Character.isDigit(telephone.charAt(i))) {
                     errors.rejectValue("telephone", "nonNumeric", "non-numeric");
                     break;
                 }
             }
+        }
+        else {
+            errors.rejectValue("telephone", "required", "required");
         }
     }
 
