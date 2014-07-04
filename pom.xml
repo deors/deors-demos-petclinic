@@ -47,12 +47,12 @@
         <!-- needed to prevent double instrumentation issues with JPA tests and JaCoCo -->
         <argLine>-XX:-UseSplitVerifier</argLine>
 
-        <jacoco.version>0.7.1.201405082137</jacoco.version>
+        <jacoco.version>0.7.0.201403182114</jacoco.version>
         <jacoco.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar</jacoco.path>
         <jacoco.report>${project.build.directory}/jacoco.itest</jacoco.report>
         <jacoco.agentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.report}</jacoco.agentConfig>
 
-        <jacoco-listeners.version>2.2.1</jacoco-listeners.version>
+        <jacoco-listeners.version>2.3</jacoco-listeners.version>
 
         <tomcat.version>7.0.22</tomcat.version>
         <tomcat.downloadUrl>http://archive.apache.org/dist/tomcat/tomcat-7/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>
