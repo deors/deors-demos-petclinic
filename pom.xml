@@ -28,6 +28,7 @@
         <openjpa.version>1.1.0</openjpa.version>
         <syndication.version>1.0.0</syndication.version>
         <jdom.version>1.1.0</jdom.version>
+        <mongodb.version>2.12.2</mongodb.version>
 
         <servlet.version>2.5.0</servlet.version>
         <jsp.version>2.1.0</jsp.version>
@@ -228,6 +229,14 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        
+        <!--  MongoDB  -->
+        <dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>${mongodb.version}</version>
+		</dependency>
+        
 
         <!-- Servlet -->
         <dependency>

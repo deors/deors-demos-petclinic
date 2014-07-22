@@ -44,7 +44,7 @@ public class Pet extends NamedEntity {
 		return this.type;
 	}
 
-	protected void setOwner(Owner owner) {
+	public void setOwner(Owner owner) {
 		this.owner = owner;
 	}
 
