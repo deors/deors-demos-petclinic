@@ -1,8 +1,6 @@
 package org.springframework.samples.petclinic.mongo;
 
-import java.awt.image.DataBufferByte;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -10,10 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.samples.petclinic.Clinic;
 import org.springframework.samples.petclinic.Owner;
 import org.springframework.samples.petclinic.Pet;
@@ -29,17 +25,22 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 
 @Service
 //@ManagedResource("petclinic:type=Clinic")
 public class SimpleMongoClinic implements Clinic {
 
+	/** Database connection. */
 	DB database;
 	
+	/**
+	 * Init method.
+	 */
 	@Autowired
 	public void init() {
 		try {
-			MongoClient mongoClient = new MongoClient("localhost" , 27017);
+			MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017, localhost:27018,localhost:27019"));
 			database = mongoClient.getDB("petClinic");
 			System.out.println("MongoDB connection initialized.");
 		} catch (UnknownHostException uhe) {
@@ -55,6 +56,11 @@ public class SimpleMongoClinic implements Clinic {
 		}
 	}
 	
+	/**
+	 * Get all the vets information in the system.
+	 * @return vets information
+	 * @throws DataAccessException
+	 */
 	public Collection<Vet> getVets() throws DataAccessException {
 		
 		List<Vet> returnVets = new ArrayList<Vet>(); 
@@ -95,6 +101,11 @@ public class SimpleMongoClinic implements Clinic {
 		return returnVets;
 	}
 	
+	/**
+	 * Get all the pet types in the system
+	 * @return pet types
+	 * @throws DataAccessException
+	 */
 	public Collection<PetType> getPetTypes() throws DataAccessException {
 		List<PetType> returnPetType = new ArrayList<PetType>(); 
 		
@@ -107,6 +118,12 @@ public class SimpleMongoClinic implements Clinic {
 		return returnPetType;
 	}
 	
+	/**
+	 * Find owners based in their last name.
+	 * @param lastName last name
+	 * @return owners that match with last name
+	 * @throws DataAccessException
+	 */
     public Collection<Owner> findOwners(String lastName) throws DataAccessException {
 		List<Owner> returnOwner = new ArrayList<Owner>(); 
 		
@@ -126,6 +143,12 @@ public class SimpleMongoClinic implements Clinic {
 		return returnOwner;
 	}
     
+    /**
+     * Return owner based in their id.
+     * @param id owner id
+     * @return owner retrieved
+     * @throws DataAccessException
+     */
     public Owner loadOwner(int id) throws DataAccessException {
     	
     	DBCollection dbOwner = database.getCollection("owner");
@@ -135,6 +158,12 @@ public class SimpleMongoClinic implements Clinic {
 		return owner;
 	}
     
+    /**
+     * Return pet based on its id.
+     * @param id pet id
+     * @return pet retrieved
+     * @throws DataAccessException
+     */
     public Pet loadPet(int id) throws DataAccessException {
     	DBCollection dbPet = database.getCollection("pet");
     	BasicDBObject query = new BasicDBObject("_id", id);
@@ -143,6 +172,11 @@ public class SimpleMongoClinic implements Clinic {
 		return pet;
 	}
     
+    /**
+     * Store owner information into database.
+     * @param owner owner to be stored
+     * @throws DataAccessException
+     */
     public void storeOwner(Owner owner) throws DataAccessException {
 		DBCollection collOwner = database.getCollection("owner");
 		if (owner.getId() == null) {
@@ -155,6 +189,11 @@ public class SimpleMongoClinic implements Clinic {
 		}
 	}
 
+    /**
+     * Store pet information into database.
+     * @param pet pet to be stored
+     * @throws DataAccessException
+     */
     public void storePet(Pet pet) throws DataAccessException {
 		
 		DBCollection collPet = database.getCollection("pet");
@@ -169,12 +208,22 @@ public class SimpleMongoClinic implements Clinic {
 		
 	}
     
+    /**
+     * Store visit into database
+     * @param visit visit to be stored
+     * @throws DataAccessException
+     */
     public void storeVisit(Visit visit) throws DataAccessException {
 		DBObject dbVisit = mapVisitToDBObject(visit, getNextIdValue("visitid"));
 		DBCollection collVisit = database.getCollection("visit");
 		collVisit.insert(dbVisit);
 	}
     
+    /**
+     * Removes pet from database.
+     * @param id pet id to be removed
+     * @throws DataAccessException
+     */
     public void deletePet(int id) throws DataAccessException {
     	BasicDBObject dbPet = new BasicDBObject("_id", id);
     	DBCollection collPet = database.getCollection("pet");
@@ -182,13 +231,23 @@ public class SimpleMongoClinic implements Clinic {
     	
 	}
     
+    /**
+     * Removes visit from database.
+     * @param id visit id to be removed
+     * @throws DataAccessException
+     */
     public void deleteVisit(int id) throws DataAccessException {
     	DBCollection dbVisit = database.getCollection("visit");
     	BasicDBObject query = new BasicDBObject("_id", id);
     	dbVisit.remove(query);
     }
     
-    
+    /**
+     * Maps visit to DBObject.
+     * @param visit visit to be mapped
+     * @param id visit id
+     * @return DBObject with visit mapped
+     */
     private DBObject mapVisitToDBObject(Visit visit, Integer id) {
     	BasicDBObject dbVisit = new BasicDBObject();
     	
@@ -200,6 +259,12 @@ public class SimpleMongoClinic implements Clinic {
     	return dbVisit;    	
     }
     
+    /**
+     * Maps owner to DBObject.
+     * @param owner owner to be mapped
+     * @param id owner id
+     * @return DBObject with owner mapped
+     */
     private DBObject mapOwnerToDBObject(Owner owner, Integer id) {
     	BasicDBObject dbOwner = new BasicDBObject();
     	
@@ -214,6 +279,12 @@ public class SimpleMongoClinic implements Clinic {
     	return dbOwner;
     }
     
+    /**
+     * Maps pet to DBObject
+     * @param pet pet to be mapped
+     * @param id pet id
+     * @return DBObject with pet mapped
+     */
     private DBObject mapPetToDBObject(Pet pet, Integer id) {
     	BasicDBObject dbPet = new BasicDBObject();
     	
@@ -226,6 +297,11 @@ public class SimpleMongoClinic implements Clinic {
     	return dbPet;
     }
     
+    /**
+     * Maps DBObjet to Owner.
+     * @param actual DBObjet to be mapped
+     * @return owner with DBObjet mapped
+     */
     private Owner mapToOwner(DBObject actual) {
     	Owner actualOwner = new Owner();
 		actualOwner.setId(((Integer)actual.get("_id")));
@@ -244,6 +320,11 @@ public class SimpleMongoClinic implements Clinic {
 		return actualOwner;
     }
     
+    /**
+     * Maps DBObject to PetType
+     * @param actual DBObjet to be mapped
+     * @return PetType with DBObjet mapped
+     */
     private PetType mapToPetType(DBObject actual) {
     	PetType actualPetType = new PetType();
 		actualPetType.setId(((Double)actual.get("_id")).intValue());
