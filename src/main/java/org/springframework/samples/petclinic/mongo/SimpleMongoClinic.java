@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.Clinic;
 import org.springframework.samples.petclinic.Owner;
@@ -30,18 +31,59 @@ import com.mongodb.MongoClientURI;
 @Service
 //@ManagedResource("petclinic:type=Clinic")
 public class SimpleMongoClinic implements Clinic {
+	
+	// Collections
+	private final static String VETS_COLLECTION = "vet";
+	private final static String VETS_SPECIALTY_COLLECTION = "vetSpecialty";
+	private final static String SPECIALTY_COLLECTION = "specialty";
+	private final static String PET_TYPE_COLLECTION = "petType";
+	private final static String OWNER_COLLECTION = "owner";
+	private final static String PETS_COLLECTION = "pet";
+	private final static String VISITS_COLLECTION = "visit";
+	private final static String COUNTERS_COLLECTION = "counters";
+	
+	// Fields
+	private final static String _ID_FIELD = "_id";
+	private final static String FIRST_NAME = "firstName";
+	private final static String LAST_NAME = "lastName";
+	private final static String VET_ID = "vetId";
+	private final static String NAME = "name";
+	private final static String DATE = "date";
+	private final static String DESCRIPTION = "description";
+	private final static String PET = "pet";
+	private final static String ADDRESS = "address";
+	private final static String CITY = "city";
+	private final static String TELEPHONE = "telephone";
+	private final static String BIRTH_DATE = "birthDate";
+	private final static String OWNER = "owner";
+	private final static String PET_TYPE = "petType";
+	private final static String SEQ = "seq";
+	
+	// Sequences
+	private final static String OWNER_SEQUENCE = "ownerid";
+	private final static String PET_SEQUENCE = "petid";
+	private final static String VISIT_SEQUENCE = "visitid";
 
 	/** Database connection. */
 	DB database;
+	
+	@Value("${mongo.connection.uri}")
+	String mongoURI;
+	
+	@Value("${mongo.db.name}")
+	String dbName;
 	
 	/**
 	 * Init method.
 	 */
 	@Autowired
 	public void init() {
+		
+		System.out.println("Mongo URI: " + mongoURI);
+
 		try {
-			MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017, localhost:27018,localhost:27019"));
-			database = mongoClient.getDB("petClinic");
+			MongoClient mongoClient = new MongoClient(new MongoClientURI(mongoURI));
+			database = mongoClient.getDB(dbName);
 			System.out.println("MongoDB connection initialized.");
 		} catch (UnknownHostException uhe) {
 			uhe.printStackTrace();
@@ -65,32 +107,32 @@ public class SimpleMongoClinic implements Clinic {
 		
 		List<Vet> returnVets = new ArrayList<Vet>(); 
 		
-		DBCollection dbVets = database.getCollection("vet");
-		DBCollection dbVetSpecialties = database.getCollection("vetSpecialty");
-		DBCollection dbSpecialties = database.getCollection("specialty");
+		DBCollection dbVets = database.getCollection(VETS_COLLECTION);
+		DBCollection dbVetSpecialties = database.getCollection(VETS_SPECIALTY_COLLECTION);
+		DBCollection dbSpecialties = database.getCollection(SPECIALTY_COLLECTION);
 		DBCursor cursor = dbVets.find();
 		DBObject actual;
 		Vet actualVet;
 		while (cursor.hasNext()) {
 			actual = cursor.next();
 			actualVet = new Vet();
-			actualVet.setId(((Double)actual.get("_id")).intValue());
-			actualVet.setFirstName((String)actual.get("firstName"));
-			actualVet.setLastName((String)actual.get("lastName"));
+			actualVet.setId(((Double)actual.get(_ID_FIELD)).intValue());
+			actualVet.setFirstName((String)actual.get(FIRST_NAME));
+			actualVet.setLastName((String)actual.get(LAST_NAME));
 			
 			
-			BasicDBObject query = new BasicDBObject("vetId", actualVet.getId());
+			BasicDBObject query = new BasicDBObject(VET_ID, actualVet.getId());
 			DBCursor specCursor = dbVetSpecialties.find(query);
 			while (specCursor.hasNext()) {
 				Specialty specialty = new Specialty();
 				DBObject actualSpec = specCursor.next();
-				Double specialtyId = (Double)actualSpec.get("_id");
-				BasicDBObject query2 = new BasicDBObject("_id", specialtyId);
+				Double specialtyId = (Double)actualSpec.get(_ID_FIELD);
+				BasicDBObject query2 = new BasicDBObject(_ID_FIELD, specialtyId);
 				DBCursor specDefCursor = dbSpecialties.find(query2);
 				while (specDefCursor.hasNext()) {
 					DBObject actualSpec2 = specDefCursor.next();
-					specialty.setId(((Double)actualSpec2.get("_id")).intValue());
-					specialty.setName((String)actualSpec2.get("name"));
+					specialty.setId(((Double)actualSpec2.get(_ID_FIELD)).intValue());
+					specialty.setName((String)actualSpec2.get(NAME));
 					actualVet.addSpecialty(specialty);
 				}
 			}
@@ -109,7 +151,7 @@ public class SimpleMongoClinic implements Clinic {
 	public Collection<PetType> getPetTypes() throws DataAccessException {
 		List<PetType> returnPetType = new ArrayList<PetType>(); 
 		
-		DBCollection dbPetType = database.getCollection("petType");
+		DBCollection dbPetType = database.getCollection(PET_TYPE_COLLECTION);
 		DBCursor cursor = dbPetType.find();
 		while (cursor.hasNext()) {
 			returnPetType.add(mapToPetType(cursor.next()));
@@ -127,15 +169,15 @@ public class SimpleMongoClinic implements Clinic {
     public Collection<Owner> findOwners(String lastName) throws DataAccessException {
 		List<Owner> returnOwner = new ArrayList<Owner>(); 
 		
-		DBCollection dbOwner = database.getCollection("owner");
+		DBCollection dbOwner = database.getCollection(OWNER_COLLECTION);
 		DBCursor cursor;
 		if (lastName == null || lastName.length() == 0)
 			cursor = dbOwner.find();
 		else {
-			BasicDBObject query = new BasicDBObject("lastName", lastName);
+			BasicDBObject query = new BasicDBObject(LAST_NAME, lastName);
 			cursor = dbOwner.find(query);
 		}
-		System.out.println("Hemos recuperado " + cursor.size() + " owners");
+
 		while (cursor.hasNext()) {
 			returnOwner.add(mapToOwner(cursor.next()));
 		}
@@ -151,8 +193,8 @@ public class SimpleMongoClinic implements Clinic {
      */
     public Owner loadOwner(int id) throws DataAccessException {
     	
-    	DBCollection dbOwner = database.getCollection("owner");
-    	BasicDBObject query = new BasicDBObject("_id", id);
+    	DBCollection dbOwner = database.getCollection(OWNER_COLLECTION);
+    	BasicDBObject query = new BasicDBObject(_ID_FIELD, id);
     	Owner owner = mapToOwner(dbOwner.findOne(query));
     	
 		return owner;
@@ -165,8 +207,8 @@ public class SimpleMongoClinic implements Clinic {
      * @throws DataAccessException
      */
     public Pet loadPet(int id) throws DataAccessException {
-    	DBCollection dbPet = database.getCollection("pet");
-    	BasicDBObject query = new BasicDBObject("_id", id);
+    	DBCollection dbPet = database.getCollection(PETS_COLLECTION);
+    	BasicDBObject query = new BasicDBObject(_ID_FIELD, id);
     	Pet pet = mapToPet(dbPet.findOne(query), null);
     	
 		return pet;
@@ -178,13 +220,13 @@ public class SimpleMongoClinic implements Clinic {
      * @throws DataAccessException
      */
     public void storeOwner(Owner owner) throws DataAccessException {
-		DBCollection collOwner = database.getCollection("owner");
+		DBCollection collOwner = database.getCollection(OWNER_COLLECTION);
 		if (owner.getId() == null) {
-			DBObject dbOwner = mapOwnerToDBObject(owner, getNextIdValue("ownerid"));
+			DBObject dbOwner = mapOwnerToDBObject(owner, getNextIdValue(OWNER_SEQUENCE));
 			collOwner.insert(dbOwner);
 		} else {
 			DBObject dbOwner = mapOwnerToDBObject(owner, owner.getId());
-			DBObject dbOwnerId = new BasicDBObject("_id", owner.getId());
+			DBObject dbOwnerId = new BasicDBObject(_ID_FIELD, owner.getId());
 			collOwner.update(dbOwnerId, dbOwner);
 		}
 	}
@@ -196,13 +238,13 @@ public class SimpleMongoClinic implements Clinic {
      */
     public void storePet(Pet pet) throws DataAccessException {
 		
-		DBCollection collPet = database.getCollection("pet");
+		DBCollection collPet = database.getCollection(PETS_COLLECTION);
 		if (pet.getId() == null) {
-			DBObject dbPet = mapPetToDBObject(pet, getNextIdValue("petid"));
+			DBObject dbPet = mapPetToDBObject(pet, getNextIdValue(PET_SEQUENCE));
 			collPet.insert(dbPet);
 		} else {
 			DBObject dbPet = mapPetToDBObject(pet, pet.getId());
-			DBObject dbPetId = new BasicDBObject("_id", pet.getId());
+			DBObject dbPetId = new BasicDBObject(_ID_FIELD, pet.getId());
 			collPet.update(dbPetId, dbPet);
 		}
 		
@@ -214,8 +256,8 @@ public class SimpleMongoClinic implements Clinic {
      * @throws DataAccessException
      */
     public void storeVisit(Visit visit) throws DataAccessException {
-		DBObject dbVisit = mapVisitToDBObject(visit, getNextIdValue("visitid"));
-		DBCollection collVisit = database.getCollection("visit");
+		DBObject dbVisit = mapVisitToDBObject(visit, getNextIdValue(VISIT_SEQUENCE));
+		DBCollection collVisit = database.getCollection(VISITS_COLLECTION);
 		collVisit.insert(dbVisit);
 	}
     
@@ -225,8 +267,8 @@ public class SimpleMongoClinic implements Clinic {
      * @throws DataAccessException
      */
     public void deletePet(int id) throws DataAccessException {
-    	BasicDBObject dbPet = new BasicDBObject("_id", id);
-    	DBCollection collPet = database.getCollection("pet");
+    	BasicDBObject dbPet = new BasicDBObject(_ID_FIELD, id);
+    	DBCollection collPet = database.getCollection(PETS_COLLECTION);
     	collPet.remove(dbPet);
     	
 	}
@@ -237,8 +279,8 @@ public class SimpleMongoClinic implements Clinic {
      * @throws DataAccessException
      */
     public void deleteVisit(int id) throws DataAccessException {
-    	DBCollection dbVisit = database.getCollection("visit");
-    	BasicDBObject query = new BasicDBObject("_id", id);
+    	DBCollection dbVisit = database.getCollection(VISITS_COLLECTION);
+    	BasicDBObject query = new BasicDBObject(_ID_FIELD, id);
     	dbVisit.remove(query);
     }
     
@@ -251,10 +293,10 @@ public class SimpleMongoClinic implements Clinic {
     private DBObject mapVisitToDBObject(Visit visit, Integer id) {
     	BasicDBObject dbVisit = new BasicDBObject();
     	
-    	dbVisit.append("_id", id)
-    		   .append("date", visit.getDate())
-    		   .append("description", visit.getDescription())
-    		   .append("pet", visit.getPet().getId());
+    	dbVisit.append(_ID_FIELD, id)
+    		   .append(DATE, visit.getDate())
+    		   .append(DESCRIPTION, visit.getDescription())
+    		   .append(PET, visit.getPet().getId());
     	
     	return dbVisit;    	
     }
@@ -268,12 +310,12 @@ public class SimpleMongoClinic implements Clinic {
     private DBObject mapOwnerToDBObject(Owner owner, Integer id) {
     	BasicDBObject dbOwner = new BasicDBObject();
     	
-    	dbOwner.append("_id", id)
-    	 	   .append("address", owner.getAddress())
-    		   .append("city", owner.getCity())
-    		   .append("firstName", owner.getFirstName())
-    		   .append("lastName", owner.getLastName())
-    		   .append("telephone", owner.getTelephone());
+    	dbOwner.append(_ID_FIELD, id)
+    	 	   .append(ADDRESS, owner.getAddress())
+    		   .append(CITY, owner.getCity())
+    		   .append(FIRST_NAME, owner.getFirstName())
+    		   .append(LAST_NAME, owner.getLastName())
+    		   .append(TELEPHONE, owner.getTelephone());
     		   
     	
     	return dbOwner;
@@ -288,11 +330,11 @@ public class SimpleMongoClinic implements Clinic {
     private DBObject mapPetToDBObject(Pet pet, Integer id) {
     	BasicDBObject dbPet = new BasicDBObject();
     	
-    	dbPet.append("_id", id)
-    		 .append("birthDate", pet.getBirthDate())
-    		 .append("name", pet.getName())
-    		 .append("owner", pet.getOwner().getId())
-    		 .append("petType", pet.getType().getId());
+    	dbPet.append(_ID_FIELD, id)
+    		 .append(BIRTH_DATE, pet.getBirthDate())
+    		 .append(NAME, pet.getName())
+    		 .append(OWNER, pet.getOwner().getId())
+    		 .append(PET_TYPE, pet.getType().getId());
     	
     	return dbPet;
     }
@@ -304,15 +346,15 @@ public class SimpleMongoClinic implements Clinic {
      */
     private Owner mapToOwner(DBObject actual) {
     	Owner actualOwner = new Owner();
-		actualOwner.setId(((Integer)actual.get("_id")));
-		actualOwner.setAddress((String)actual.get("address"));
-		actualOwner.setCity((String)actual.get("city"));
-		actualOwner.setFirstName((String)actual.get("firstName"));
-		actualOwner.setLastName((String)actual.get("lastName"));
-		actualOwner.setTelephone((String)actual.get("telephone"));
+		actualOwner.setId(((Integer)actual.get(_ID_FIELD)));
+		actualOwner.setAddress((String)actual.get(ADDRESS));
+		actualOwner.setCity((String)actual.get(CITY));
+		actualOwner.setFirstName((String)actual.get(FIRST_NAME));
+		actualOwner.setLastName((String)actual.get(LAST_NAME));
+		actualOwner.setTelephone((String)actual.get(TELEPHONE));
 		
-		DBCollection collPet = database.getCollection("pet");
-		BasicDBObject filter = new BasicDBObject("owner", actualOwner.getId());
+		DBCollection collPet = database.getCollection(PETS_COLLECTION);
+		BasicDBObject filter = new BasicDBObject(OWNER, actualOwner.getId());
 		DBCursor curr = collPet.find(filter);
 		while (curr.hasNext()) {
 			actualOwner.addPet(mapToPet(curr.next(), actualOwner));	
@@ -327,25 +369,25 @@ public class SimpleMongoClinic implements Clinic {
      */
     private PetType mapToPetType(DBObject actual) {
     	PetType actualPetType = new PetType();
-		actualPetType.setId(((Double)actual.get("_id")).intValue());
-		actualPetType.setName((String)actual.get("name"));
+		actualPetType.setId(((Double)actual.get(_ID_FIELD)).intValue());
+		actualPetType.setName((String)actual.get(NAME));
 		return actualPetType;
     }
     
     private Pet mapToPet(DBObject actual, Owner owner) {
     	Pet actualPet = new Pet();
-    	actualPet.setId((Integer)actual.get("_id"));
-    	actualPet.setBirthDate((Date)actual.get("birthDate"));
-    	actualPet.setName((String)actual.get("name"));
-    	actualPet.setType(getPetTypeById((Integer)actual.get("petType")));
+    	actualPet.setId((Integer)actual.get(_ID_FIELD));
+    	actualPet.setBirthDate((Date)actual.get(BIRTH_DATE));
+    	actualPet.setName((String)actual.get(NAME));
+    	actualPet.setType(getPetTypeById((Integer)actual.get(PET_TYPE)));
     	if (owner != null) {
     		actualPet.setOwner(owner);
     	} else {
     		actualPet.setOwner(findPetsOwner(actualPet.getId()));
     	}
     	
-		DBCollection collVisit = database.getCollection("visit");
-		BasicDBObject filter = new BasicDBObject("pet", actualPet.getId());
+		DBCollection collVisit = database.getCollection(VISITS_COLLECTION);
+		BasicDBObject filter = new BasicDBObject(PET, actualPet.getId());
 		DBCursor curr = collVisit.find(filter);
 		while (curr.hasNext()) {
 			actualPet.addVisit(mapToVisit(curr.next(), actualPet));	
@@ -356,7 +398,7 @@ public class SimpleMongoClinic implements Clinic {
     private Owner findPetsOwner(Integer petId) {
     	Owner owner = null;
     	
-    	DBCollection dbOwner = database.getCollection("owner");
+    	DBCollection dbOwner = database.getCollection(OWNER_COLLECTION);
 		DBCursor cursor = dbOwner.find();
     	
 		Owner tempOwner;
@@ -375,9 +417,9 @@ public class SimpleMongoClinic implements Clinic {
     
     private Visit mapToVisit(DBObject actual, Pet pet) {
     	Visit actualVisit = new Visit();
-    	actualVisit.setId((Integer)actual.get("_id"));
-    	actualVisit.setDescription((String)actual.get("description"));
-    	actualVisit.setDate((Date)actual.get("date"));
+    	actualVisit.setId((Integer)actual.get(_ID_FIELD));
+    	actualVisit.setDescription((String)actual.get(DESCRIPTION));
+    	actualVisit.setDate((Date)actual.get(DATE));
     	actualVisit.setPet(pet);
     	
     	return actualVisit;
@@ -386,23 +428,24 @@ public class SimpleMongoClinic implements Clinic {
     
     private PetType getPetTypeById(Integer id) {
 
-    	DBCollection dbPetType = database.getCollection("petType");
-		BasicDBObject query = new BasicDBObject("_id", id);
+    	DBCollection dbPetType = database.getCollection(PET_TYPE_COLLECTION);
+		BasicDBObject query = new BasicDBObject(_ID_FIELD, id);
 		PetType petType = mapToPetType(dbPetType.findOne(query));
 
 		return petType;
     }
     
     private Integer getNextIdValue(String collection) {
-    	DBCollection dbCounters = database.getCollection("counters");
+    	DBCollection dbCounters = database.getCollection(COUNTERS_COLLECTION);
     	Double counterValue;
     	synchronized (dbCounters) {
-        	BasicDBObject filter = new BasicDBObject("_id", collection);
+        	BasicDBObject filter = new BasicDBObject(_ID_FIELD, collection);
         	DBObject counter = dbCounters.findOne(filter);
-        	counterValue = (Double)counter.get("seq");
-        	counter.put("seq", counterValue +1);
+        	counterValue = (Double)counter.get(SEQ);
+        	counter.put(SEQ, counterValue +1);
         	dbCounters.update(filter, counter);
 		}
     	return counterValue.intValue();
     }
+    
 }
