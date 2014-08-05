@@ -11,6 +11,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.samples.petclinic.Clinic;
 import org.springframework.samples.petclinic.Owner;
 import org.springframework.samples.petclinic.Pet;
@@ -222,8 +223,10 @@ public class SimpleMongoClinic implements Clinic {
     public void storeOwner(Owner owner) throws DataAccessException {
 		DBCollection collOwner = database.getCollection(OWNER_COLLECTION);
 		if (owner.getId() == null) {
-			DBObject dbOwner = mapOwnerToDBObject(owner, getNextIdValue(OWNER_SEQUENCE));
+			Integer nextId =  getNextIdValue(OWNER_SEQUENCE);
+			DBObject dbOwner = mapOwnerToDBObject(owner, nextId);
 			collOwner.insert(dbOwner);
+			owner.setId(nextId);
 		} else {
 			DBObject dbOwner = mapOwnerToDBObject(owner, owner.getId());
 			DBObject dbOwnerId = new BasicDBObject(_ID_FIELD, owner.getId());
