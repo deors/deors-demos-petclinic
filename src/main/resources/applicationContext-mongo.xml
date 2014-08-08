@@ -58,7 +58,8 @@
 	<context:mbean-export/>
 
 	<!-- PetClinic's central data access object using Spring's SimpleJdbcTemplate -->
-	<bean id="clinic" class="org.springframework.samples.petclinic.mongo.SimpleMongoClinic"/>
+	<!-- bean id="clinic" class="org.springframework.samples.petclinic.mongo.SimpleMongoClinic"/ -->
+	<bean id="clinic" class="org.springframework.samples.petclinic.mongo.SimpleMongoClinicNoSQL"/>
 
 	<!-- Call monitoring aspect that monitors call count and call invocation time -->
 	<bean id="callMonitor" class="org.springframework.samples.petclinic.aspects.CallMonitoringAspect"/>

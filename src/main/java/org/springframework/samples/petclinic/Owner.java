@@ -52,6 +52,10 @@ public class Owner extends Person {
 		this.telephone = telephone;
 	}
 
+	public void setPets(List<Pet> pets) {
+		this.pets = new HashSet<Pet>(pets);
+	}
+	
 	protected void setPetsInternal(Set<Pet> pets) {
 		this.pets = pets;
 	}
