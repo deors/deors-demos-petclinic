@@ -13,7 +13,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
 
         <servlet.version>2.5.0</servlet.version>
         <jsp.version>2.1.0</jsp.version>
@@ -53,7 +53,7 @@
 
         <jacoco-listeners.version>2.4</jacoco-listeners.version>
 
-        <tomcat.version>7.0.22</tomcat.version>
+        <tomcat.version>7.0.55</tomcat.version>
         <tomcat.downloadUrl>http://archive.apache.org/dist/tomcat/tomcat-7/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>
 
         <jboss.version>7.1.1.Final</jboss.version>
