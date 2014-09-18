@@ -13,7 +13,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
 
         <servlet.version>2.5.0</servlet.version>
         <jsp.version>2.1.0</jsp.version>
@@ -361,8 +361,9 @@
                 <configuration>
                     <!-- JDK 7 - relax bytecode verifier to prevent double -->
                     <!-- instrumentation issues with OpenJPA tests and JaCoCo -->
-                    <!--<argLine>-XX:-UseSplitVerifier ${jacoco.utAgentConfig}</argLine>-->
+                    <!-- <argLine>-XX:-UseSplitVerifier ${jacoco.utAgentConfig}</argLine> -->
                     <!-- JDK 8 - bytecode verifier cannot be relaxed or disabled -->
+                    <!-- to prevent runtime errors, OpenJPA tests are ignored -->
                     <argLine>${jacoco.utAgentConfig}</argLine>
                     <includes>
                         <include>**/*Test.java</include>
@@ -372,6 +373,8 @@
                         <exclude>**/it/*IT.java</exclude>
                     </excludes>
                     <properties>
+                        <!-- add SonarQube's JaCoCo listener to enable -->
+                        <!-- gathering of code coverage metrics per test -->
                         <property>
                             <name>listener</name>
                             <value>org.sonar.java.jacoco.JUnitListener</value>
@@ -532,15 +535,6 @@
                     </plugin>
                 </plugins>
             </build>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>org.jacoco.agent</artifactId>
-                    <version>${jacoco.version}</version>
-                    <classifier>runtime</classifier>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
         </profile>
 
         <!-- Cargo configuration to execute integration tests -->
@@ -588,15 +582,6 @@
                     </plugin>
                 </plugins>
             </build>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>org.jacoco.agent</artifactId>
-                    <version>${jacoco.version}</version>
-                    <classifier>runtime</classifier>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
         </profile>
 
         <!-- Cargo configuration to execute integration tests -->
@@ -644,15 +629,6 @@
                     </plugin>
                 </plugins>
             </build>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>org.jacoco.agent</artifactId>
-                    <version>${jacoco.version}</version>
-                    <classifier>runtime</classifier>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
         </profile>
 
         <!-- add Selenium integration tests -->
