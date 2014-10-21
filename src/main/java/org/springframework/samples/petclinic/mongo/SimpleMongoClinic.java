@@ -377,6 +377,12 @@ public class SimpleMongoClinic implements Clinic {
 		return actualPetType;
     }
     
+    /**
+     * Maps DBObject to Pet
+     * @param actual DBObject retrieved from database
+     * @param owner Pet's owner
+     * @return Pet info.
+     */
     private Pet mapToPet(DBObject actual, Owner owner) {
     	Pet actualPet = new Pet();
     	actualPet.setId((Integer)actual.get(_ID_FIELD));
@@ -398,6 +404,11 @@ public class SimpleMongoClinic implements Clinic {
     	return actualPet;
     }
     
+    /**
+     * Get pet's owner from database-
+     * @param petId Pet id
+     * @return pet's owner
+     */
     private Owner findPetsOwner(Integer petId) {
     	Owner owner = null;
     	
@@ -418,6 +429,12 @@ public class SimpleMongoClinic implements Clinic {
     	return owner;
     }
     
+    /**
+     * Maps DBObjet to visit.
+     * @param actual DBObject retrieved from database
+     * @param pet visit's pet
+     * @return Visit info
+     */
     private Visit mapToVisit(DBObject actual, Pet pet) {
     	Visit actualVisit = new Visit();
     	actualVisit.setId((Integer)actual.get(_ID_FIELD));
@@ -429,6 +446,11 @@ public class SimpleMongoClinic implements Clinic {
     	
     }
     
+    /**
+     * Find PetType by id.
+     * @param id pet's id
+     * @return PetType
+     */
     private PetType getPetTypeById(Integer id) {
 
     	DBCollection dbPetType = database.getCollection(PET_TYPE_COLLECTION);
@@ -438,6 +460,11 @@ public class SimpleMongoClinic implements Clinic {
 		return petType;
     }
     
+    /**
+     * Retrieve next id value.
+     * @param collection Collection to be inserted
+     * @return next id value.
+     */
     private Integer getNextIdValue(String collection) {
     	DBCollection dbCounters = database.getCollection(COUNTERS_COLLECTION);
     	Double counterValue;
