@@ -1,38 +1,37 @@
-// SQL flavor
+// counters
 
-// counters collection
-db.counters.insert([
-		{ "_id" : "ownerid", "seq" : 0 },
-		{ "_id" : "petid", "seq" : 0 },
-		{ "_id" : "visitid", "seq" : 0 },
-	]);
-	
-// petType collection
-db.petType.insert([
-		{ "_id" : 0, "name" : "dog" },
-		{ "_id" : 1, "name" : "cat" },
-		{ "_id" : 2, "name" : "parrot" },
-		{ "_id" : 3, "name" : "snake" }
-	]);
+db.counters.insert({ "_id" : "ownerid", "seq" : 5 });
+db.counters.insert({ "_id" : "petid", "seq" : 8 });
+db.counters.insert({ "_id" : "visitid", "seq" : 7 });
 
-// specialty collection
-db.specialty.insert([
-		{ "_id" : 0, "name" : "Feline" },
-		{ "_id" : 1, "name" : "Canine" },
-		{ "_id" : 2, "name" : "Birds" },
-		{ "_id" : 3, "name" : "Lizards" }
-	]);
-	
-// vetSpecialty collection
-db.vetSpecialty.insert([
-		{ "_id" : 0, "vetId" : 0, specialtyId : 0 },
-		{ "_id" : 1, "vetId" : 0, specialtyId : 2 },
-		{ "_id" : 2, "vetId" : 1, specialtyId : 1 },
-		{ "_id" : 3, "vetId" : 1, specialtyId : 3 }
-	]);
-	
-// vet collection
-db.vet.insert([
-		{"_id" : 0, "firstName" : "John", "lastName" : "Doe"},
-		{"_id" : 1, "firstName" : "Mary", "lastName" : "Smith"},
-	]);
+// petType
+
+db.petType.insert({ "_id" : 0, "name" : "dog" });
+db.petType.insert({ "_id" : 1, "name" : "cat" });
+db.petType.insert({ "_id" : 3, "name" : "parrot" });
+
+// specialty
+
+db.specialty.insert({ "_id" : 1, "name" : "Animal behavior" });
+db.specialty.insert({ "_id" : 2, "name" : "Animal welfare" });
+db.specialty.insert({ "_id" : 3, "name" : "Birds" });
+db.specialty.insert({ "_id" : 4, "name" : "Bovine" });
+db.specialty.insert({ "_id" : 5, "name" : "Canine" });
+db.specialty.insert({ "_id" : 6, "name" : "Cardiology" });
+db.specialty.insert({ "_id" : 7, "name" : "Equine" });
+db.specialty.insert({ "_id" : 8, "name" : "Emergency and critical care" });
+db.specialty.insert({ "_id" : 9, "name" : "Feline" });
+db.specialty.insert({ "_id" : 10, "name" : "Reptile and amphibian" });
+
+//vet
+
+db.vet.insert({ "_id" : 1, "firstName" : "John", "lastName" : "Doe" });
+db.vet.insert({ "_id" : 2, "firstName" : "Mary", "lastName" : "Smith" });
+
+// vetSpecialty
+
+db.vetSpecialty.insert({ "_id" : 1, "vetId" : 1, "specialtyId" : 1 });
+db.vetSpecialty.insert({ "_id" : 2, "vetId" : 1, "specialtyId" : 9 });
+db.vetSpecialty.insert({ "_id" : 3, "vetId" : 2, "specialtyId" : 10 });
+db.vetSpecialty.insert({ "_id" : 4, "vetId" : 2, "specialtyId" : 3 });
+db.vetSpecialty.insert({ "_id" : 5, "vetId" : 2, "specialtyId" : 5 });
