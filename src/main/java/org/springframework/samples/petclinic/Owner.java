@@ -19,109 +19,112 @@ import org.springframework.core.style.ToStringCreator;
  */
 public class Owner extends Person {
 
-	private String address;
+    private String address;
 
-	private String city;
+    private String city;
 
-	private String telephone;
+    private String telephone;
 
-	private Set<Pet> pets;
+    private Set<Pet> pets;
 
+    public String getAddress() {
+        return this.address;
+    }
 
-	public String getAddress() {
-		return this.address;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public String getCity() {
+        return this.city;
+    }
 
-	public String getCity() {
-		return this.city;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public String getTelephone() {
+        return this.telephone;
+    }
 
-	public String getTelephone() {
-		return this.telephone;
-	}
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
+    public void setPets(List<Pet> pets) {
+        this.pets = new HashSet<Pet>(pets);
+    }
 
-	protected void setPetsInternal(Set<Pet> pets) {
-		this.pets = pets;
-	}
+    protected void setPetsInternal(Set<Pet> pets) {
+        this.pets = pets;
+    }
 
-	protected Set<Pet> getPetsInternal() {
-		if (this.pets == null) {
-			this.pets = new HashSet<Pet>();
-		}
-		return this.pets;
-	}
+    protected Set<Pet> getPetsInternal() {
+        if (this.pets == null) {
+            this.pets = new HashSet<Pet>();
+        }
+        return this.pets;
+    }
 
-	public List<Pet> getPets() {
-		List<Pet> sortedPets = new ArrayList<Pet>(getPetsInternal());
-		PropertyComparator.sort(sortedPets, new MutableSortDefinition("name", true, true));
-		return Collections.unmodifiableList(sortedPets);
-	}
+    public List<Pet> getPets() {
+        List<Pet> sortedPets = new ArrayList<Pet>(getPetsInternal());
+        PropertyComparator.sort(sortedPets, new MutableSortDefinition("name", true, true));
+        return Collections.unmodifiableList(sortedPets);
+    }
 
-	public void addPet(Pet pet) {
-		getPetsInternal().add(pet);
-		pet.setOwner(this);
-	}
+    public void addPet(Pet pet) {
+        getPetsInternal().add(pet);
+        pet.setOwner(this);
+    }
 
-	/**
-	 * Return the Pet with the given name, or null if none found for this Owner.
-	 *
-	 * @param name to test
-	 * @return true if pet name is already in use
-	 */
-	public Pet getPet(String name) {
-		return getPet(name, false);
-	}
+    /**
+    * Return the Pet with the given name, or null if none found for this Owner.
+    *
+    * @param name to test
+    * @return true if pet name is already in use
+    */
+    public Pet getPet(String name) {
+        return getPet(name, false);
+    }
 
-	/**
-	 * Return the Pet with the given name, or null if none found for this Owner.
-	 *
-	 * @param name to test
-	 * @return true if pet name is already in use
-	 */
-	public Pet getPet(String name, boolean ignoreNew) {
-		name = name.toLowerCase();
-		for (Pet pet : getPetsInternal()) {
-			if (!ignoreNew || !pet.isNew()) {
-				String compName = pet.getName();
-				compName = compName.toLowerCase();
-				if (compName.equals(name)) {
-					return pet;
-				}
-			}
-		}
-		return null;
-	}
+    /**
+    * Return the Pet with the given name, or null if none found for this Owner.
+    *
+    * @param name to test
+    * @return true if pet name is already in use
+    */
+    public Pet getPet(String name, boolean ignoreNew) {
+        name = name.toLowerCase();
+        for (Pet pet : getPetsInternal()) {
+            if (!ignoreNew || !pet.isNew()) {
+                String compName = pet.getName();
+                compName = compName.toLowerCase();
+                if (compName.equals(name)) {
+                    return pet;
+                }
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public String toString() {
-		return new ToStringCreator(this)
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
 
-		.append("id", this.getId())
+        .append("id", this.getId())
 
-		.append("new", this.isNew())
+        .append("new", this.isNew())
 
-		.append("lastName", this.getLastName())
+        .append("lastName", this.getLastName())
 
-		.append("firstName", this.getFirstName())
+        .append("firstName", this.getFirstName())
 
-		.append("address", this.address)
+        .append("address", this.address)
 
-		.append("city", this.city)
+        .append("city", this.city)
 
-		.append("telephone", this.telephone)
+        .append("telephone", this.telephone)
 
-		.toString();
-	}
+        .toString();
+    }
 }

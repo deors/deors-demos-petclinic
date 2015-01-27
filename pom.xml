@@ -39,11 +39,14 @@
         <hsqldb.version>1.8.0.9</hsqldb.version>
         <mysql.version>5.1.6</mysql.version>
         <postgresql.version>9.1-901.jdbc4</postgresql.version>
+        <mongojava.version>2.12.2</mongojava.version>
 
         <junit.version>4.11</junit.version>
         <selenium.version>2.39.0</selenium.version>
         <htmlunit.version>2.13</htmlunit.version>
         <pitest.version>1.1.0</pitest.version>
+        <embedmongo.version>0.1.12</embedmongo.version>
+        <mongodb.version>2.6.7</mongodb.version>
 
         <jacoco.version>0.7.1.201405082137</jacoco.version>
         <jacoco.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar</jacoco.path>
@@ -148,7 +151,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Database runtimes -->
+        <!-- Database drivers -->
         <!-- HSQLDB JDBC Connector -->
         <dependency>
             <groupId>org.hsqldb</groupId>
@@ -169,6 +172,12 @@
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
             <scope>runtime</scope>
+        </dependency>
+        <!--  MongoDB  -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>${mongojava.version}</version>
         </dependency>
 
         <!-- Hibernate -->
@@ -372,6 +381,7 @@
                     </includes>
                     <excludes>
                         <exclude>**/it/*IT.java</exclude>
+                        <exclude>**/mongo/*IT.java</exclude>
                     </excludes>
                     <properties>
                         <!-- add SonarQube's JaCoCo listener to enable -->
@@ -395,7 +405,7 @@
                         <param>org.springframework.samples.petclinic.it.*</param>
                     </excludedClasses>
                     <outputFormats>
-                        <outputFormat>XML</outputFormat> 
+                        <outputFormat>XML</outputFormat>
                     </outputFormats>
                 </configuration>
             </plugin>
@@ -694,6 +704,59 @@
                                 <phase>integration-test</phase>
                                 <goals>
                                     <goal>jmeter</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- add MongoDB integration tests -->
+        <profile>
+            <id>mongodb-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>2.17</version>
+                        <configuration>
+                            <includes>
+                                <include>**/mongo/*IT.java</include>
+                            </includes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>integration-test</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.joelittlejohn.embedmongo</groupId>
+                        <artifactId>embedmongo-maven-plugin</artifactId>
+                        <version>${embedmongo.version}</version>
+                        <configuration>
+                            <port>57017</port>
+                            <version>${mongodb.version}</version>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>start</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>stop</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
                                 </goals>
                             </execution>
                         </executions>

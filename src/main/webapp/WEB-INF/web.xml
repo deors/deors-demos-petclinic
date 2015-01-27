@@ -17,8 +17,6 @@
         <param-value>petclinic.root</param-value>
     </context-param>
 
-
-
     <!--
         Location of the Log4J config file, for initialization and refresh checks.
         Applied by Log4jConfigListener.
@@ -39,8 +37,9 @@
     -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/classes/applicationContext-jdbc.xml</param-value>
+        <param-value>/WEB-INF/classes/applicationContext-mongo.xml</param-value>
         <!--
+        <param-value>/WEB-INF/classes/applicationContext-jdbc.xml</param-value>
             <param-value>/WEB-INF/classes/applicationContext-hibernate.xml</param-value>
             <param-value>/WEB-INF/classes/applicationContext-jpa.xml</param-value>
         -->
