@@ -394,22 +394,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.pitest</groupId>
-                <artifactId>pitest-maven</artifactId>
-                <version>${pitest.version}</version>
-                <configuration>
-                    <targetClasses>
-                        <param>org.springframework.samples.petclinic.*</param>
-                    </targetClasses>
-                    <excludedClasses>
-                        <param>org.springframework.samples.petclinic.it.*</param>
-                    </excludedClasses>
-                    <outputFormats>
-                        <outputFormat>XML</outputFormat>
-                    </outputFormats>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.3</version>
@@ -757,6 +741,41 @@
                                 <phase>post-integration-test</phase>
                                 <goals>
                                     <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- add Pitest mutation tests (bound to unit test execution) -->
+        <profile>
+            <id>pitest-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <version>${pitest.version}</version>
+                        <configuration>
+                            <targetClasses>
+                                <param>org.springframework.samples.petclinic.*</param>
+                            </targetClasses>
+                            <excludedClasses>
+                                <param>org.springframework.samples.petclinic.it.*</param>
+                                <param>org.springframework.samples.petclinic.mongo.*</param>
+                            </excludedClasses>
+                            <outputFormats>
+                                <outputFormat>XML</outputFormat>
+                            </outputFormats>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>test</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>mutationCoverage</goal>
                                 </goals>
                             </execution>
                         </executions>
