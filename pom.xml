@@ -55,9 +55,9 @@
         <jacoco.utAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.utReport}</jacoco.utAgentConfig>
         <jacoco.itAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.itReport}</jacoco.itAgentConfig>
 
-        <jacoco-listeners.version>2.4</jacoco-listeners.version>
+        <jacoco-listeners.version>2.5.1</jacoco-listeners.version>
 
-        <tomcat.version>7.0.55</tomcat.version>
+        <tomcat.version>7.0.61</tomcat.version>
         <tomcat.downloadUrl>http://archive.apache.org/dist/tomcat/tomcat-7/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>
 
         <jboss.version>7.1.1.Final</jboss.version>
