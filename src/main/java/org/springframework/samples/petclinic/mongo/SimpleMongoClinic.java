@@ -470,7 +470,7 @@ public class SimpleMongoClinic
         while (cursor.hasNext() && (owner == null)) {
             tempOwner = mapToOwner(cursor.next());
             for (Pet pet : tempOwner.getPets()) {
-                if (pet.getId() == petId) {
+                if (pet.getId().equals(petId)) {
                     owner = tempOwner;
                     break;
                 }
