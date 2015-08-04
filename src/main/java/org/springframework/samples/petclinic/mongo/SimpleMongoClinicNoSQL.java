@@ -293,7 +293,7 @@ public class SimpleMongoClinicNoSQL
             List<Pet> newPetsList = new ArrayList<Pet>();
 
             for (Pet pet1 : pets) {
-                if (pet1.getId() == pet.getId()) {
+                if (pet1.getId().equals(pet.getId())) {
                     newPetsList.add(pet);
                 } else {
                     newPetsList.add(pet1);
@@ -522,7 +522,7 @@ public class SimpleMongoClinicNoSQL
         while (cursor.hasNext() && (owner == null)) {
             tempOwner = mapToOwner(cursor.next());
             for (Pet pet : tempOwner.getPets()) {
-                if (pet.getId() == petId) {
+                if (pet.getId().equals(petId)) {
                     owner = tempOwner;
                     break;
                 }
