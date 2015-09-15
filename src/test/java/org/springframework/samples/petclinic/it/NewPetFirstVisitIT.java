@@ -11,11 +11,11 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 //import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -165,7 +165,7 @@ public class NewPetFirstVisitIT {
 
         Assume.assumeTrue(RUN_IE);
 
-        DesiredCapabilities browser = DesiredCapabilities.internetExplorer();
+        Capabilities browser = DesiredCapabilities.internetExplorer();
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
         testNewPetFirstVisit(driver, TARGET_SERVER_URL);
     }
@@ -176,7 +176,7 @@ public class NewPetFirstVisitIT {
 
         Assume.assumeTrue(RUN_FIREFOX);
 
-        DesiredCapabilities browser = DesiredCapabilities.firefox();
+        Capabilities browser = DesiredCapabilities.firefox();
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
         testNewPetFirstVisit(driver, TARGET_SERVER_URL);
     }
@@ -187,7 +187,7 @@ public class NewPetFirstVisitIT {
 
         Assume.assumeTrue(RUN_CHROME);
 
-        DesiredCapabilities browser = DesiredCapabilities.chrome();
+        Capabilities browser = DesiredCapabilities.chrome();
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
         testNewPetFirstVisit(driver, TARGET_SERVER_URL);
     }
@@ -198,8 +198,8 @@ public class NewPetFirstVisitIT {
 
         Assume.assumeTrue(RUN_OPERA);
 
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL),
-            new OperaDriver().getCapabilities());
+        Capabilities browser = DesiredCapabilities.operaBlink();
+        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
         testNewPetFirstVisit(driver, TARGET_SERVER_URL);
     }
 
