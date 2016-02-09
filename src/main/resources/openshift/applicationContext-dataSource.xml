@@ -22,9 +22,9 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://${OPENSHIFT_DB_HOST}:${OPENSHIFT_DB_PORT}/${OPENSHIFT_APP_NAME}" />
-        <property name="username" value="${OPENSHIFT_DB_USERNAME}" />
-        <property name="password" value="${OPENSHIFT_DB_PASSWORD}" />
+        <property name="url" value="jdbc:mysql://${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}/${OPENSHIFT_APP_NAME}" />
+        <property name="username" value="${OPENSHIFT_MYSQL_DB_USERNAME}" />
+        <property name="password" value="${OPENSHIFT_MYSQL_DB_PASSWORD}" />
         <property name="maxWait" value="5000" />
         <property name="maxActive" value="15" />
     </bean>
