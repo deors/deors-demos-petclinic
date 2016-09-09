@@ -5,23 +5,26 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import org.junit.Assume;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-//import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 
 public class NewPetFirstVisitIT {
 
@@ -37,15 +40,9 @@ public class NewPetFirstVisitIT {
 
     private static boolean RUN_OPERA;
 
-    private static boolean RUN_ANDROID;
-
     private static String SELENIUM_HUB_URL;
 
-    private static String SELENIUM_HUB_URL_ANDROID;
-
     private static String TARGET_SERVER_URL;
-
-    private static String TARGET_SERVER_URL_ANDROID;
 
     @BeforeClass
     public static void initEnvironment() {
@@ -85,13 +82,6 @@ public class NewPetFirstVisitIT {
 
         logger.info("running the tests in Opera: " + RUN_OPERA);
 
-        RUN_ANDROID = getConfigurationProperty(
-            "RUN_ANDROID",
-            "test.run.android",
-            false);
-
-        logger.info("running the tests in Android: " + RUN_ANDROID);
-
         SELENIUM_HUB_URL = getConfigurationProperty(
             "SELENIUM_HUB_URL",
             "test.selenium.hub.url",
@@ -99,26 +89,12 @@ public class NewPetFirstVisitIT {
 
         logger.info("using Selenium hub at: " + SELENIUM_HUB_URL);
 
-        SELENIUM_HUB_URL_ANDROID = getConfigurationProperty(
-            "SELENIUM_HUB_URL_ANDROID",
-            "test.selenium.hub.url.android",
-            "http://localhost:4448/wd/hub");
-
-        logger.info("using Selenium hub for Android at: " + SELENIUM_HUB_URL_ANDROID);
-
         TARGET_SERVER_URL = getConfigurationProperty(
             "TARGET_SERVER_URL",
             "test.target.server.url",
             "http://localhost:58080/petclinic");
 
         logger.info("using target server at: " + TARGET_SERVER_URL);
-
-        TARGET_SERVER_URL_ANDROID = getConfigurationProperty(
-            "TARGET_SERVER_URL_ANDROID",
-            "test.target.server.url.android",
-            "http://localhost:58080/petclinic");
-
-        logger.info("using target server for Android at: " + TARGET_SERVER_URL_ANDROID);
     }
 
     private static String getConfigurationProperty(String envKey, String sysKey, String defValue) {
@@ -156,7 +132,14 @@ public class NewPetFirstVisitIT {
         Assume.assumeTrue(RUN_HTMLUNIT);
 
         WebDriver driver = new HtmlUnitDriver();
-        testNewPetFirstVisit(driver, TARGET_SERVER_URL);
+
+        try {
+            testNewPetFirstVisit(driver, TARGET_SERVER_URL);
+        } finally {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
     }
 
     @Test
@@ -167,7 +150,14 @@ public class NewPetFirstVisitIT {
 
         Capabilities browser = DesiredCapabilities.internetExplorer();
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
-        testNewPetFirstVisit(driver, TARGET_SERVER_URL);
+
+        try {
+            testNewPetFirstVisit(driver, TARGET_SERVER_URL);
+        } finally {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
     }
 
     @Test
@@ -178,7 +168,14 @@ public class NewPetFirstVisitIT {
 
         Capabilities browser = DesiredCapabilities.firefox();
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
-        testNewPetFirstVisit(driver, TARGET_SERVER_URL);
+
+        try {
+            testNewPetFirstVisit(driver, TARGET_SERVER_URL);
+        } finally {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
     }
 
     @Test
@@ -189,7 +186,14 @@ public class NewPetFirstVisitIT {
 
         Capabilities browser = DesiredCapabilities.chrome();
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
-        testNewPetFirstVisit(driver, TARGET_SERVER_URL);
+
+        try {
+            testNewPetFirstVisit(driver, TARGET_SERVER_URL);
+        } finally {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
     }
 
     @Test
@@ -200,122 +204,160 @@ public class NewPetFirstVisitIT {
 
         Capabilities browser = DesiredCapabilities.operaBlink();
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
-        testNewPetFirstVisit(driver, TARGET_SERVER_URL);
-    }
 
-    @Ignore @Test
-    public void testAndroid()
-        throws MalformedURLException, IOException {
-
-        Assume.assumeTrue(RUN_ANDROID);
-
-        //WebDriver driver = new AndroidDriver(new URL(SELENIUM_HUB_URL_ANDROID));
-        //testNewPetFirstVisit(driver, TARGET_SERVER_URL_ANDROID);
+        try {
+            testNewPetFirstVisit(driver, TARGET_SERVER_URL);
+        } finally {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
     }
 
     public void testNewPetFirstVisit(final WebDriver driver, final String baseUrl) {
 
+        driver.get(baseUrl);
+
+        // wait for the application to get fully loaded
+        WebElement findOwnerLink = (new WebDriverWait(driver, 5)).until(
+            (Function<WebDriver, WebElement>) d -> d.findElement(By.linkText("Find owner")));
+
+        findOwnerLink.click();
+
+        (new WebDriverWait(driver, 5)).until((Predicate<WebDriver>) d
+            -> d.getCurrentUrl().startsWith(baseUrl + "/owners/search"));
+
+        driver.findElement(By.id("lastName")).clear();
+        driver.findElement(By.id("lastName")).sendKeys("Schroeder");
+        driver.findElement(By.id("findowners")).click();
+
+        (new WebDriverWait(driver, 5)).until(
+            (Predicate<WebDriver>) d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
+
+        assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
+        driver.findElement(By.linkText("Add New Pet")).click();
+
+        (new WebDriverWait(driver, 5)).until(
+            (Predicate<WebDriver>) d -> d.getCurrentUrl().equals(baseUrl + "/owners/9/pets/new"));
+
+        driver.findElement(By.id("name")).clear();
+        driver.findElement(By.id("name")).sendKeys("Mimi");
+        driver.findElement(By.id("birthDate")).clear();
+        driver.findElement(By.id("birthDate")).sendKeys("2011-10-02");
+        driver.findElement(By.id("addpet")).click();
+
+        (new WebDriverWait(driver, 5)).until(
+            (Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
+                && !d.getCurrentUrl().contains("pets/new"));
+
+        assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
+        assertTrue(driver.findElement(By.id("main")).getText().contains("Mimi"));
+        assertTrue(driver.findElement(By.id("main")).getText().contains("2011-10-02"));
+        driver.findElement(By.linkText("Add Visit")).click();
+
+        (new WebDriverWait(driver, 5)).until(
+            (Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
+                && d.getCurrentUrl().contains("visits/new"));
+
+        driver.findElement(By.id("date")).clear();
+        driver.findElement(By.id("date")).sendKeys("2012-03-15");
+        driver.findElement(By.id("description")).clear();
+        driver.findElement(By.id("description")).sendKeys("rabies shot");
+        driver.findElement(By.id("addvisit")).click();
+
+        (new WebDriverWait(driver, 5)).until(
+            (Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
+                && !d.getCurrentUrl().contains("visits/new"));
+
+        assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
+        assertTrue(driver.findElement(By.id("main")).getText().contains("Mimi"));
+        assertTrue(driver.findElement(By.id("main")).getText().contains("2011-10-02"));
+        assertTrue(driver.findElement(By.id("main")).getText().contains("rabies shot"));
+        driver.findElement(By.linkText("Edit Pet")).click();
+
+        (new WebDriverWait(driver, 5)).until(
+            (Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
+                && d.getCurrentUrl().contains("edit"));
+
+        driver.findElement(By.id("deletepet")).click();
+
+        (new WebDriverWait(driver, 5)).until(
+            (Predicate<WebDriver>) d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
+    }
+
+    @Test
+    public void testAllElementsChrome()
+        throws MalformedURLException, IOException {
+
+        Assume.assumeTrue(RUN_CHROME);
+
+        Capabilities browser = DesiredCapabilities.chrome();
+        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
+
         try {
+            driver.get(TARGET_SERVER_URL);
+
             // wait for the application to get fully loaded
-            WebElement findOwnerLink = (new WebDriverWait(driver, 5)).until(new ExpectedCondition<WebElement>() {
-                public WebElement apply(WebDriver d) {
-                    d.get(baseUrl);
-                    return d.findElement(By.linkText("Find owner"));
-                }
-            });
+            WebElement findOwnerLink = (new WebDriverWait(driver, 5)).until(
+                (Function<WebDriver, WebElement>) d -> d.findElement(By.linkText("Find owner")));
 
-            findOwnerLink.click();
+            logger.info("looking for elements in root of DOM");
 
-            (new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver d) {
-                    return d.getCurrentUrl().startsWith(baseUrl + "/owners/search");
-                }
-            });
+            List<WebElement> elements = driver.findElements(By.xpath("//*"));
 
-            driver.findElement(By.id("lastName")).clear();
-            driver.findElement(By.id("lastName")).sendKeys("S");
-            driver.findElement(By.id("lastName")).sendKeys("chroeder");
-            driver.findElement(By.id("findowners")).click();
+            logElements(elements);
+            findElementAtCoordinates(elements, 100, 100).getTagName();
+            findElementAtCoordinates(elements, 240, 100).getTagName();
 
-            (new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver d) {
-                    return d.getCurrentUrl().equals(baseUrl + "/owners/9");
-                }
-            });
+            logger.info("looking for elements under top div element");
 
-            assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
-            driver.findElement(By.linkText("Add New Pet")).click();
+            elements = driver.findElements(By.xpath("//div/*"));
 
-            (new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver d) {
-                    return d.getCurrentUrl().equals(baseUrl + "/owners/9/pets/new");
-                }
-            });
-
-            driver.findElement(By.id("name")).clear();
-            driver.findElement(By.id("name")).sendKeys("M");
-            driver.findElement(By.id("name")).sendKeys("imi");
-            driver.findElement(By.id("birthDate")).clear();
-            driver.findElement(By.id("birthDate")).sendKeys("2011-10-02");
-            driver.findElement(By.id("addpet")).click();
-
-            (new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver d) {
-                    return d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
-                        && !d.getCurrentUrl().contains("pets/new");
-                }
-            });
-
-            assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
-            assertTrue(driver.findElement(By.id("main")).getText().contains("Mimi"));
-            assertTrue(driver.findElement(By.id("main")).getText().contains("2011-10-02"));
-            driver.findElement(By.linkText("Add Visit")).click();
-
-            (new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver d) {
-                    return d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
-                        && d.getCurrentUrl().contains("visits/new");
-                }
-            });
-
-            driver.findElement(By.id("date")).clear();
-            driver.findElement(By.id("date")).sendKeys("2012-03-15");
-            driver.findElement(By.id("description")).clear();
-            driver.findElement(By.id("description")).sendKeys("rabies shot");
-            driver.findElement(By.id("addvisit")).click();
-
-            (new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver d) {
-                    return d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
-                        && !d.getCurrentUrl().contains("visits/new");
-                }
-            });
-
-            assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
-            assertTrue(driver.findElement(By.id("main")).getText().contains("Mimi"));
-            assertTrue(driver.findElement(By.id("main")).getText().contains("2011-10-02"));
-            assertTrue(driver.findElement(By.id("main")).getText().contains("rabies shot"));
-            driver.findElement(By.linkText("Edit Pet")).click();
-
-            (new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver d) {
-                    return d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
-                        && d.getCurrentUrl().contains("edit");
-                }
-            });
-
-            driver.findElement(By.id("deletepet")).click();
-
-            (new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver d) {
-                    return d.getCurrentUrl().equals(baseUrl + "/owners/9");
-                }
-            });
+            logElements(elements);
+            findElementAtCoordinates(elements, 100, 100);
+            findElementAtCoordinates(elements, 240, 100);
 
         } finally {
             if (driver != null) {
                 driver.quit();
             }
         }
+    }
+
+    private void logElements(List<WebElement> elements) {
+
+        for (WebElement e: elements) {
+
+            Point loc = e.getLocation();
+            Dimension size = e.getSize();
+
+            logger.info("  found element {} at position ({},{}) with size ({},{})",
+                new Object[] {e.getTagName(), loc.getX(), loc.getY(), size.getWidth(), size.getHeight()});
+        }
+    }
+
+    private WebElement findElementAtCoordinates(List<WebElement> elements, int x, int y) {
+
+        for (WebElement e: elements) {
+
+            Point pos = e.getLocation();
+            Dimension size = e.getSize();
+
+            if (x >= pos.getX()
+                && x <= pos.getX() + size.getWidth()
+                && y >= pos.getY()
+                && y <= pos.getY() + size.getHeight()) {
+
+                logger.info("  found element {} at position ({},{})",
+                    new Object[] {e.getTagName(), x, y});
+
+                return e;
+            }
+        }
+
+        logger.info("  no element found at position ({},{})",
+            new Object[] {x, y});
+
+        return null;
     }
 }
