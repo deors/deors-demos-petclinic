@@ -557,7 +557,7 @@
         </profile>
 
         <!-- Cargo configuration to execute integration tests -->
-        <!-- in an ad-hoc provisioned JBoss container -->
+        <!-- in an ad-hoc provisioned WildFly container -->
         <profile>
             <id>cargo-wildfly</id>
             <build>
