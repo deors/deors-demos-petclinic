@@ -42,8 +42,7 @@
         <mongojava.version>2.12.2</mongojava.version>
 
         <junit.version>4.12</junit.version>
-        <selenium.version>2.47.1</selenium.version>
-        <selenium-android.version>2.39.0</selenium-android.version>
+        <selenium.version>2.53.1</selenium.version>
         <htmlunit.version>2.18</htmlunit.version>
         <pitest.version>1.1.5</pitest.version>
         <embedmongo.version>0.1.12</embedmongo.version>
@@ -305,18 +304,6 @@
             <version>${selenium.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-android-driver</artifactId>
-            <version>${selenium-android.version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.seleniumhq.selenium</groupId>
-                    <artifactId>selenium-remote-driver</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency> -->
         <dependency>
             <groupId>net.sourceforge.htmlunit</groupId>
             <artifactId>htmlunit</artifactId>
