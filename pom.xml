@@ -57,13 +57,13 @@
 
         <jacoco-listeners.version>3.5</jacoco-listeners.version>
 
-        <tomcat.version>7.0.61</tomcat.version>
-        <tomcat.downloadUrl>http://archive.apache.org/dist/tomcat/tomcat-7/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>
+        <tomcat.version>8.0.30</tomcat.version>
+        <tomcat.downloadUrl>http://archive.apache.org/dist/tomcat/tomcat-8/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>
 
-        <jboss.version>7.1.1.Final</jboss.version>
-        <jboss.downloadUrl>http://download.jboss.org/jbossas/7.1/jboss-as-${jboss.version}/jboss-as-${jboss.version}.zip</jboss.downloadUrl>
+        <wildfly.version>10.0.0.Final</wildfly.version>
+        <wildfly.downloadUrl>http://download.jboss.org/wildfly/${wildfly.version}/wildfly-${wildfly.version}.zip</wildfly.downloadUrl>
 
-        <jetty.version>8.1.3.v20120416</jetty.version>
+        <jetty.version>9.3.6.v20151106</jetty.version>
         <jetty.downloadUrl>http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${jetty.version}/jetty-distribution-${jetty.version}.zip</jetty.downloadUrl>
 
         <!-- overriding sonar.sources properties to enable multi-language analysis -->
@@ -517,10 +517,10 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.2.1</version>
+                        <version>1.4.18</version>
                         <configuration>
                             <container>
-                                <containerId>tomcat7x</containerId>
+                                <containerId>tomcat8x</containerId>
                                 <zipUrlInstaller>
                                     <url>${tomcat.downloadUrl}</url>
                                 </zipUrlInstaller>
@@ -559,18 +559,18 @@
         <!-- Cargo configuration to execute integration tests -->
         <!-- in an ad-hoc provisioned JBoss container -->
         <profile>
-            <id>cargo-jboss</id>
+            <id>cargo-wildfly</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.2.1</version>
+                        <version>1.4.18</version>
                         <configuration>
                             <container>
-                                <containerId>jboss71x</containerId>
+                                <containerId>wildfly10x</containerId>
                                 <zipUrlInstaller>
-                                    <url>${jboss.downloadUrl}</url>
+                                    <url>${wildfly.downloadUrl}</url>
                                 </zipUrlInstaller>
                             </container>
                             <configuration>
@@ -612,10 +612,10 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.2.1</version>
+                        <version>1.4.18</version>
                         <configuration>
                             <container>
-                                <containerId>jetty8x</containerId>
+                                <containerId>jetty9x</containerId>
                                 <zipUrlInstaller>
                                     <url>${jetty.downloadUrl}</url>
                                 </zipUrlInstaller>
