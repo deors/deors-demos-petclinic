@@ -25,8 +25,8 @@
 
         <spring.version>3.0.6.RELEASE</spring.version>
         <aspectj.version>1.6.8.RELEASE</aspectj.version>
-        <slf4j.version>1.5.6</slf4j.version>
-        <log4j.version>1.2.15</log4j.version>
+        <slf4j.version>1.7.21</slf4j.version>
+        <log4j.version>2.6.2</log4j.version>
         <commons-dbcp.version>1.2.2.osgi</commons-dbcp.version>
         <commons-pool.version>1.5.3</commons-pool.version>
         <hibernate.version>3.3.2.GA</hibernate.version>
@@ -116,24 +116,18 @@
         <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>com.springsource.slf4j.api</artifactId>
+            <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>com.springsource.slf4j.log4j</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.log4j</groupId>
-            <artifactId>com.springsource.org.apache.log4j</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
             <scope>runtime</scope>
         </dependency>
@@ -186,6 +180,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>com.springsource.org.hibernate</artifactId>
             <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>com.springsource.slf4j.api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- JPA -->
@@ -205,6 +205,10 @@
                     <groupId>org.apache.commons</groupId>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>com.springsource.slf4j.api</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -216,6 +220,10 @@
                 <exclusion>
                     <groupId>org.apache.commons</groupId>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>com.springsource.slf4j.api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

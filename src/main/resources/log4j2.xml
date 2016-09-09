@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %p [%c] - %m%n" />
+        </Console>
+        <RollingFile name="file" fileName="${OPENSHIFT_WILDFLY_LOG_DIR}/logs/petclinic.log"
+            filePattern="${OPENSHIFT_WILDFLY_LOG_DIR}/logs/petclinic-%i.log.gz">
+            <PatternLayout pattern="%d %p [%c] - %m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="4 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="file" />
+        </Root>
+    </Loggers>
+</Configuration>

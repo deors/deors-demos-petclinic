@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %p [%c] - %m%n" />
+        </Console>
+        <RollingFile name="file" fileName="${catalina.base}/logs/petclinic.log"
+            filePattern="${catalina.base}/logs/petclinic-%i.log.gz">
+            <PatternLayout pattern="%d %p [%c] - %m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="512 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="3"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="file" />
+        </Root>
+    </Loggers>
+</Configuration>
