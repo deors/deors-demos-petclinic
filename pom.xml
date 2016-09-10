@@ -1,795 +1,852 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <name>petclinic</name>
+	<name>petclinic</name>
 
-    <groupId>deors.demos</groupId>
-    <artifactId>deors.demos.petclinic</artifactId>
-    <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
+	<groupId>deors.demos</groupId>
+	<artifactId>deors.demos.petclinic</artifactId>
+	<packaging>war</packaging>
+	<version>1.0-SNAPSHOT</version>
 
-    <properties>
-        <java.version>1.8</java.version>
+	<properties>
+		<java.version>1.8</java.version>
 
-        <servlet.version>2.5.0</servlet.version>
-        <jsp.version>2.1.0</jsp.version>
-        <jstl.version>1.2.0</jstl.version>
-        <taglibs.version>1.1.2</taglibs.version>
-        <jaxb.version>2.1.7</jaxb.version>
-        <jta.version>1.1.0</jta.version>
-        <jpa.version>1.0.0</jpa.version>
+		<servlet.version>2.5.0</servlet.version>
+		<jsp.version>2.1.0</jsp.version>
+		<jstl.version>1.2.0</jstl.version>
+		<taglibs.version>1.1.2</taglibs.version>
+		<jaxb.version>2.1.7</jaxb.version>
+		<jta.version>1.1.0</jta.version>
+		<jpa.version>1.0.0</jpa.version>
 
-        <spring.version>3.0.6.RELEASE</spring.version>
-        <aspectj.version>1.6.8.RELEASE</aspectj.version>
-        <slf4j.version>1.7.21</slf4j.version>
-        <log4j.version>2.6.2</log4j.version>
-        <commons-dbcp.version>1.2.2.osgi</commons-dbcp.version>
-        <commons-pool.version>1.5.3</commons-pool.version>
-        <hibernate.version>3.3.2.GA</hibernate.version>
-        <hibernate-jpa.version>3.4.0.GA</hibernate-jpa.version>
-        <toplink.version>2.0.0.b41-beta2</toplink.version>
-        <openjpa.version>1.1.0</openjpa.version>
-        <syndication.version>1.0.0</syndication.version>
-        <jdom.version>1.1.0</jdom.version>
+		<spring.version>3.0.6.RELEASE</spring.version>
+		<aspectj.version>1.6.8.RELEASE</aspectj.version>
+		<slf4j.version>1.7.21</slf4j.version>
+		<log4j.version>2.6.2</log4j.version>
+		<commons-dbcp.version>1.2.2.osgi</commons-dbcp.version>
+		<commons-pool.version>1.5.3</commons-pool.version>
+		<hibernate.version>3.3.2.GA</hibernate.version>
+		<hibernate-jpa.version>3.4.0.GA</hibernate-jpa.version>
+		<toplink.version>2.0.0.b41-beta2</toplink.version>
+		<openjpa.version>1.1.0</openjpa.version>
+		<syndication.version>1.0.0</syndication.version>
+		<jdom.version>1.1.0</jdom.version>
 
-        <hsqldb.version>1.8.0.9</hsqldb.version>
-        <mysql.version>5.1.6</mysql.version>
-        <postgresql.version>9.1-901.jdbc4</postgresql.version>
-        <mongojava.version>2.12.2</mongojava.version>
+		<hsqldb.version>1.8.0.9</hsqldb.version>
+		<mysql.version>5.1.6</mysql.version>
+		<postgresql.version>9.1-901.jdbc4</postgresql.version>
+		<mongojava.version>2.12.2</mongojava.version>
 
-        <junit.version>4.12</junit.version>
-        <selenium.version>2.53.1</selenium.version>
-        <htmlunit.version>2.18</htmlunit.version>
-        <pitest.version>1.1.5</pitest.version>
-        <embedmongo.version>0.1.12</embedmongo.version>
-        <mongodb.version>2.6.7</mongodb.version>
+		<junit.version>4.12</junit.version>
+		<selenium.version>2.53.1</selenium.version>
+		<htmlunit.version>2.18</htmlunit.version>
+		<pitest.version>1.1.5</pitest.version>
+		<embedmongo.version>0.1.12</embedmongo.version>
+		<mongodb.version>2.6.7</mongodb.version>
 
-        <jacoco.version>0.7.5.201505241946</jacoco.version>
-        <jacoco.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar</jacoco.path>
-        <jacoco.utReport>${project.build.directory}/jacoco.exec</jacoco.utReport>
-        <jacoco.itReport>${project.build.directory}/jacoco-it.exec</jacoco.itReport>
-        <jacoco.utAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.utReport}</jacoco.utAgentConfig>
-        <jacoco.itAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.itReport}</jacoco.itAgentConfig>
+		<jacoco.version>0.7.5.201505241946</jacoco.version>
+		<jacoco.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar</jacoco.path>
+		<jacoco.utReport>${project.build.directory}/jacoco.exec</jacoco.utReport>
+		<jacoco.itReport>${project.build.directory}/jacoco-it.exec</jacoco.itReport>
+		<jacoco.utAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.utReport}</jacoco.utAgentConfig>
+		<jacoco.itAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.itReport}</jacoco.itAgentConfig>
 
-        <jacoco-listeners.version>3.5</jacoco-listeners.version>
+		<jacoco-listeners.version>3.5</jacoco-listeners.version>
 
-        <tomcat.version>8.0.30</tomcat.version>
-        <tomcat.downloadUrl>http://archive.apache.org/dist/tomcat/tomcat-8/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>
+		<tomcat.version>8.0.30</tomcat.version>
+		<tomcat.downloadUrl>http://archive.apache.org/dist/tomcat/tomcat-8/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>
 
-        <wildfly.version>10.0.0.Final</wildfly.version>
-        <wildfly.downloadUrl>http://download.jboss.org/wildfly/${wildfly.version}/wildfly-${wildfly.version}.zip</wildfly.downloadUrl>
+		<wildfly.version>10.0.0.Final</wildfly.version>
+		<wildfly.downloadUrl>http://download.jboss.org/wildfly/${wildfly.version}/wildfly-${wildfly.version}.zip</wildfly.downloadUrl>
 
-        <jetty.version>9.3.6.v20151106</jetty.version>
-        <jetty.downloadUrl>http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${jetty.version}/jetty-distribution-${jetty.version}.zip</jetty.downloadUrl>
+		<jetty.version>9.3.6.v20151106</jetty.version>
+		<jetty.downloadUrl>http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${jetty.version}/jetty-distribution-${jetty.version}.zip</jetty.downloadUrl>
 
-        <!-- overriding sonar.sources properties to enable multi-language analysis -->
-        <sonar.sources>src/main</sonar.sources>
-        <org.sonar.plugins.jmeter.jtlpath>${project.build.directory}/jmeter/results/petclinic.jtl</org.sonar.plugins.jmeter.jtlpath>
-    </properties>
+		<!-- overriding sonar.sources properties to enable multi-language analysis -->
+		<sonar.sources>src/main</sonar.sources>
+		<org.sonar.plugins.jmeter.jtlpath>${project.build.directory}/jmeter/results/petclinic.jtl</org.sonar.plugins.jmeter.jtlpath>
+	</properties>
 
-    <dependencies>
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.context</artifactId>
-            <version>${spring.version}</version>
-            <exclusions>
-                <!-- Exclude Commons Logging in favor of SLF4j -->
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>com.springsource.org.apache.commons.logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.orm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.oxm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.web.servlet</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.aspects</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <!-- AspectJ -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>com.springsource.org.aspectj.weaver</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
+	<dependencies>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.context</artifactId>
+			<version>${spring.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.oxm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.web.servlet</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.aspects</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>com.springsource.org.aspectj.weaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
 
-        <!-- Logging -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
-            <scope>runtime</scope>
-        </dependency>
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
 
-        <!-- DataSource -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
-            <version>${commons-dbcp.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>com.springsource.org.apache.commons.pool</artifactId>
-            <version>${commons-pool.version}</version>
-            <scope>runtime</scope>
-        </dependency>
+		<!-- DataSource -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+			<version>${commons-dbcp.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>com.springsource.org.apache.commons.pool</artifactId>
+			<version>${commons-pool.version}</version>
+			<scope>runtime</scope>
+		</dependency>
 
-        <!-- Database drivers -->
-        <!-- HSQLDB JDBC Connector -->
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>com.springsource.org.hsqldb</artifactId>
-            <version>${hsqldb.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- MySQL JDBC Connector -->
-        <dependency>
-            <groupId>com.mysql.jdbc</groupId>
-            <artifactId>com.springsource.com.mysql.jdbc</artifactId>
-            <version>${mysql.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- PostgreSQL JDB Connector -->
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <!--  MongoDB  -->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongojava.version}</version>
-        </dependency>
+		<!-- Database drivers -->
+		<!-- HSQLDB JDBC Connector -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>com.springsource.org.hsqldb</artifactId>
+			<version>${hsqldb.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- MySQL JDBC Connector -->
+		<dependency>
+			<groupId>com.mysql.jdbc</groupId>
+			<artifactId>com.springsource.com.mysql.jdbc</artifactId>
+			<version>${mysql.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- PostgreSQL JDB Connector -->
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- MongoDB -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>${mongojava.version}</version>
+		</dependency>
 
-        <!-- Hibernate -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>com.springsource.org.hibernate</artifactId>
-            <version>${hibernate.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>com.springsource.slf4j.api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate</artifactId>
+			<version>${hibernate.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>com.springsource.slf4j.api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-        <!-- JPA -->
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>com.springsource.javax.persistence</artifactId>
-            <version>${jpa.version}</version>
-        </dependency>
-        <!-- Hibernate JPA Provider -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>com.springsource.org.hibernate.ejb</artifactId>
-            <version>${hibernate-jpa.version}</version>
-            <exclusions>
-                <!-- Exclude Commons Logging in favor of SLF4j -->
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>com.springsource.org.apache.commons.logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>com.springsource.slf4j.api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>com.springsource.org.hibernate.annotations</artifactId>
-            <version>${hibernate-jpa.version}</version>
-            <exclusions>
-                <!-- Exclude Commons Logging in favor of SLF4j -->
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>com.springsource.org.apache.commons.logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>com.springsource.slf4j.api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- Toplink JPA Provider -->
-        <dependency>
-            <groupId>com.oracle.toplink.essentials</groupId>
-            <artifactId>com.springsource.oracle.toplink.essentials</artifactId>
-            <version>${toplink.version}</version>
-        </dependency>
-        <!-- Open JPA Provider -->
-        <dependency>
-            <groupId>org.apache.openjpa</groupId>
-            <artifactId>com.springsource.org.apache.openjpa</artifactId>
-            <version>${openjpa.version}</version>
-            <exclusions>
-                <!-- Exclude Commons Logging in favor of SLF4j -->
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>com.springsource.org.apache.commons.logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+		<!-- JPA -->
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>com.springsource.javax.persistence</artifactId>
+			<version>${jpa.version}</version>
+		</dependency>
+		<!-- Hibernate JPA Provider -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate.ejb</artifactId>
+			<version>${hibernate-jpa.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>com.springsource.slf4j.api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate.annotations</artifactId>
+			<version>${hibernate-jpa.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>com.springsource.slf4j.api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Toplink JPA Provider -->
+		<dependency>
+			<groupId>com.oracle.toplink.essentials</groupId>
+			<artifactId>com.springsource.oracle.toplink.essentials</artifactId>
+			<version>${toplink.version}</version>
+		</dependency>
+		<!-- Open JPA Provider -->
+		<dependency>
+			<groupId>org.apache.openjpa</groupId>
+			<artifactId>com.springsource.org.apache.openjpa</artifactId>
+			<version>${openjpa.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-        <!-- Servlet -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>com.springsource.javax.servlet</artifactId>
-            <version>${servlet.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>com.springsource.javax.servlet.jsp</artifactId>
-            <version>${jsp.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>com.springsource.javax.servlet.jsp.jstl</artifactId>
-            <version>${jstl.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.taglibs</groupId>
-            <artifactId>com.springsource.org.apache.taglibs.standard</artifactId>
-            <version>${taglibs.version}</version>
-        </dependency>
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>com.springsource.javax.servlet</artifactId>
+			<version>${servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>com.springsource.javax.servlet.jsp</artifactId>
+			<version>${jsp.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>com.springsource.javax.servlet.jsp.jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>com.springsource.org.apache.taglibs.standard</artifactId>
+			<version>${taglibs.version}</version>
+		</dependency>
 
-        <!-- Rome RSS -->
-        <dependency>
-            <groupId>com.sun.syndication</groupId>
-            <artifactId>com.springsource.com.sun.syndication</artifactId>
-            <version>${syndication.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jdom</groupId>
-            <artifactId>com.springsource.org.jdom</artifactId>
-            <version>${jdom.version}</version>
-            <scope>runtime</scope>
-        </dependency>
+		<!-- Rome RSS -->
+		<dependency>
+			<groupId>com.sun.syndication</groupId>
+			<artifactId>com.springsource.com.sun.syndication</artifactId>
+			<version>${syndication.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>com.springsource.org.jdom</artifactId>
+			<version>${jdom.version}</version>
+			<scope>runtime</scope>
+		</dependency>
 
-        <!-- JAXB -->
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>com.springsource.javax.xml.bind</artifactId>
-            <version>${jaxb.version}</version>
-            <scope>provided</scope>
-        </dependency>
+		<!-- JAXB -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>com.springsource.javax.xml.bind</artifactId>
+			<version>${jaxb.version}</version>
+			<scope>provided</scope>
+		</dependency>
 
-        <!-- Test dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.sourceforge.htmlunit</groupId>
-            <artifactId>htmlunit</artifactId>
-            <version>${htmlunit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.test</artifactId>
-            <version>${spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>com.springsource.javax.transaction</artifactId>
-            <version>${jta.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jacoco</groupId>
-            <artifactId>org.jacoco.agent</artifactId>
-            <version>${jacoco.version}</version>
-            <classifier>runtime</classifier>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.sonarsource.java</groupId>
-            <artifactId>sonar-jacoco-listeners</artifactId>
-            <version>${jacoco-listeners.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${selenium.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.htmlunit</groupId>
+			<artifactId>htmlunit</artifactId>
+			<version>${htmlunit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>com.springsource.javax.transaction</artifactId>
+			<version>${jta.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>org.jacoco.agent</artifactId>
+			<version>${jacoco.version}</version>
+			<classifier>runtime</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.sonarsource.java</groupId>
+			<artifactId>sonar-jacoco-listeners</artifactId>
+			<version>${jacoco-listeners.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
-    <repositories>
-        <repository>
-            <id>com.springsource.repository.bundles.release</id>
-            <name>SpringSource Enterprise Bundle Repository - SpringSource Releases</name>
-            <url>http://repository.springsource.com/maven/bundles/release</url>
-        </repository>
-        <repository>
-            <id>com.springsource.repository.bundles.external</id>
-            <name>SpringSource Enterprise Bundle Repository - External Releases</name>
-            <url>http://repository.springsource.com/maven/bundles/external</url>
-        </repository>
-        <repository>
-            <id>com.springsource.repository.bundles.milestone</id>
-            <name>SpringSource Enterprise Bundle Repository - SpringSource Milestones</name>
-            <url>http://repository.springsource.com/maven/bundles/milestone</url>
-        </repository>
-        <repository>
-            <id>com.springsource.repository.bundles.snapshot</id>
-            <name>SpringSource Enterprise Bundle Repository - Snapshot Releases</name>
-            <url>http://repository.springsource.com/maven/bundles/snapshot</url>
-        </repository>
-    </repositories>
+	<repositories>
+		<repository>
+			<id>com.springsource.repository.bundles.release</id>
+			<name>SpringSource Enterprise Bundle Repository - SpringSource Releases</name>
+			<url>http://repository.springsource.com/maven/bundles/release</url>
+		</repository>
+		<repository>
+			<id>com.springsource.repository.bundles.external</id>
+			<name>SpringSource Enterprise Bundle Repository - External Releases</name>
+			<url>http://repository.springsource.com/maven/bundles/external</url>
+		</repository>
+		<repository>
+			<id>com.springsource.repository.bundles.milestone</id>
+			<name>SpringSource Enterprise Bundle Repository - SpringSource Milestones</name>
+			<url>http://repository.springsource.com/maven/bundles/milestone</url>
+		</repository>
+		<repository>
+			<id>com.springsource.repository.bundles.snapshot</id>
+			<name>SpringSource Enterprise Bundle Repository - Snapshot Releases</name>
+			<url>http://repository.springsource.com/maven/bundles/snapshot</url>
+		</repository>
+	</repositories>
 
-    <build>
-        <finalName>petclinic</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.17</version>
-                <configuration>
-                    <!-- JDK 7 - relax bytecode verifier to prevent double -->
-                    <!-- instrumentation issues with OpenJPA tests and JaCoCo -->
-                    <!-- <argLine>-XX:-UseSplitVerifier ${jacoco.utAgentConfig}</argLine> -->
-                    <!-- JDK 8 - bytecode verifier cannot be relaxed or disabled -->
-                    <!-- to prevent runtime errors, OpenJPA tests are ignored -->
-                    <argLine>${jacoco.utAgentConfig}</argLine>
-                    <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*Tests.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/it/*IT.java</exclude>
-                        <exclude>**/mongo/*IT.java</exclude>
-                    </excludes>
-                    <properties>
-                        <!-- add SonarQube's JaCoCo listener to enable -->
-                        <!-- gathering of code coverage metrics per test -->
-                        <property>
-                            <name>listener</name>
-                            <value>org.sonar.java.jacoco.JUnitListener</value>
-                        </property>
-                    </properties>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
-                <configuration>
-                    <warName>petclinic</warName>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<finalName>petclinic</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
+				<configuration>
+					<!-- JDK 7 - relax bytecode verifier to prevent double -->
+					<!-- instrumentation issues with OpenJPA tests and JaCoCo -->
+					<!-- <argLine>-XX:-UseSplitVerifier ${jacoco.utAgentConfig}</argLine> -->
+					<!-- JDK 8 - bytecode verifier cannot be relaxed or disabled -->
+					<!-- to prevent runtime errors, OpenJPA tests are ignored -->
+					<argLine>${jacoco.utAgentConfig}</argLine>
+					<includes>
+						<include>**/*Test.java</include>
+						<include>**/*Tests.java</include>
+					</includes>
+					<excludes>
+						<exclude>**/it/*IT.java</exclude>
+						<exclude>**/mongo/*IT.java</exclude>
+					</excludes>
+					<properties>
+						<!-- add SonarQube's JaCoCo listener to enable -->
+						<!-- gathering of code coverage metrics per test -->
+						<property>
+							<name>listener</name>
+							<value>org.sonar.java.jacoco.JUnitListener</value>
+						</property>
+					</properties>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<warName>petclinic</warName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-    <profiles>
-        <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
-        <!-- Use this profile for any OpenShift specific customization your app will need. -->
-        <!-- By default that is to put the resulting archive into the 'deployments' folder. -->
-        <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
-        <profile>
-            <id>openshift</id>
-            <build>
-                <finalName>petclinic</finalName>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <version>2.3</version>
-                        <configuration>
-                            <outputDirectory>deployments</outputDirectory>
-                            <warName>ROOT</warName>
-                            <webResources>
-                                <resource>
-                                    <!-- copy OpenShift specific resources -->
-                                    <!-- this is relative to where the pom.xml file is -->
-                                    <directory>src/main/resources/openshift</directory>
-                                    <targetPath>WEB-INF/classes</targetPath>
-                                </resource>
-                            </webResources>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+	<profiles>
+		<!-- When built in OpenShift the 'openshift' profile will be used when
+			invoking mvn. -->
+		<!-- Use this profile for any OpenShift specific customization your app
+			will need. -->
+		<!-- By default that is to put the resulting archive into the 'deployments'
+			folder. -->
+		<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+		<profile>
+			<id>openshift</id>
+			<build>
+				<finalName>petclinic</finalName>
+				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.3</version>
+						<configuration>
+							<outputDirectory>deployments</outputDirectory>
+							<warName>ROOT</warName>
+							<webResources>
+								<resource>
+									<!-- copy OpenShift specific resources -->
+									<!-- this is relative to where the pom.xml file is -->
+									<directory>src/main/resources/openshift</directory>
+									<targetPath>WEB-INF/classes</targetPath>
+								</resource>
+							</webResources>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
-        <!-- Activated only when building on Heroku -->
-        <profile>
-            <id>heroku</id>
-            <activation>
-                <file>
-                    <exists>/app/tmp/cache/.maven/bin/mvn</exists>
-                </file>
-            </activation>
-            <build>
-                <finalName>petclinic</finalName>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <version>2.3</version>
-                        <configuration>
-                            <webResources>
-                                <resource>
-                                    <!-- copy Heroku specific resources -->
-                                    <!-- this is relative to where the pom.xml file is -->
-                                    <directory>src/main/resources/heroku</directory>
-                                    <targetPath>WEB-INF/classes</targetPath>
-                                </resource>
-                            </webResources>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <version>2.4</version>
-                        <executions>
-                            <execution>
-                                <id>package</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>copy</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>org.mortbay.jetty</groupId>
-                                            <artifactId>jetty-runner</artifactId>
-                                            <version>8.1.3.v20120416</version>
-                                            <destFileName>jetty-runner.jar</destFileName>
-                                        </artifactItem>
-                                        <!-- not available in jetty-runner 8.1.3 -->
-                                        <artifactItem>
-                                            <groupId>javax.servlet</groupId>
-                                            <artifactId>com.springsource.javax.servlet.jsp.jstl</artifactId>
-                                            <version>1.2.0</version>
-                                            <destFileName>jstl.jar</destFileName>
-                                        </artifactItem>
-                                        <artifactItem>
-                                            <groupId>org.apache.taglibs</groupId>
-                                            <artifactId>com.springsource.org.apache.taglibs.standard</artifactId>
-                                            <version>1.1.2</version>
-                                            <destFileName>standard.jar</destFileName>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+		<!-- Activated only when building on Heroku -->
+		<profile>
+			<id>heroku</id>
+			<activation>
+				<file>
+					<exists>/app/tmp/cache/.maven/bin/mvn</exists>
+				</file>
+			</activation>
+			<build>
+				<finalName>petclinic</finalName>
+				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.3</version>
+						<configuration>
+							<webResources>
+								<resource>
+									<!-- copy Heroku specific resources -->
+									<!-- this is relative to where the pom.xml file is -->
+									<directory>src/main/resources/heroku</directory>
+									<targetPath>WEB-INF/classes</targetPath>
+								</resource>
+							</webResources>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<version>2.4</version>
+						<executions>
+							<execution>
+								<id>package</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy</goal>
+								</goals>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>org.mortbay.jetty</groupId>
+											<artifactId>jetty-runner</artifactId>
+											<version>8.1.3.v20120416</version>
+											<destFileName>jetty-runner.jar</destFileName>
+										</artifactItem>
+										<!-- not available in jetty-runner 8.1.3 -->
+										<artifactItem>
+											<groupId>javax.servlet</groupId>
+											<artifactId>com.springsource.javax.servlet.jsp.jstl</artifactId>
+											<version>1.2.0</version>
+											<destFileName>jstl.jar</destFileName>
+										</artifactItem>
+										<artifactItem>
+											<groupId>org.apache.taglibs</groupId>
+											<artifactId>com.springsource.org.apache.taglibs.standard</artifactId>
+											<version>1.1.2</version>
+											<destFileName>standard.jar</destFileName>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
-        <!-- Cargo configuration to execute integration tests -->
-        <!-- in an ad-hoc provisioned Tomcat container -->
-        <profile>
-            <id>cargo-tomcat</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.cargo</groupId>
-                        <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.4.18</version>
-                        <configuration>
-                            <container>
-                                <containerId>tomcat8x</containerId>
-                                <zipUrlInstaller>
-                                    <url>${tomcat.downloadUrl}</url>
-                                </zipUrlInstaller>
-                            </container>
-                            <configuration>
-                                <properties>
-                                    <cargo.servlet.port>58080</cargo.servlet.port>
-                                    <cargo.tomcat.ajp.port>58009</cargo.tomcat.ajp.port>
-                                    <cargo.jvmargs>${jacoco.itAgentConfig}</cargo.jvmargs>
-                                </properties>
-                            </configuration>
-                        </configuration>
-                        <executions>
-                            <!-- start server before integration tests -->
-                            <execution>
-                                <id>start-container</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                            </execution>
-                            <!-- stop server after integration tests -->
-                            <execution>
-                                <id>stop-container</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+		<!-- Cargo configuration to execute integration tests -->
+		<!-- in an ad-hoc provisioned Tomcat container -->
+		<profile>
+			<id>cargo-tomcat</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<version>1.4.18</version>
+						<configuration>
+							<container>
+								<containerId>tomcat8x</containerId>
+								<zipUrlInstaller>
+									<url>${tomcat.downloadUrl}</url>
+								</zipUrlInstaller>
+							</container>
+							<configuration>
+								<properties>
+									<cargo.servlet.port>58080</cargo.servlet.port>
+									<cargo.tomcat.ajp.port>58009</cargo.tomcat.ajp.port>
+									<cargo.jvmargs>${jacoco.itAgentConfig}</cargo.jvmargs>
+								</properties>
+							</configuration>
+						</configuration>
+						<executions>
+							<!-- start server before integration tests -->
+							<execution>
+								<id>start-container</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<!-- stop server after integration tests -->
+							<execution>
+								<id>stop-container</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
-        <!-- Cargo configuration to execute integration tests -->
-        <!-- in an ad-hoc provisioned WildFly container -->
-        <profile>
-            <id>cargo-wildfly</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.cargo</groupId>
-                        <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.4.18</version>
-                        <configuration>
-                            <container>
-                                <containerId>wildfly10x</containerId>
-                                <zipUrlInstaller>
-                                    <url>${wildfly.downloadUrl}</url>
-                                </zipUrlInstaller>
-                            </container>
-                            <configuration>
-                                <properties>
-                                    <cargo.servlet.port>58080</cargo.servlet.port>
-                                    <cargo.jvmargs>${jacoco.itAgentConfig}</cargo.jvmargs>
-                                </properties>
-                            </configuration>
-                        </configuration>
-                        <executions>
-                            <!-- start server before integration tests -->
-                            <execution>
-                                <id>start-container</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                            </execution>
-                            <!-- stop server after integration tests -->
-                            <execution>
-                                <id>stop-container</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+		<!-- Cargo configuration to execute integration tests -->
+		<!-- in an ad-hoc provisioned WildFly container -->
+		<profile>
+			<id>cargo-wildfly</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<version>1.4.18</version>
+						<configuration>
+							<container>
+								<containerId>wildfly10x</containerId>
+								<zipUrlInstaller>
+									<url>${wildfly.downloadUrl}</url>
+								</zipUrlInstaller>
+							</container>
+							<configuration>
+								<properties>
+									<cargo.servlet.port>58080</cargo.servlet.port>
+									<cargo.jvmargs>${jacoco.itAgentConfig}</cargo.jvmargs>
+								</properties>
+							</configuration>
+						</configuration>
+						<executions>
+							<!-- start server before integration tests -->
+							<execution>
+								<id>start-container</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<!-- stop server after integration tests -->
+							<execution>
+								<id>stop-container</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
-        <!-- Cargo configuration to execute integration tests -->
-        <!-- in an ad-hoc provisioned Jetty container -->
-        <profile>
-            <id>cargo-jetty</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.cargo</groupId>
-                        <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.4.18</version>
-                        <configuration>
-                            <container>
-                                <containerId>jetty9x</containerId>
-                                <zipUrlInstaller>
-                                    <url>${jetty.downloadUrl}</url>
-                                </zipUrlInstaller>
-                            </container>
-                            <configuration>
-                                <properties>
-                                    <cargo.servlet.port>58080</cargo.servlet.port>
-                                    <cargo.jvmargs>${jacoco.itAgentConfig}</cargo.jvmargs>
-                                </properties>
-                            </configuration>
-                        </configuration>
-                        <executions>
-                            <!-- start server before integration tests -->
-                            <execution>
-                                <id>start-container</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                            </execution>
-                            <!-- stop server after integration tests -->
-                            <execution>
-                                <id>stop-container</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+		<!-- Cargo configuration to execute integration tests -->
+		<!-- in an ad-hoc provisioned Jetty container -->
+		<profile>
+			<id>cargo-jetty</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<version>1.4.18</version>
+						<configuration>
+							<container>
+								<containerId>jetty9x</containerId>
+								<zipUrlInstaller>
+									<url>${jetty.downloadUrl}</url>
+								</zipUrlInstaller>
+							</container>
+							<configuration>
+								<properties>
+									<cargo.servlet.port>58080</cargo.servlet.port>
+									<cargo.jvmargs>${jacoco.itAgentConfig}</cargo.jvmargs>
+								</properties>
+							</configuration>
+						</configuration>
+						<executions>
+							<!-- start server before integration tests -->
+							<execution>
+								<id>start-container</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<!-- stop server after integration tests -->
+							<execution>
+								<id>stop-container</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
-        <!-- add Selenium integration tests -->
-        <profile>
-            <id>selenium-tests</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>2.17</version>
-                        <configuration>
-                            <includes>
-                                <include>**/it/*IT.java</include>
-                            </includes>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>integration-test</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+		<!-- add Selenium integration tests -->
+		<profile>
+			<id>selenium-tests</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>2.17</version>
+						<configuration>
+							<includes>
+								<include>**/it/*IT.java</include>
+							</includes>
+						</configuration>
+						<executions>
+							<execution>
+								<id>integration-test</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>integration-test</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
-        <!-- add JMeter integration tests -->
-        <profile>
-            <id>jmeter-tests</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.lazerycode.jmeter</groupId>
-                        <artifactId>jmeter-maven-plugin</artifactId>
-                        <version>1.6.0</version>
-                        <configuration>
-                            <testResultsTimestamp>false</testResultsTimestamp>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>integration-test</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>jmeter</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+		<!-- add Selenium integration tests -->
+		<profile>
+			<id>selenium-tests-all</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>2.17</version>
+						<configuration>
+							<includes>
+								<include>**/it/*IT*.java</include>
+							</includes>
+						</configuration>
+						<executions>
+							<execution>
+								<id>integration-test</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>integration-test</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
-        <!-- add MongoDB integration tests -->
-        <profile>
-            <id>mongodb-tests</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>2.17</version>
-                        <configuration>
-                            <includes>
-                                <include>**/mongo/*IT.java</include>
-                            </includes>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>integration-test</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.github.joelittlejohn.embedmongo</groupId>
-                        <artifactId>embedmongo-maven-plugin</artifactId>
-                        <version>${embedmongo.version}</version>
-                        <configuration>
-                            <port>57017</port>
-                            <version>${mongodb.version}</version>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>start</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>stop</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+		<profile>
+			<id>selenium-tests-po</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>2.17</version>
+						<configuration>
+							<includes>
+								<include>**/it/*ITPO.java</include>
+							</includes>
+						</configuration>
+						<executions>
+							<execution>
+								<id>integration-test</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>integration-test</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
-        <!-- add Pitest mutation tests (bound to unit test execution) -->
-        <profile>
-            <id>pitest-tests</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.pitest</groupId>
-                        <artifactId>pitest-maven</artifactId>
-                        <version>${pitest.version}</version>
-                        <configuration>
-                            <targetClasses>
-                                <param>org.springframework.samples.petclinic.*</param>
-                            </targetClasses>
-                            <excludedClasses>
-                                <param>org.springframework.samples.petclinic.it.*</param>
-                                <param>org.springframework.samples.petclinic.mongo.*</param>
-                            </excludedClasses>
-                            <outputFormats>
-                                <outputFormat>XML</outputFormat>
-                            </outputFormats>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>test</id>
-                                <phase>test</phase>
-                                <goals>
-                                    <goal>mutationCoverage</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+		<!-- add JMeter integration tests -->
+		<profile>
+			<id>jmeter-tests</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.lazerycode.jmeter</groupId>
+						<artifactId>jmeter-maven-plugin</artifactId>
+						<version>1.6.0</version>
+						<configuration>
+							<testResultsTimestamp>false</testResultsTimestamp>
+						</configuration>
+						<executions>
+							<execution>
+								<id>integration-test</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>jmeter</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- add MongoDB integration tests -->
+		<profile>
+			<id>mongodb-tests</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>2.17</version>
+						<configuration>
+							<includes>
+								<include>**/mongo/*IT.java</include>
+							</includes>
+						</configuration>
+						<executions>
+							<execution>
+								<id>integration-test</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>integration-test</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>com.github.joelittlejohn.embedmongo</groupId>
+						<artifactId>embedmongo-maven-plugin</artifactId>
+						<version>${embedmongo.version}</version>
+						<configuration>
+							<port>57017</port>
+							<version>${mongodb.version}</version>
+						</configuration>
+						<executions>
+							<execution>
+								<id>start</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>stop</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- add Pitest mutation tests (bound to unit test execution) -->
+		<profile>
+			<id>pitest-tests</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-maven</artifactId>
+						<version>${pitest.version}</version>
+						<configuration>
+							<targetClasses>
+								<param>org.springframework.samples.petclinic.*</param>
+							</targetClasses>
+							<excludedClasses>
+								<param>org.springframework.samples.petclinic.it.*</param>
+								<param>org.springframework.samples.petclinic.mongo.*</param>
+							</excludedClasses>
+							<outputFormats>
+								<outputFormat>XML</outputFormat>
+							</outputFormats>
+						</configuration>
+						<executions>
+							<execution>
+								<id>test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>mutationCoverage</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
