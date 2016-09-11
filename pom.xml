@@ -376,6 +376,9 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.17</version>
 				<configuration>
+					<!-- this will allow to run integration tests ignoring unit tests. The
+						parameter -Dskip.surefire.tests should be added while running maven -->
+					<skipTests>${skip.surefire.tests}</skipTests>
 					<!-- JDK 7 - relax bytecode verifier to prevent double -->
 					<!-- instrumentation issues with OpenJPA tests and JaCoCo -->
 					<!-- <argLine>-XX:-UseSplitVerifier ${jacoco.utAgentConfig}</argLine> -->
@@ -652,7 +655,8 @@
 			</build>
 		</profile>
 
-		<!-- add Selenium integration tests -->
+		<!-- add Selenium integration tests (will execute only regular integration
+			tests -->
 		<profile>
 			<id>selenium-tests</id>
 			<build>
@@ -680,7 +684,7 @@
 			</build>
 		</profile>
 
-		<!-- add Selenium integration tests -->
+		<!-- add Selenium integration tests (will execute all integration tests) -->
 		<profile>
 			<id>selenium-tests-all</id>
 			<build>
@@ -708,6 +712,8 @@
 			</build>
 		</profile>
 
+		<!-- add Selenium integration tests (will execute only page objects based
+			integration tests) -->
 		<profile>
 			<id>selenium-tests-po</id>
 			<build>
