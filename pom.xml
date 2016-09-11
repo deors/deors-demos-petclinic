@@ -667,8 +667,11 @@
 						<version>2.17</version>
 						<configuration>
 							<includes>
-								<include>**/it/*IT.java</include>
+								<include>**/it/*IT*.java</include>
 							</includes>
+							<excludes>
+								<exclude>**/it/*OP.java</exclude>
+							</excludes>
 						</configuration>
 						<executions>
 							<execution>
@@ -724,8 +727,11 @@
 						<version>2.17</version>
 						<configuration>
 							<includes>
-								<include>**/it/*ITPO.java</include>
+								<include>**/it/*IT*.java</include>
 							</includes>
+							<excludes>
+								<exclude>**/it/*IT.java</exclude>
+							</excludes>
 						</configuration>
 						<executions>
 							<execution>
