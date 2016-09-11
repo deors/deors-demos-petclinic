@@ -129,43 +129,6 @@ public class NewPetFirstVisitITPO
         }
     }
 
-    public void testNewPetFirstVisitFull(final WebDriver driver, final String baseUrl) {
-
-        driver.get(baseUrl);
-
-        HomePage homePage = new HomePage(driver, baseUrl);
-
-        FindOwnersPage findOwnersPage = homePage.navigateToFindOwners();
-
-        OwnerPage ownerPage = findOwnersPage.findOwner("Schroeder");
-        assertTrue("owner page not found", ownerPage.verifyPage());
-        assertTrue("incorrect owner name while searching", ownerPage.getName().contains("David Schroeder"));
-
-        PetPage petPage = ownerPage.navigateToAddNewPet();
-        assertTrue("pet page not found", petPage.verifyPage());
-
-        petPage.createPet("Mimi", "2011-10-02");
-        assertTrue("owner page not found", ownerPage.verifyPage());
-        assertTrue("incorrect owner name after adding pet", ownerPage.getName().contains("David Schroeder"));
-        assertTrue("pet name not found", ownerPage.getMainText().contains("Mimi"));
-        assertTrue("pet birthdate not found", ownerPage.getMainText().contains("2011-10-02"));
-
-        VisitPage visitPage = ownerPage.navigateToAddNewVisit();
-        assertTrue("visit page not found", visitPage.verifyPage());
-
-        visitPage.createVisit("2012-03-15", "rabies shot");
-        assertTrue("visit page not found", ownerPage.verifyPage());
-        assertTrue("incorrect owner name after adding the visit", ownerPage.getName().contains("David Schroeder"));
-        assertTrue("pet name not found after adding the visit", ownerPage.getMainText().contains("Mimi"));
-        assertTrue("visit date not found", ownerPage.getMainText().contains("2012-03-15"));
-        assertTrue("visit description not found", ownerPage.getMainText().contains("rabies shot"));
-
-        petPage = ownerPage.navigateToEditPet();
-        assertTrue("pet page not found", petPage.verifyPage());
-
-        petPage.deletePet();
-    }
-
     public void testNewPetFirstVisit(final WebDriver driver, final String baseUrl) {
 
         driver.get(baseUrl);
