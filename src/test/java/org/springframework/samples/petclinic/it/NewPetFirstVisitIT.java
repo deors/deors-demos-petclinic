@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.it;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -283,6 +284,9 @@ public class NewPetFirstVisitIT {
 
         (new WebDriverWait(driver, 5)).until(
             (Predicate<WebDriver>) d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
+
+        assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
+        assertFalse(driver.findElement(By.id("main")).getText().contains("Mimi"));
     }
 
     @Test
@@ -298,7 +302,7 @@ public class NewPetFirstVisitIT {
             driver.get(TARGET_SERVER_URL);
 
             // wait for the application to get fully loaded
-            WebElement findOwnerLink = (new WebDriverWait(driver, 5)).until(
+            (new WebDriverWait(driver, 5)).until(
                 (Function<WebDriver, WebElement>) d -> d.findElement(By.linkText("Find owner")));
 
             logger.info("looking for elements in root of DOM");
