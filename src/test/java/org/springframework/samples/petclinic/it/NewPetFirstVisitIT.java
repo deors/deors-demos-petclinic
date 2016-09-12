@@ -6,15 +6,12 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -297,81 +294,5 @@ public class NewPetFirstVisitIT {
 
         assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
         assertFalse(driver.findElement(By.id("main")).getText().contains("Mimi"));
-    }
-
-    @Test
-    public void testAllElementsChrome()
-        throws MalformedURLException, IOException {
-
-        Assume.assumeTrue(RUN_CHROME);
-
-        Capabilities browser = DesiredCapabilities.chrome();
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
-
-        try {
-            driver.get(TARGET_SERVER_URL);
-
-            // wait for the application to get fully loaded
-            (new WebDriverWait(driver, 5)).until(
-                (Function<WebDriver, WebElement>) d -> d.findElement(By.linkText("Find owner")));
-
-            logger.info("looking for elements in root of DOM");
-
-            List<WebElement> elements = driver.findElements(By.xpath("//*"));
-
-            logElements(elements);
-            findElementAtCoordinates(elements, 100, 100).getTagName();
-            findElementAtCoordinates(elements, 240, 100).getTagName();
-
-            logger.info("looking for elements under top div element");
-
-            elements = driver.findElements(By.xpath("//div/*"));
-
-            logElements(elements);
-            findElementAtCoordinates(elements, 100, 100);
-            findElementAtCoordinates(elements, 240, 100);
-
-        } finally {
-            if (driver != null) {
-                driver.quit();
-            }
-        }
-    }
-
-    private void logElements(List<WebElement> elements) {
-
-        for (WebElement e: elements) {
-
-            Point loc = e.getLocation();
-            Dimension size = e.getSize();
-
-            logger.info("  found element {} at position ({},{}) with size ({},{})",
-                new Object[] {e.getTagName(), loc.getX(), loc.getY(), size.getWidth(), size.getHeight()});
-        }
-    }
-
-    private WebElement findElementAtCoordinates(List<WebElement> elements, int x, int y) {
-
-        for (WebElement e: elements) {
-
-            Point pos = e.getLocation();
-            Dimension size = e.getSize();
-
-            if (x >= pos.getX()
-                && x <= pos.getX() + size.getWidth()
-                && y >= pos.getY()
-                && y <= pos.getY() + size.getHeight()) {
-
-                logger.info("  found element {} at position ({},{})",
-                    new Object[] {e.getTagName(), x, y});
-
-                return e;
-            }
-        }
-
-        logger.info("  no element found at position ({},{})",
-            new Object[] {x, y});
-
-        return null;
     }
 }
