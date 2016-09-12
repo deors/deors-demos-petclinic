@@ -4,9 +4,9 @@ import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestSetupITBase {
+public class SeleniumITBase {
 
-    private static final Logger logger = LoggerFactory.getLogger(TestSetupITBase.class);
+    private static final Logger logger = LoggerFactory.getLogger(SeleniumITBase.class);
 
     protected static boolean RUN_HTMLUNIT;
 
@@ -45,13 +45,13 @@ public class TestSetupITBase {
 
         logger.info("running the tests in Opera: " + RUN_OPERA);
 
-        SELENIUM_HUB_URL =
-            getConfigurationProperty("SELENIUM_HUB_URL", "test.selenium.hub.url", "http://localhost:4444/wd/hub");
+        SELENIUM_HUB_URL = getConfigurationProperty(
+            "SELENIUM_HUB_URL", "test.selenium.hub.url", "http://localhost:4444/wd/hub");
 
         logger.info("using Selenium hub at: " + SELENIUM_HUB_URL);
 
-        TARGET_SERVER_URL =
-            getConfigurationProperty("TARGET_SERVER_URL", "test.target.server.url", "http://localhost:58080/petclinic");
+        TARGET_SERVER_URL = getConfigurationProperty(
+            "TARGET_SERVER_URL", "test.target.server.url", "http://localhost:58080/petclinic");
 
         logger.info("using target server at: " + TARGET_SERVER_URL);
     }
@@ -83,5 +83,4 @@ public class TestSetupITBase {
         }
         return retValue;
     }
-
 }

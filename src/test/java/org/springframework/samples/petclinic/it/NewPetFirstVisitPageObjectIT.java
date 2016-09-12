@@ -22,23 +22,13 @@ import org.springframework.samples.petclinic.it.page.OwnerPage;
 import org.springframework.samples.petclinic.it.page.PetPage;
 import org.springframework.samples.petclinic.it.page.VisitPage;
 
-public class NewPetFirstVisitITPO
-    extends TestSetupITBase {
+public class NewPetFirstVisitPageObjectIT
+    extends SeleniumITBase {
 
-    private static final Logger logger = LoggerFactory.getLogger(NewPetFirstVisitITPO.class);
-
-    /**
-     *
-     */
-    public NewPetFirstVisitITPO() {
-
-        super();
-    }
+    private static final Logger logger = LoggerFactory.getLogger(NewPetFirstVisitPageObjectIT.class);
 
     @Test
     public void testHtmlUnit() throws MalformedURLException, IOException {
-
-        logger.info("will starting tests in HTMLUNIT...");
 
         Assume.assumeTrue(RUN_HTMLUNIT);
 
@@ -55,8 +45,6 @@ public class NewPetFirstVisitITPO
 
     @Test
     public void testIE() throws MalformedURLException, IOException {
-
-        logger.info("will starting tests in IE...");
 
         Assume.assumeTrue(RUN_IE);
 
@@ -75,8 +63,6 @@ public class NewPetFirstVisitITPO
     @Test
     public void testFirefox() throws MalformedURLException, IOException {
 
-        logger.info("will starting tests in FIREFOX...");
-
         Assume.assumeTrue(RUN_FIREFOX);
 
         Capabilities browser = DesiredCapabilities.firefox();
@@ -94,8 +80,6 @@ public class NewPetFirstVisitITPO
     @Test
     public void testChrome() throws MalformedURLException, IOException {
 
-        logger.info("will starting tests in CHROME...");
-
         Assume.assumeTrue(RUN_CHROME);
 
         Capabilities browser = DesiredCapabilities.chrome();
@@ -112,8 +96,6 @@ public class NewPetFirstVisitITPO
 
     @Test
     public void testOpera() throws MalformedURLException, IOException {
-
-        logger.info("will starting tests in OPERA...");
 
         Assume.assumeTrue(RUN_OPERA);
 
@@ -160,5 +142,4 @@ public class NewPetFirstVisitITPO
 
         petPage.deletePet();
     }
-
 }
