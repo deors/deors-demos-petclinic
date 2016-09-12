@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.it;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -7,7 +8,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.junit.Assume;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
@@ -151,5 +151,7 @@ public class NewPetFirstVisitPageObjectIT
         assertTrue("pet page not found", petPage.verifyPage());
 
         petPage.deletePet();
+        assertTrue(ownerPage.getName().contains("David Schroeder"));
+        assertFalse(ownerPage.getMainText().contains("Mimi"));
     }
 }
