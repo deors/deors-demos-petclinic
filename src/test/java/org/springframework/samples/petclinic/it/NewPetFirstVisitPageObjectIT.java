@@ -32,6 +32,8 @@ public class NewPetFirstVisitPageObjectIT
 
         Assume.assumeTrue(RUN_HTMLUNIT);
 
+        logger.info("executing test in htmlunit");
+
         WebDriver driver = new HtmlUnitDriver();
 
         try {
@@ -47,6 +49,8 @@ public class NewPetFirstVisitPageObjectIT
     public void testIE() throws MalformedURLException, IOException {
 
         Assume.assumeTrue(RUN_IE);
+
+        logger.info("executing test in internet explorer");
 
         Capabilities browser = DesiredCapabilities.internetExplorer();
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
@@ -65,6 +69,8 @@ public class NewPetFirstVisitPageObjectIT
 
         Assume.assumeTrue(RUN_FIREFOX);
 
+        logger.info("executing test in firefox");
+
         Capabilities browser = DesiredCapabilities.firefox();
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
 
@@ -82,6 +88,8 @@ public class NewPetFirstVisitPageObjectIT
 
         Assume.assumeTrue(RUN_CHROME);
 
+        logger.info("executing test in chrome");
+
         Capabilities browser = DesiredCapabilities.chrome();
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
 
@@ -98,6 +106,8 @@ public class NewPetFirstVisitPageObjectIT
     public void testOpera() throws MalformedURLException, IOException {
 
         Assume.assumeTrue(RUN_OPERA);
+
+        logger.info("executing test in opera");
 
         Capabilities browser = DesiredCapabilities.operaBlink();
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
