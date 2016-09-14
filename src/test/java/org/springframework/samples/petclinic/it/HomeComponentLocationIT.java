@@ -138,7 +138,7 @@ public class HomeComponentLocationIT {
             Dimension size = e.getSize();
 
             logger.info("  found element {} at position ({},{}) with size ({},{})",
-                new Object[] {e.getTagName(), loc.getX(), loc.getY(), size.getWidth(), size.getHeight()});
+                e.getTagName(), loc.getX(), loc.getY(), size.getWidth(), size.getHeight());
         }
     }
 
@@ -154,15 +154,13 @@ public class HomeComponentLocationIT {
                 && y >= pos.getY()
                 && y <= pos.getY() + size.getHeight()) {
 
-                logger.info("  found element {} at position ({},{})",
-                    new Object[] {e.getTagName(), x, y});
+                logger.info("  found element {} at position ({},{})", e.getTagName(), x, y);
 
                 return e;
             }
         }
 
-        logger.info("  no element found at position ({},{})",
-            new Object[] {x, y});
+        logger.info("  no element found at position ({},{})", x, y);
 
         return null;
     }
