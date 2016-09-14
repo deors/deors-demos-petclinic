@@ -47,10 +47,10 @@
       <td>
         <c:choose>
           <c:when test="${owner['new']}">
-            <p class="submit"><input type="submit" value="Add Owner"/></p>
+            <p class="submit"><input id="addowner" type="submit" value="Add Owner"/></p>
           </c:when>
           <c:otherwise>
-            <p class="submit"><input type="submit" value="Update Owner"/></p>
+            <p class="submit"><input id="updateowner" type="submit" value="Update Owner"/></p>
           </c:otherwise>
         </c:choose>
       </td>
