@@ -21,6 +21,7 @@ import org.springframework.samples.petclinic.it.page.HomePage;
 import org.springframework.samples.petclinic.it.page.OwnerPage;
 import org.springframework.samples.petclinic.it.page.PetPage;
 import org.springframework.samples.petclinic.it.page.VisitPage;
+import org.springframework.samples.petclinic.it.page.VisitPageFactory;
 
 public class NewPetFirstVisitPageObjectIT
     extends SeleniumITBase {
@@ -140,6 +141,8 @@ public class NewPetFirstVisitPageObjectIT
         assertTrue(ownerPage.getMainText().contains("2011-10-02"));
 
         VisitPage visitPage = ownerPage.navigateToAddNewVisit();
+        // alternative way using the PageFactory pattern
+        //VisitPageFactory visitPage = ownerPage.navigateToAddNewVisitFromFactory();
 
         visitPage.createVisit("2012-03-15", "rabies shot");
         assertTrue(ownerPage.getName().contains("David Schroeder"));
