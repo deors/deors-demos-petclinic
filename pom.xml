@@ -55,7 +55,7 @@
         <jacoco.utAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.utReport}</jacoco.utAgentConfig>
         <jacoco.itAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.itReport}</jacoco.itAgentConfig>
 
-        <jacoco-listeners.version>4.2.1.6971</jacoco-listeners.version>
+        <jacoco-listeners.version>4.3.0.7717</jacoco-listeners.version>
 
         <tomcat.version>8.0.30</tomcat.version>
         <tomcat.downloadUrl>http://archive.apache.org/dist/tomcat/tomcat-8/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>
