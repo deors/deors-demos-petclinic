@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<Configuration monitorInterval="5">
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %p [%c] - %m%n" />
+            <PatternLayout pattern="%d %-5level [%logger{3.}] - %msg%n" />
         </Console>
-        <RollingFile name="file" fileName="${OPENSHIFT_WILDFLY_LOG_DIR}/logs/petclinic.log"
-            filePattern="${OPENSHIFT_WILDFLY_LOG_DIR}/logs/petclinic-%i.log.gz">
-            <PatternLayout pattern="%d %p [%c] - %m%n"/>
+        <RollingFile name="file"
+            fileName="${sys:catalina.base}/logs/petclinic.log"
+            filePattern="${sys:catalina.base}/logs/petclinic-%i.log.gz">
+            <PatternLayout pattern="%d %-5level [%logger{3.}] - %msg%n"/>
             <Policies>
-                <SizeBasedTriggeringPolicy size="4 MB"/>
+                <SizeBasedTriggeringPolicy size="512 KB"/>
             </Policies>
-            <DefaultRolloverStrategy max="20"/>
+            <DefaultRolloverStrategy max="3"/>
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Root level="info">
+        <Root level="INFO">
             <AppenderRef ref="console" />
             <AppenderRef ref="file" />
         </Root>
