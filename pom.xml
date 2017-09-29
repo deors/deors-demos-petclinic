@@ -57,13 +57,22 @@
 
         <jacoco-listeners.version>4.11.0.10660</jacoco-listeners.version>
 
-        <tomcat.version>8.0.30</tomcat.version>
+        <compiler.version>3.7.0</compiler.version>
+        <surefire.version>2.20.1</surefire.version>
+        <failsafe.version>2.20.1</failsafe.version>
+        <war.version>3.1.0</war.version>
+        <dependency.version>3.0.2</dependency.version>
+        <jmeter.version>2.2.0</jmeter.version>
+
+        <cargo.version>1.6.4</cargo.version>
+
+        <tomcat.version>8.5.20</tomcat.version>
         <tomcat.downloadUrl>http://archive.apache.org/dist/tomcat/tomcat-8/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>
 
-        <wildfly.version>10.0.0.Final</wildfly.version>
+        <wildfly.version>10.1.0.Final</wildfly.version>
         <wildfly.downloadUrl>http://download.jboss.org/wildfly/${wildfly.version}/wildfly-${wildfly.version}.zip</wildfly.downloadUrl>
 
-        <jetty.version>9.3.6.v20151106</jetty.version>
+        <jetty.version>9.4.7.v20170914</jetty.version>
         <jetty.downloadUrl>http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${jetty.version}/jetty-distribution-${jetty.version}.zip</jetty.downloadUrl>
 
         <!-- overriding sonar.sources properties to enable multi-language analysis -->
@@ -366,7 +375,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>${compiler.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -375,7 +384,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.17</version>
+                <version>${surefire.version}</version>
                 <configuration>
                     <!-- JDK 7 - relax bytecode verifier to prevent double -->
                     <!-- instrumentation issues with OpenJPA tests and JaCoCo -->
@@ -404,7 +413,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
+                <version>${war.version}</version>
                 <configuration>
                     <warName>petclinic</warName>
                 </configuration>
@@ -424,7 +433,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
-                        <version>2.3</version>
+                        <version>${war.version}</version>
                         <configuration>
                             <outputDirectory>deployments</outputDirectory>
                             <warName>ROOT</warName>
@@ -455,7 +464,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
-                        <version>2.3</version>
+                        <version>${war.version}</version>
                         <configuration>
                             <webResources>
                                 <resource>
@@ -470,7 +479,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
-                        <version>2.4</version>
+                        <version>${dependency.version}</version>
                         <executions>
                             <execution>
                                 <id>package</id>
@@ -483,20 +492,20 @@
                                         <artifactItem>
                                             <groupId>org.mortbay.jetty</groupId>
                                             <artifactId>jetty-runner</artifactId>
-                                            <version>8.1.3.v20120416</version>
+                                            <version>${jetty.version}</version>
                                             <destFileName>jetty-runner.jar</destFileName>
                                         </artifactItem>
-                                        <!-- not available in jetty-runner 8.1.3 -->
+                                        <!-- not available in jetty-runner -->
                                         <artifactItem>
                                             <groupId>javax.servlet</groupId>
                                             <artifactId>com.springsource.javax.servlet.jsp.jstl</artifactId>
-                                            <version>1.2.0</version>
+                                            <version>${jstl.version}</version>
                                             <destFileName>jstl.jar</destFileName>
                                         </artifactItem>
                                         <artifactItem>
                                             <groupId>org.apache.taglibs</groupId>
                                             <artifactId>com.springsource.org.apache.taglibs.standard</artifactId>
-                                            <version>1.1.2</version>
+                                            <version>${taglibs.version}</version>
                                             <destFileName>standard.jar</destFileName>
                                         </artifactItem>
                                     </artifactItems>
@@ -517,7 +526,7 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.4.18</version>
+                        <version>${cargo.version}</version>
                         <configuration>
                             <container>
                                 <containerId>tomcat8x</containerId>
@@ -565,7 +574,7 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.4.18</version>
+                        <version>${cargo.version}</version>
                         <configuration>
                             <container>
                                 <containerId>wildfly10x</containerId>
@@ -612,7 +621,7 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.4.18</version>
+                        <version>${cargo.version}</version>
                         <configuration>
                             <container>
                                 <containerId>jetty9x</containerId>
@@ -658,7 +667,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>2.17</version>
+                        <version>${failsafe.version}</version>
                         <configuration>
                             <includes>
                                 <include>**/it/*IT.java</include>
@@ -686,7 +695,7 @@
                     <plugin>
                         <groupId>com.lazerycode.jmeter</groupId>
                         <artifactId>jmeter-maven-plugin</artifactId>
-                        <version>1.6.0</version>
+                        <version>${jmeter.version}</version>
                         <configuration>
                             <testResultsTimestamp>false</testResultsTimestamp>
                         </configuration>
@@ -712,7 +721,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>2.17</version>
+                        <version>${failsafe.version}</version>
                         <configuration>
                             <includes>
                                 <include>**/mongo/*IT.java</include>
