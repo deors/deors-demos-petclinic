@@ -26,8 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.samples.petclinic.Owner;
 
-import com.google.common.base.Predicate;
-
 public class CreateNewOwnerBulkIT {
 
     private static final Logger logger = LoggerFactory.getLogger(CreateNewOwnerBulkIT.class);
@@ -146,7 +144,7 @@ public class CreateNewOwnerBulkIT {
         driver.findElement(By.id("addowner")).click();
 
         (new WebDriverWait(driver, 5)).until(
-            (Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/"));
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/"));
 
         assertTrue(driver.getPageSource().contains(owner.getFirstName()));
         assertTrue(driver.getPageSource().contains(owner.getLastName()));

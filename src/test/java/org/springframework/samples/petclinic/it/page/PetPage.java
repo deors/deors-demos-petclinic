@@ -7,8 +7,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Predicate;
-
 /**
  * @author vicente.gonzalez
  *
@@ -115,12 +113,11 @@ public class PetPage {
         driver.findElement(birthDate).sendKeys(petBirthDate);
         driver.findElement(addPetCommand).click();
 
-        (new WebDriverWait(driver, 5)).until((Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(
-            baseUrl + "/owners/9")
-            && !d.getCurrentUrl().contains("pets/new"));
+        (new WebDriverWait(driver, 5)).until(
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
+                && !d.getCurrentUrl().contains("pets/new"));
 
         logger.debug("\t-- -- after create pet current driver is:" + driver.getCurrentUrl());
-
     }
 
     /**
@@ -134,10 +131,9 @@ public class PetPage {
 
         driver.findElement(deletePetCommand).click();
 
-        (new WebDriverWait(driver, 5)).until((Predicate<WebDriver>) d -> d.getCurrentUrl()
-            .equals(baseUrl + "/owners/9"));
+        (new WebDriverWait(driver, 5)).until(
+            d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
 
         logger.debug("\t-- -- after deleting pet : current driver is:" + driver.getCurrentUrl());
     }
-
 }

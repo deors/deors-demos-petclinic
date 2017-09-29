@@ -7,8 +7,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Predicate;
-
 public class FindOwnersPage {
 
     private static final Logger logger = LoggerFactory.getLogger(FindOwnersPage.class);
@@ -96,12 +94,11 @@ public class FindOwnersPage {
         driver.findElement(lastNameField).sendKeys(ownerToFind);
         driver.findElement(findOwnersCommand).click();
 
-        (new WebDriverWait(driver, 5)).until((Predicate<WebDriver>) d -> d.getCurrentUrl().equals(
-            baseUrl + "/owners/9"));
+        (new WebDriverWait(driver, 5)).until(
+            d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
 
         logger.debug("\t-- -- after find owner: current URL:" + driver.getCurrentUrl());
 
         return new OwnerPage(driver, baseUrl);
     }
-
 }

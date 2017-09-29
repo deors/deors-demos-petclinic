@@ -7,8 +7,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Predicate;
-
 /**
  * @author vicente.gonzalez
  *
@@ -115,12 +113,10 @@ public class VisitPage {
         driver.findElement(descriptionField).sendKeys(description);
         driver.findElement(addVisitCommand).click();
 
-        (new WebDriverWait(driver, 5)).until((Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(
-            baseUrl + "/owners/9")
-            && !d.getCurrentUrl().contains("pets/new"));
+        (new WebDriverWait(driver, 5)).until(
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
+                && !d.getCurrentUrl().contains("pets/new"));
 
         logger.debug("\t-- -- after create visit current driver is:" + driver.getCurrentUrl());
-
     }
-
 }

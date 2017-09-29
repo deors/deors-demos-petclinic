@@ -21,9 +21,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-
 public class NewPetFirstVisitIT {
 
     private static final Logger logger = LoggerFactory.getLogger(NewPetFirstVisitIT.class);
@@ -228,25 +225,25 @@ public class NewPetFirstVisitIT {
 
         // wait for the application to get fully loaded
         WebElement findOwnerLink = (new WebDriverWait(driver, 5)).until(
-            (Function<WebDriver, WebElement>) d -> d.findElement(By.linkText("Find owner")));
+            d -> d.findElement(By.linkText("Find owner")));
 
         findOwnerLink.click();
 
-        (new WebDriverWait(driver, 5)).until((Predicate<WebDriver>) d
-            -> d.getCurrentUrl().startsWith(baseUrl + "/owners/search"));
+        (new WebDriverWait(driver, 5)).until(
+        	d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/search"));
 
         driver.findElement(By.id("lastName")).clear();
         driver.findElement(By.id("lastName")).sendKeys("Schroeder");
         driver.findElement(By.id("findowners")).click();
 
         (new WebDriverWait(driver, 5)).until(
-            (Predicate<WebDriver>) d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
+            d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
 
         assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
         driver.findElement(By.linkText("Add New Pet")).click();
 
         (new WebDriverWait(driver, 5)).until(
-            (Predicate<WebDriver>) d -> d.getCurrentUrl().equals(baseUrl + "/owners/9/pets/new"));
+            d -> d.getCurrentUrl().equals(baseUrl + "/owners/9/pets/new"));
 
         driver.findElement(By.id("name")).clear();
         driver.findElement(By.id("name")).sendKeys("Mimi");
@@ -255,7 +252,7 @@ public class NewPetFirstVisitIT {
         driver.findElement(By.id("addpet")).click();
 
         (new WebDriverWait(driver, 5)).until(
-            (Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
                 && !d.getCurrentUrl().contains("pets/new"));
 
         assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
@@ -264,7 +261,7 @@ public class NewPetFirstVisitIT {
         driver.findElement(By.linkText("Add Visit")).click();
 
         (new WebDriverWait(driver, 5)).until(
-            (Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
                 && d.getCurrentUrl().contains("visits/new"));
 
         driver.findElement(By.id("date")).clear();
@@ -274,7 +271,7 @@ public class NewPetFirstVisitIT {
         driver.findElement(By.id("addvisit")).click();
 
         (new WebDriverWait(driver, 5)).until(
-            (Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
                 && !d.getCurrentUrl().contains("visits/new"));
 
         assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
@@ -284,13 +281,13 @@ public class NewPetFirstVisitIT {
         driver.findElement(By.linkText("Edit Pet")).click();
 
         (new WebDriverWait(driver, 5)).until(
-            (Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
                 && d.getCurrentUrl().contains("edit"));
 
         driver.findElement(By.id("deletepet")).click();
 
         (new WebDriverWait(driver, 5)).until(
-            (Predicate<WebDriver>) d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
+            d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
 
         assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
         assertFalse(driver.findElement(By.id("main")).getText().contains("Mimi"));

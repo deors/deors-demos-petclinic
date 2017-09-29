@@ -44,18 +44,18 @@
         <embedmongo.version>0.1.12</embedmongo.version>
 
         <junit.version>4.12</junit.version>
-        <selenium.version>2.53.1</selenium.version>
-        <htmlunit.version>2.23</htmlunit.version>
-        <pitest.version>1.1.10</pitest.version>
+        <selenium.version>3.4.0</selenium.version>
+        <htmlunit.version>2.27</htmlunit.version>
+        <pitest.version>1.2.2</pitest.version>
 
-        <jacoco.version>0.7.6.201602180812</jacoco.version>
+        <jacoco.version>0.7.9</jacoco.version>
         <jacoco.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar</jacoco.path>
         <jacoco.utReport>${project.build.directory}/jacoco.exec</jacoco.utReport>
         <jacoco.itReport>${project.build.directory}/jacoco-it.exec</jacoco.itReport>
         <jacoco.utAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.utReport}</jacoco.utAgentConfig>
         <jacoco.itAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.itReport}</jacoco.itAgentConfig>
 
-        <jacoco-listeners.version>4.3.0.7717</jacoco-listeners.version>
+        <jacoco-listeners.version>4.11.0.10660</jacoco-listeners.version>
 
         <tomcat.version>8.0.30</tomcat.version>
         <tomcat.downloadUrl>http://archive.apache.org/dist/tomcat/tomcat-8/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>

@@ -7,8 +7,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Predicate;
-
 /**
  * Abstraction for OwnerPage
  *
@@ -132,8 +130,8 @@ public class OwnerPage {
 
         driver.findElement(addNewPetCommand).click();
 
-        (new WebDriverWait(driver, 5)).until((Predicate<WebDriver>) d -> d.getCurrentUrl().equals(
-            baseUrl + "/owners/9/pets/new"));
+        (new WebDriverWait(driver, 5)).until(
+            d -> d.getCurrentUrl().equals(baseUrl + "/owners/9/pets/new"));
 
         logger.debug("\t-- -- after navigate to add new pet: current driver is:" + driver.getCurrentUrl());
 
@@ -156,7 +154,7 @@ public class OwnerPage {
         driver.findElement(editPetCommand).click();
 
         (new WebDriverWait(driver, 5)).until(
-            (Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
                 && d.getCurrentUrl().contains("edit"));
 
         logger.debug("\t-- -- after navigate to edit pet: current URL is:" + driver.getCurrentUrl());
@@ -178,14 +176,13 @@ public class OwnerPage {
 
         driver.findElement(addVisitCommand).click();
 
-        (new WebDriverWait(driver, 5)).until((Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(
-            baseUrl + "/owners/9/pets")
+        (new WebDriverWait(driver, 5)).until(
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
             && d.getCurrentUrl().contains("visits/new"));
 
         logger.debug("\t-- -- after navigate to add new visit: current driver is:" + driver.getCurrentUrl());
 
         return new VisitPage(driver, baseUrl);
-
     }
 
     /**
@@ -202,14 +199,12 @@ public class OwnerPage {
 
         driver.findElement(addVisitCommand).click();
 
-        (new WebDriverWait(driver, 5)).until((Predicate<WebDriver>) d -> d.getCurrentUrl().startsWith(
-            baseUrl + "/owners/9/pets")
-            && d.getCurrentUrl().contains("visits/new"));
+        (new WebDriverWait(driver, 5)).until(
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
+                && d.getCurrentUrl().contains("visits/new"));
 
         logger.debug("\t-- -- after navigate to add new visit: current URL is:" + driver.getCurrentUrl());
 
         return new VisitPageFactory(driver, baseUrl);
-
     }
-
 }
