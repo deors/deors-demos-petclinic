@@ -45,18 +45,19 @@
         <embedmongo.version>0.1.12</embedmongo.version>
 
         <junit.version>4.12</junit.version>
-        <selenium.version>3.4.0</selenium.version>
-        <htmlunit.version>2.27</htmlunit.version>
+        <easymock.version>3.4</easymock.version>
+        <selenium.version>3.9.1</selenium.version>
+        <htmlunit.version>2.29.0</htmlunit.version>
         <pitest.version>1.2.2</pitest.version>
 
-        <jacoco.version>0.7.9</jacoco.version>
+        <jacoco.version>0.8.0</jacoco.version>
         <jacoco.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar</jacoco.path>
         <jacoco.utReport>${project.build.directory}/jacoco.exec</jacoco.utReport>
         <jacoco.itReport>${project.build.directory}/jacoco-it.exec</jacoco.itReport>
         <jacoco.utAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.utReport}</jacoco.utAgentConfig>
         <jacoco.itAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.itReport}</jacoco.itAgentConfig>
 
-        <jacoco-listeners.version>4.11.0.10660</jacoco-listeners.version>
+        <jacoco-listeners.version>5.1.0.13090</jacoco-listeners.version>
 
         <compiler.version>3.7.0</compiler.version>
         <surefire.version>2.20.1</surefire.version>
@@ -314,12 +315,12 @@
             <version>${selenium.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>net.sourceforge.htmlunit</groupId>
-            <artifactId>htmlunit</artifactId>
-            <version>${htmlunit.version}</version>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>htmlunit-driver</artifactId>
+			<version>${htmlunit.version}</version>
+			<scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.test</artifactId>
@@ -393,13 +394,8 @@
                     <!-- JDK 8 - bytecode verifier cannot be relaxed or disabled -->
                     <!-- to prevent runtime errors, OpenJPA tests are ignored -->
                     <argLine>${jacoco.utAgentConfig}</argLine>
-                    <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*Tests.java</include>
-                    </includes>
                     <excludes>
-                        <exclude>**/it/*IT.java</exclude>
-                        <exclude>**/mongo/*IT.java</exclude>
+                        <exclude>**/*IntegrationTestCase.java</exclude>
                     </excludes>
                     <properties>
                         <!-- add SonarQube's JaCoCo listener to enable -->
@@ -671,15 +667,14 @@
                         <version>${failsafe.version}</version>
                         <configuration>
                             <includes>
-                                <include>**/it/*IT.java</include>
+                                <include>**/*IntegrationTestCase.java</include>
                             </includes>
                         </configuration>
                         <executions>
                             <execution>
-                                <id>integration-test</id>
-                                <phase>integration-test</phase>
                                 <goals>
                                     <goal>integration-test</goal>
+                                    <goal>verify</goal>
                                 </goals>
                             </execution>
                         </executions>
