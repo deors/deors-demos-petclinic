@@ -483,19 +483,6 @@
                                             <version>${jetty.version}</version>
                                             <destFileName>jetty-runner.jar</destFileName>
                                         </artifactItem>
-                                        <!-- not available in jetty-runner -->
-                                        <artifactItem>
-                                            <groupId>javax.servlet</groupId>
-                                            <artifactId>com.springsource.javax.servlet.jsp.jstl</artifactId>
-                                            <version>${jstl.version}</version>
-                                            <destFileName>jstl.jar</destFileName>
-                                        </artifactItem>
-                                        <artifactItem>
-                                            <groupId>org.apache.taglibs</groupId>
-                                            <artifactId>com.springsource.org.apache.taglibs.standard</artifactId>
-                                            <version>${taglibs.version}</version>
-                                            <destFileName>standard.jar</destFileName>
-                                        </artifactItem>
                                     </artifactItems>
                                 </configuration>
                             </execution>
