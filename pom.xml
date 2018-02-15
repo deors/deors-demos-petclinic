@@ -40,9 +40,6 @@
         <hsqldb.version>1.8.0.9</hsqldb.version>
         <mysql.version>5.1.6</mysql.version>
         <postgresql.version>9.1-901.jdbc4</postgresql.version>
-        <mongojava.version>2.12.2</mongojava.version>
-        <mongodb.version>2.6.7</mongodb.version>
-        <embedmongo.version>0.1.12</embedmongo.version>
 
         <junit.version>4.12</junit.version>
         <easymock.version>3.4</easymock.version>
@@ -177,12 +174,6 @@
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
             <scope>runtime</scope>
-        </dependency>
-        <!--  MongoDB  -->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongojava.version}</version>
         </dependency>
 
         <!-- Hibernate -->
@@ -709,59 +700,6 @@
             </build>
         </profile>
 
-        <!-- add MongoDB integration tests -->
-        <profile>
-            <id>mongodb-tests</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>${failsafe.version}</version>
-                        <configuration>
-                            <includes>
-                                <include>**/mongo/*IT.java</include>
-                            </includes>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>integration-test</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.github.joelittlejohn.embedmongo</groupId>
-                        <artifactId>embedmongo-maven-plugin</artifactId>
-                        <version>${embedmongo.version}</version>
-                        <configuration>
-                            <port>57017</port>
-                            <version>${mongodb.version}</version>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>start</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>stop</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
         <!-- add Pitest mutation tests (bound to unit test execution) -->
         <profile>
             <id>pitest-tests</id>
@@ -777,7 +715,6 @@
                             </targetClasses>
                             <excludedClasses>
                                 <param>org.springframework.samples.petclinic.it.*</param>
-                                <param>org.springframework.samples.petclinic.mongo.*</param>
                             </excludedClasses>
                             <outputFormats>
                                 <outputFormat>XML</outputFormat>
