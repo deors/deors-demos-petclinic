@@ -72,7 +72,7 @@
         <wildfly.downloadUrl>http://download.jboss.org/wildfly/${wildfly.version}/wildfly-${wildfly.version}.zip</wildfly.downloadUrl>
 
         <jetty.version>9.4.8.v20171121</jetty.version>
-        <jetty.downloadUrl>http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${jetty.version}/jetty-distribution-${jetty.version}.zip</jetty.downloadUrl>
+        <jetty.downloadUrl>http://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-distribution/${jetty.version}/jetty-distribution-${jetty.version}.zip</jetty.downloadUrl>
 
         <!-- overriding sonar.sources properties to enable multi-language analysis -->
         <sonar.sources>src/main</sonar.sources>
