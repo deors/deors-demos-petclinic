@@ -478,7 +478,7 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>org.mortbay.jetty</groupId>
+                                            <groupId>org.eclipse.jetty</groupId>
                                             <artifactId>jetty-runner</artifactId>
                                             <version>${jetty.version}</version>
                                             <destFileName>jetty-runner.jar</destFileName>
