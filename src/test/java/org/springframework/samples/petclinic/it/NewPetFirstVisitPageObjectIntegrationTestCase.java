@@ -23,10 +23,10 @@ import org.springframework.samples.petclinic.it.page.PetPage;
 import org.springframework.samples.petclinic.it.page.VisitPage;
 import org.springframework.samples.petclinic.it.page.VisitPageFactory;
 
-public class NewPetFirstVisitPageObjectIT
-    extends SeleniumITBase {
+public class NewPetFirstVisitPageObjectIntegrationTestCase
+    extends SeleniumIntegrationTestBase {
 
-    private static final Logger logger = LoggerFactory.getLogger(NewPetFirstVisitPageObjectIT.class);
+    private static final Logger logger = LoggerFactory.getLogger(NewPetFirstVisitPageObjectIntegrationTestCase.class);
 
     @Test
     public void testHtmlUnit() throws MalformedURLException, IOException {

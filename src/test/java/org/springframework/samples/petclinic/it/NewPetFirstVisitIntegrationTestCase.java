@@ -21,9 +21,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NewPetFirstVisitIT {
+public class NewPetFirstVisitIntegrationTestCase {
 
-    private static final Logger logger = LoggerFactory.getLogger(NewPetFirstVisitIT.class);
+    private static final Logger logger = LoggerFactory.getLogger(NewPetFirstVisitIntegrationTestCase.class);
 
     private static boolean RUN_HTMLUNIT;
 

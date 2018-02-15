@@ -4,9 +4,9 @@ import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SeleniumITBase {
+public class SeleniumIntegrationTestBase {
 
-    private static final Logger logger = LoggerFactory.getLogger(SeleniumITBase.class);
+    private static final Logger logger = LoggerFactory.getLogger(SeleniumIntegrationTestBase.class);
 
     protected static boolean RUN_HTMLUNIT;
 

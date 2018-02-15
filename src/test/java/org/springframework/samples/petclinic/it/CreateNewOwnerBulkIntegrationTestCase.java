@@ -26,9 +26,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.samples.petclinic.Owner;
 
-public class CreateNewOwnerBulkIT {
+public class CreateNewOwnerBulkIntegrationTestCase {
 
-    private static final Logger logger = LoggerFactory.getLogger(CreateNewOwnerBulkIT.class);
+    private static final Logger logger = LoggerFactory.getLogger(CreateNewOwnerBulkIntegrationTestCase.class);
 
     private static boolean RUN_CHROME;
 

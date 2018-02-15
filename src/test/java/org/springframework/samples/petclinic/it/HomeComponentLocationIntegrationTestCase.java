@@ -22,9 +22,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Function;
 
-public class HomeComponentLocationIT {
+public class HomeComponentLocationIntegrationTestCase {
 
-    private static final Logger logger = LoggerFactory.getLogger(HomeComponentLocationIT.class);
+    private static final Logger logger = LoggerFactory.getLogger(HomeComponentLocationIntegrationTestCase.class);
 
     private static boolean RUN_CHROME;
 

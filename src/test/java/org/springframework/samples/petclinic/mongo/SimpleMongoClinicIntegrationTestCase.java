@@ -17,12 +17,12 @@ import org.springframework.test.context.ContextConfiguration;
 
 @ContextConfiguration
 @DirtiesContext
-public class SimpleMongoClinicIT extends AbstractClinicTests {
+public class SimpleMongoClinicIntegrationTestCase extends AbstractClinicTests {
 
     @Autowired
     protected Clinic clinic;
 
-    private static final Logger logger = LoggerFactory.getLogger(SimpleMongoClinicIT.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleMongoClinicIntegrationTestCase.class);
 
     @Test
     public void testMongoClinic() {
