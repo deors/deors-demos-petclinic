@@ -68,7 +68,7 @@
 
         <cargo.version>1.6.4</cargo.version>
 
-        <tomcat.version>8.5.20</tomcat.version>
+        <tomcat.version>8.5.27</tomcat.version>
         <tomcat.downloadUrl>http://archive.apache.org/dist/tomcat/tomcat-8/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>
 
         <wildfly.version>10.1.0.Final</wildfly.version>
