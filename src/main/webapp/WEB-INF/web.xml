@@ -41,7 +41,6 @@
         <!--
         <param-value>/WEB-INF/classes/applicationContext-hibernate.xml</param-value>
         <param-value>/WEB-INF/classes/applicationContext-jpa.xml</param-value>
-        <param-value>/WEB-INF/classes/applicationContext-mongo.xml</param-value>
         -->
 
         <!--
