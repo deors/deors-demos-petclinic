@@ -71,7 +71,7 @@
         <wildfly.version>10.1.0.Final</wildfly.version>
         <wildfly.downloadUrl>http://download.jboss.org/wildfly/${wildfly.version}/wildfly-${wildfly.version}.zip</wildfly.downloadUrl>
 
-        <jetty.version>8.2.0.v20160908</jetty.version>
+        <jetty.version>8.1.9.v20130131</jetty.version>
         <jetty.downloadUrl>http://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-distribution/${jetty.version}/jetty-distribution-${jetty.version}.zip</jetty.downloadUrl>
 
         <!-- overriding sonar.sources properties to enable multi-language analysis -->
@@ -478,7 +478,7 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>org.eclipse.jetty</groupId>
+                                            <groupId>org.mortbay.jetty</groupId>
                                             <artifactId>jetty-runner</artifactId>
                                             <version>${jetty.version}</version>
                                             <destFileName>jetty-runner.jar</destFileName>
