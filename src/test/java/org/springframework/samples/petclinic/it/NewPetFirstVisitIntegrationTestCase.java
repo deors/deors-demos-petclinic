@@ -225,16 +225,20 @@ public class NewPetFirstVisitIntegrationTestCase {
 
     public void testNewPetFirstVisit(final WebDriver driver, final String baseUrl) {
 
-        driver.get(baseUrl);
-
         // wait for the application to get fully loaded
-        WebElement findOwnerLink = (new WebDriverWait(driver, 5)).until(
-            d -> d.findElement(By.linkText("Find owner")));
+        // wildfly returns 404 page when not loaded
+        // so we have to navigate to home page until loaded
+        // increase timeout to allow for app to be fully loaded
+        WebElement findOwnerLink = (new WebDriverWait(driver, 25)).until(
+            d -> {
+                driver.get(baseUrl);
+                return d.findElement(By.linkText("Find owner"));
+            });
 
         findOwnerLink.click();
 
         (new WebDriverWait(driver, 50)).until(
-        	d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/search"));
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/search"));
 
         driver.findElement(By.id("lastName")).clear();
         driver.findElement(By.id("lastName")).sendKeys("Schroeder");

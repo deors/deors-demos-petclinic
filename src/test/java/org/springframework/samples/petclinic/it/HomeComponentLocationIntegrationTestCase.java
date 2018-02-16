@@ -108,7 +108,7 @@ public class HomeComponentLocationIntegrationTestCase {
         driver.get(baseUrl);
 
         // wait for the application to get fully loaded
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, 25)).until(
             d -> d.findElement(By.linkText("Find owner")));
 
         logger.info("looking for elements in root of DOM");

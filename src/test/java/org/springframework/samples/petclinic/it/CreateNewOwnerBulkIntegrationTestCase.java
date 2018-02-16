@@ -135,6 +135,9 @@ public class CreateNewOwnerBulkIntegrationTestCase {
 
         driver.get(baseUrl + "/owners/new");
 
+        (new WebDriverWait(driver, 25)).until(
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/new"));
+
         driver.findElement(By.id("firstName")).sendKeys(owner.getFirstName());
         driver.findElement(By.id("lastName")).sendKeys(owner.getLastName());
         driver.findElement(By.id("address")).sendKeys(owner.getAddress());
@@ -144,7 +147,8 @@ public class CreateNewOwnerBulkIntegrationTestCase {
         driver.findElement(By.id("addowner")).click();
 
         (new WebDriverWait(driver, 5)).until(
-            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/"));
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/")
+                && !d.getCurrentUrl().contains("/new"));
 
         assertTrue(driver.getPageSource().contains(owner.getFirstName()));
         assertTrue(driver.getPageSource().contains(owner.getLastName()));
