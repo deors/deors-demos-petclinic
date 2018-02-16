@@ -306,12 +306,12 @@
             <version>${selenium.version}</version>
             <scope>test</scope>
         </dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>htmlunit-driver</artifactId>
-			<version>${htmlunit.version}</version>
-			<scope>test</scope>
-		</dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>htmlunit-driver</artifactId>
+      <version>${htmlunit.version}</version>
+      <scope>test</scope>
+    </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.test</artifactId>
@@ -410,10 +410,7 @@
     </build>
 
     <profiles>
-        <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
-        <!-- Use this profile for any OpenShift specific customization your app will need. -->
-        <!-- By default that is to put the resulting archive into the 'deployments' folder. -->
-        <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+        <!-- Activated by OpenShift when building the app before deployment -->
         <profile>
             <id>openshift</id>
             <build>
