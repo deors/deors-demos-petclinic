@@ -13,14 +13,30 @@
 
 	<!-- ========================= DATASOURCE DEFINITION ========================= -->
 
+    <bean id="dataConfigPropertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties"/>
+        <property name="searchSystemEnvironment" value="true" />
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://${MYSQL_TEST_SERVICE_HOST}:${MYSQL_TEST_SERVICE_PORT}/${MYSQL_DATABASE}" />
+        <property name="username" value="${MYSQL_USER}" />
+        <property name="password" value="${MYSQL_PASSWORD}" />
+        <property name="maxWait" value="5000" />
+        <property name="maxActive" value="15" />
+    </bean>
+
 	<!-- Configurer that replaces ${...} placeholders with values from a properties file -->
 	<!-- (in this case, JDBC-related settings for the dataSource definition below) -->
-	<context:property-placeholder location="classpath:jdbc.properties"/>
+	<!-- <context:property-placeholder location="classpath:jdbc.properties"/> -->
 
 	<!-- DataSource configuration for Apache Commons DBCP. -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
 			p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}"
-			p:username="${jdbc.username}" p:password="${jdbc.password}"/>
+			p:username="${jdbc.username}" p:password="${jdbc.password}"/> -->
 
 	<!-- JNDI DataSource for JEE environments -->
 	<!--
@@ -29,9 +45,9 @@
 
 	<!-- Database initializer. If any of the script fails, the initialization stops. -->
 	<!-- As an alternative, for embedded databases see <jdbc:embedded-database/>. -->
-	<jdbc:initialize-database data-source="dataSource">
+	<!-- <jdbc:initialize-database data-source="dataSource">
 		<jdbc:script location="${jdbc.initLocation}"/>
 		<jdbc:script location="${jdbc.dataLocation}"/>
-	</jdbc:initialize-database>
+	</jdbc:initialize-database> -->
 
 </beans>

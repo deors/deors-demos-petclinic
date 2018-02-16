@@ -16,24 +16,24 @@ jpa.showSql=true
 #-------------------------------------------------------------------------------
 # HSQL Settings
 
-jdbc.driverClassName=org.hsqldb.jdbcDriver
-jdbc.url=jdbc:hsqldb:mem:petclinic
-jdbc.username=sa
-jdbc.password=
+#jdbc.driverClassName=org.hsqldb.jdbcDriver
+#jdbc.url=jdbc:hsqldb:mem:petclinic
+#jdbc.username=sa
+#jdbc.password=
 
 # Properties that control the population of schema and data for a new data source
-jdbc.initLocation=classpath:db/hsqldb/initDB.txt
-jdbc.dataLocation=classpath:db/hsqldb/populateDB.txt
+#jdbc.initLocation=classpath:db/hsqldb/initDB.txt
+#jdbc.dataLocation=classpath:db/hsqldb/populateDB.txt
 
 # Property that determines which Hibernate dialect to use
 # (only applied with "applicationContext-hibernate.xml")
-hibernate.dialect=org.hibernate.dialect.HSQLDialect
+#hibernate.dialect=org.hibernate.dialect.HSQLDialect
 
 # Property that determines which JPA DatabasePlatform to use with TopLink Essentials
-jpa.databasePlatform=org.springframework.samples.petclinic.toplink.EssentialsHSQLPlatformWithNativeSequence
+#jpa.databasePlatform=org.springframework.samples.petclinic.toplink.EssentialsHSQLPlatformWithNativeSequence
 
 # Property that determines which database to use with an AbstractJpaVendorAdapter
-jpa.database=HSQL
+#jpa.database=HSQL
 
 
 #-------------------------------------------------------------------------------
@@ -45,15 +45,15 @@ jpa.database=HSQL
 #jdbc.password=
 
 # Properties that control the population of schema and data for a new data source
-#jdbc.initLocation=classpath:db/mysql/initDB.txt
-#jdbc.dataLocation=classpath:db/mysql/populateDB.txt
+jdbc.initLocation=classpath:db/mysql/initDB.txt
+jdbc.dataLocation=classpath:db/mysql/populateDB.txt
 
 # Property that determines which Hibernate dialect to use
 # (only applied with "applicationContext-hibernate.xml")
-#hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
 
 # Property that determines which JPA DatabasePlatform to use with TopLink Essentials
-#jpa.databasePlatform=oracle.toplink.essentials.platform.database.MySQL4Platform
+jpa.databasePlatform=oracle.toplink.essentials.platform.database.MySQL4Platform
 
 # Property that determines which database to use with an AbstractJpaVendorAdapter
-#jpa.database=MYSQL
+jpa.database=MYSQL
