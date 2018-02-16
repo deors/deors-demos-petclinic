@@ -14,13 +14,11 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Function;
 
 public class HomeComponentLocationIntegrationTestCase {
 
@@ -93,10 +91,10 @@ public class HomeComponentLocationIntegrationTestCase {
 
         logger.info("executing test in chrome");
 
-        Capabilities browser = DesiredCapabilities.chrome();
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
-
+        WebDriver driver = null;
         try {
+            Capabilities browser = new ChromeOptions();
+            driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
             testHomeComponentLocation(driver, TARGET_SERVER_URL);
         } finally {
             if (driver != null) {
@@ -111,7 +109,7 @@ public class HomeComponentLocationIntegrationTestCase {
 
         // wait for the application to get fully loaded
         (new WebDriverWait(driver, 5)).until(
-            (Function<WebDriver, WebElement>) d -> d.findElement(By.linkText("Find owner")));
+            d -> d.findElement(By.linkText("Find owner")));
 
         logger.info("looking for elements in root of DOM");
 

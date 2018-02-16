@@ -11,8 +11,11 @@ import org.junit.Assume;
 import org.junit.Test;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.ie.InternetExplorerOptions;
+import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +24,6 @@ import org.springframework.samples.petclinic.it.page.HomePage;
 import org.springframework.samples.petclinic.it.page.OwnerPage;
 import org.springframework.samples.petclinic.it.page.PetPage;
 import org.springframework.samples.petclinic.it.page.VisitPage;
-import org.springframework.samples.petclinic.it.page.VisitPageFactory;
 
 public class NewPetFirstVisitPageObjectIntegrationTestCase
     extends SeleniumIntegrationTestBase {
@@ -35,9 +37,10 @@ public class NewPetFirstVisitPageObjectIntegrationTestCase
 
         logger.info("executing test in htmlunit");
 
-        WebDriver driver = new HtmlUnitDriver();
+        WebDriver driver = null;
 
         try {
+            driver = new HtmlUnitDriver(true);
             testNewPetFirstVisit(driver, TARGET_SERVER_URL);
         } finally {
             if (driver != null) {
@@ -53,10 +56,10 @@ public class NewPetFirstVisitPageObjectIntegrationTestCase
 
         logger.info("executing test in internet explorer");
 
-        Capabilities browser = DesiredCapabilities.internetExplorer();
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
-
+        WebDriver driver = null;
         try {
+            Capabilities browser = new InternetExplorerOptions();
+            driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
             testNewPetFirstVisit(driver, TARGET_SERVER_URL);
         } finally {
             if (driver != null) {
@@ -72,10 +75,10 @@ public class NewPetFirstVisitPageObjectIntegrationTestCase
 
         logger.info("executing test in firefox");
 
-        Capabilities browser = DesiredCapabilities.firefox();
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
-
+        WebDriver driver = null;
         try {
+            Capabilities browser = new FirefoxOptions();
+            driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
             testNewPetFirstVisit(driver, TARGET_SERVER_URL);
         } finally {
             if (driver != null) {
@@ -91,10 +94,10 @@ public class NewPetFirstVisitPageObjectIntegrationTestCase
 
         logger.info("executing test in chrome");
 
-        Capabilities browser = DesiredCapabilities.chrome();
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
-
+        WebDriver driver = null;
         try {
+            Capabilities browser = new ChromeOptions();
+            driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
             testNewPetFirstVisit(driver, TARGET_SERVER_URL);
         } finally {
             if (driver != null) {
@@ -110,10 +113,10 @@ public class NewPetFirstVisitPageObjectIntegrationTestCase
 
         logger.info("executing test in opera");
 
-        Capabilities browser = DesiredCapabilities.operaBlink();
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
-
+        WebDriver driver = null;
         try {
+            Capabilities browser = new OperaOptions();
+            driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
             testNewPetFirstVisit(driver, TARGET_SERVER_URL);
         } finally {
             if (driver != null) {

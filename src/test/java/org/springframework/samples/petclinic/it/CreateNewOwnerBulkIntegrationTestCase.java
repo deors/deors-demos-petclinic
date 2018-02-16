@@ -19,7 +19,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -106,10 +106,10 @@ public class CreateNewOwnerBulkIntegrationTestCase {
 
         logger.info("executing test in chrome");
 
-        Capabilities browser = DesiredCapabilities.chrome();
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
-
+        WebDriver driver = null;
         try {
+            Capabilities browser = new ChromeOptions();
+            driver = new RemoteWebDriver(new URL(SELENIUM_HUB_URL), browser);
             createNewUserBulk(driver, TARGET_SERVER_URL);
         } finally {
             if (driver != null) {
