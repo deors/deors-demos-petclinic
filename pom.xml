@@ -424,11 +424,12 @@
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${dependency-check.version}</version>
-                <!-- commenting build fail flag as this is an old
-                     and insecure version of Spring Pet Clinic -->
-                <!-- <configuration>
-                    <failBuildOnCVSS>5</failBuildOnCVSS>
-                </configuration> -->
+                <configuration>
+                    <format>ALL</format>
+                    <!-- commenting build fail flag as this is an old
+                         and insecure version of Spring Pet Clinic -->
+                    <!-- <failBuildOnCVSS>5</failBuildOnCVSS> -->
+                </configuration>
             </plugin>
         </plugins>
     </build>
