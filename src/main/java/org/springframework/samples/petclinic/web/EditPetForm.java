@@ -1,4 +1,3 @@
-
 package org.springframework.samples.petclinic.web;
 
 import java.text.SimpleDateFormat;
@@ -82,16 +81,15 @@ public class EditPetForm {
         return "redirect:/owners/" + pet.getOwner().getId();
     }
 
-
-	/**
-	 * Added the binding initializer because MVC is annotation-based.
-	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder, WebRequest request) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-		binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
-		binder.registerCustomEditor(PetType.class, new PetTypeEditor(this.clinic));
-	}
+    /**
+     * Added the binding initializer because MVC is annotation-based.
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder, WebRequest request) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
+        binder.registerCustomEditor(PetType.class, new PetTypeEditor(this.clinic));
+    }
 }

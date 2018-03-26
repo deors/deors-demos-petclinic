@@ -70,8 +70,8 @@ public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
      * Default constructor.
      */
     public SimpleJdbcClinic() {
-		super();
-	}
+        super();
+    }
 
     @Autowired
     public void init(DataSource dataSource) {
@@ -337,9 +337,9 @@ public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
         /**
          * Default constructor.
          */
-    	public JdbcPetRowMapper() {
-			super();
-		}
+        public JdbcPetRowMapper() {
+            super();
+        }
 
         public JdbcPet mapRow(ResultSet rs, int rownum) throws SQLException {
             JdbcPet pet = new JdbcPet();
@@ -352,10 +352,15 @@ public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
         }
     }
 
-	@Override
-	public void deleteVisit(int id) throws DataAccessException {
-		this.simpleJdbcTemplate.update("DELETE FROM visits WHERE id=?", id);
+    @Override
+    public void deleteVisit(int id) throws DataAccessException {
+        this.simpleJdbcTemplate.update("DELETE FROM visits WHERE id=?", id);
+    }
 
-	}
-
+    @Override
+    public void deleteOwner(int id) throws DataAccessException {
+        this.simpleJdbcTemplate.update("DELETE FROM visits WHERE pet_id IN (SELECT id FROM pets WHERE owner_id=?)", id);
+        this.simpleJdbcTemplate.update("DELETE FROM pets WHERE owner_id=?", id);
+        this.simpleJdbcTemplate.update("DELETE FROM owners WHERE id=?", id);
+    }
 }

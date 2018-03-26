@@ -120,18 +120,23 @@ public class CreateNewOwnerBulkIntegrationTestCase {
 
     private void createNewUserBulk(final WebDriver driver, final String baseUrl) {
 
+        List<Integer> addedOwnerIds = new ArrayList<>();
+
         Optional<List<String>> testData = readTestData();
         if (testData.isPresent()) {
             for (String testDataLine : testData.get()) {
                 Optional<Owner> owner = parseOwner(testDataLine);
                 if (owner.isPresent()) {
-                    createNewUser(driver, baseUrl, owner.get());
+                    addedOwnerIds.add(createNewUser(driver, baseUrl, owner.get()));
                 }
             }
         }
+
+        // removing all users added
+        addedOwnerIds.stream().forEach(id -> deleteUser(driver, baseUrl, id));
     }
 
-    private void createNewUser(final WebDriver driver, final String baseUrl, Owner owner) {
+    private Integer createNewUser(final WebDriver driver, final String baseUrl, Owner owner) {
 
         driver.get(baseUrl + "/owners/new");
 
@@ -159,6 +164,22 @@ public class CreateNewOwnerBulkIntegrationTestCase {
         String ownerId = driver.getCurrentUrl().substring(driver.getCurrentUrl().lastIndexOf('/') + 1);
 
         logger.info("owner {} {} with id {} successfully created", owner.getFirstName(), owner.getLastName(), ownerId);
+
+        return Integer.parseInt(ownerId);
+    }
+
+    private void deleteUser(final WebDriver driver, final String baseUrl, Integer ownerId) {
+
+        driver.get(baseUrl + "/owners/" + ownerId.toString() + "/edit");
+
+        (new WebDriverWait(driver, 5)).until(
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/" + ownerId.toString() + "/edit"));
+
+        driver.findElement(By.id("deleteowner")).click();
+
+        (new WebDriverWait(driver, 5)).until(
+            d -> d.getCurrentUrl().startsWith(baseUrl + "/owners")
+                && !d.getCurrentUrl().startsWith(baseUrl + "/owners/"));
     }
 
     private Optional<List<String>> readTestData() {

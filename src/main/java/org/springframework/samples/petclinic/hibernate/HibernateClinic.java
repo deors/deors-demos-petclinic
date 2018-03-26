@@ -35,75 +35,80 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HibernateClinic implements Clinic {
 
-	private SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
-	@Autowired
-	public HibernateClinic(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+    @Autowired
+    public HibernateClinic(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
-	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
-	public Collection<Vet> getVets() {
-		return sessionFactory.getCurrentSession().createQuery("from Vet vet order by vet.lastName, vet.firstName").list();
-	}
+    @Transactional(readOnly = true)
+    @SuppressWarnings("unchecked")
+    public Collection<Vet> getVets() {
+        return sessionFactory.getCurrentSession().createQuery("from Vet vet order by vet.lastName, vet.firstName").list();
+    }
 
-	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
-	public Collection<PetType> getPetTypes() {
-		return sessionFactory.getCurrentSession().createQuery("from PetType type order by type.name").list();
-	}
+    @Transactional(readOnly = true)
+    @SuppressWarnings("unchecked")
+    public Collection<PetType> getPetTypes() {
+        return sessionFactory.getCurrentSession().createQuery("from PetType type order by type.name").list();
+    }
 
-	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
-	public Collection<Owner> findOwners(String lastName) {
-		return sessionFactory.getCurrentSession().createQuery("from Owner owner where owner.lastName like :lastName")
-				.setString("lastName", lastName + "%").list();
-	}
+    @Transactional(readOnly = true)
+    @SuppressWarnings("unchecked")
+    public Collection<Owner> findOwners(String lastName) {
+        return sessionFactory.getCurrentSession().createQuery("from Owner owner where owner.lastName like :lastName")
+                .setString("lastName", lastName + "%").list();
+    }
 
-	@Transactional(readOnly = true)
-	public Owner loadOwner(int id) {
-		return (Owner) sessionFactory.getCurrentSession().load(Owner.class, id);
-	}
+    @Transactional(readOnly = true)
+    public Owner loadOwner(int id) {
+        return (Owner) sessionFactory.getCurrentSession().load(Owner.class, id);
+    }
 
-	@Transactional(readOnly = true)
-	public Pet loadPet(int id) {
-		return (Pet) sessionFactory.getCurrentSession().load(Pet.class, id);
-	}
+    @Transactional(readOnly = true)
+    public Pet loadPet(int id) {
+        return (Pet) sessionFactory.getCurrentSession().load(Pet.class, id);
+    }
 
-	public void storeOwner(Owner owner) {
-		// Note: Hibernate3's merge operation does not reassociate the object
-		// with the current Hibernate Session. Instead, it will always copy the
-		// state over to a registered representation of the entity. In case of a
-		// new entity, it will register a copy as well, but will not update the
-		// id of the passed-in object. To still update the ids of the original
-		// objects too, we need to register Spring's
-		// IdTransferringMergeEventListener on our SessionFactory.
-		sessionFactory.getCurrentSession().merge(owner);
-	}
+    public void storeOwner(Owner owner) {
+        // Note: Hibernate3's merge operation does not reassociate the object
+        // with the current Hibernate Session. Instead, it will always copy the
+        // state over to a registered representation of the entity. In case of a
+        // new entity, it will register a copy as well, but will not update the
+        // id of the passed-in object. To still update the ids of the original
+        // objects too, we need to register Spring's
+        // IdTransferringMergeEventListener on our SessionFactory.
+        sessionFactory.getCurrentSession().merge(owner);
+    }
 
-	public void storePet(Pet pet) {
-		sessionFactory.getCurrentSession().merge(pet);
-	}
+    public void storePet(Pet pet) {
+        sessionFactory.getCurrentSession().merge(pet);
+    }
 
-	public void storeVisit(Visit visit) {
-		sessionFactory.getCurrentSession().merge(visit);
-	}
+    public void storeVisit(Visit visit) {
+        sessionFactory.getCurrentSession().merge(visit);
+    }
 
-	public void deletePet(int id) throws DataAccessException {
-		Pet pet = loadPet(id);
-		sessionFactory.getCurrentSession().delete(pet);
-	}
+    public void deletePet(int id) throws DataAccessException {
+        Pet pet = loadPet(id);
+        sessionFactory.getCurrentSession().delete(pet);
+    }
 
-	@Transactional(readOnly = true)
-	public Visit loadVisit(int id) {
-		return (Visit) sessionFactory.getCurrentSession().load(Visit.class, id);
-	}
+    @Transactional(readOnly = true)
+    public Visit loadVisit(int id) {
+        return (Visit) sessionFactory.getCurrentSession().load(Visit.class, id);
+    }
 
-	@Override
-	public void deleteVisit(int id) throws DataAccessException {
-		Visit visit = loadVisit(id);
-		sessionFactory.getCurrentSession().delete(visit);
-	}
+    @Override
+    public void deleteVisit(int id) throws DataAccessException {
+        Visit visit = loadVisit(id);
+        sessionFactory.getCurrentSession().delete(visit);
+    }
 
+    @Override
+    public void deleteOwner(int id) throws DataAccessException {
+        Owner owner = loadOwner(id);
+        sessionFactory.getCurrentSession().delete(owner);
+    }
 }

@@ -58,4 +58,10 @@
   </table>
 </form:form>
 
+<c:if test="${!owner['new']}">
+  <form:form method="delete">
+    <p class="submit"><input id="deleteowner" type="submit" value="Delete Owner"/></p>
+  </form:form>
+</c:if>
+
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>
