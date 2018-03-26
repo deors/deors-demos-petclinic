@@ -46,6 +46,8 @@
         <selenium.version>3.9.1</selenium.version>
         <htmlunit.version>2.29.0</htmlunit.version>
         <pitest.version>1.2.2</pitest.version>
+        <jmeter.version>2.2.0</jmeter.version>
+        <dependency-check.version>3.1.1</dependency-check.version>
 
         <jacoco.version>0.8.0</jacoco.version>
         <jacoco.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar</jacoco.path>
@@ -61,7 +63,6 @@
         <failsafe.version>2.20.1</failsafe.version>
         <war.version>3.1.0</war.version>
         <dependency.version>3.0.2</dependency.version>
-        <jmeter.version>2.2.0</jmeter.version>
 
         <cargo.version>1.6.4</cargo.version>
 
@@ -73,10 +74,6 @@
 
         <jetty.version>8.1.9.v20130131</jetty.version>
         <jetty.downloadUrl>http://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-distribution/${jetty.version}/jetty-distribution-${jetty.version}.zip</jetty.downloadUrl>
-
-        <!-- overriding sonar.sources properties to enable multi-language analysis -->
-        <sonar.sources>src/main</sonar.sources>
-        <org.sonar.plugins.jmeter.jtlpath>${project.build.directory}/jmeter/results/petclinic.jtl</org.sonar.plugins.jmeter.jtlpath>
     </properties>
 
     <dependencies>
@@ -372,6 +369,7 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <useIncrementalCompilation>false</useIncrementalCompilation>
                 </configuration>
             </plugin>
             <plugin>
@@ -405,6 +403,32 @@
                 <configuration>
                     <warName>petclinic</warName>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest.version}</version>
+                <configuration>
+                    <targetClasses>
+                        <param>org.springframework.samples.petclinic.*</param>
+                    </targetClasses>
+                    <excludedClasses>
+                        <param>org.springframework.samples.petclinic.it.*</param>
+                    </excludedClasses>
+                    <outputFormats>
+                        <outputFormat>XML</outputFormat>
+                    </outputFormats>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency-check.version}</version>
+                <!-- commenting build fail flag as this is an old
+                     and insecure version of Spring Pet Clinic -->
+                <!-- <configuration>
+                    <failBuildOnCVSS>5</failBuildOnCVSS>
+                </configuration> -->
             </plugin>
         </plugins>
     </build>
@@ -671,7 +695,7 @@
             </build>
         </profile>
 
-        <!-- add JMeter integration tests -->
+        <!-- add JMeter performance tests -->
         <profile>
             <id>jmeter-tests</id>
             <build>
@@ -685,44 +709,9 @@
                         </configuration>
                         <executions>
                             <execution>
-                                <id>integration-test</id>
                                 <phase>integration-test</phase>
                                 <goals>
                                     <goal>jmeter</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <!-- add Pitest mutation tests (bound to unit test execution) -->
-        <profile>
-            <id>pitest-tests</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.pitest</groupId>
-                        <artifactId>pitest-maven</artifactId>
-                        <version>${pitest.version}</version>
-                        <configuration>
-                            <targetClasses>
-                                <param>org.springframework.samples.petclinic.*</param>
-                            </targetClasses>
-                            <excludedClasses>
-                                <param>org.springframework.samples.petclinic.it.*</param>
-                            </excludedClasses>
-                            <outputFormats>
-                                <outputFormat>XML</outputFormat>
-                            </outputFormats>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>test</id>
-                                <phase>test</phase>
-                                <goals>
-                                    <goal>mutationCoverage</goal>
                                 </goals>
                             </execution>
                         </executions>
