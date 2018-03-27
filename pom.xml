@@ -713,6 +713,7 @@
                                 <phase>integration-test</phase>
                                 <goals>
                                     <goal>jmeter</goal>
+                                    <goal>results</goal>
                                 </goals>
                             </execution>
                         </executions>
