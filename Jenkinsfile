@@ -5,7 +5,8 @@ pipeline {
 
     agent {
         docker {
-            image 'maven:3.5.3-jdk-8-alpine'
+            image 'maven:3.5.4-jdk-8-alpine'
+            args '--mount type=volume,source=maven_home,target=/root/.m2'
         }
     }
 
@@ -21,6 +22,8 @@ pipeline {
             steps {
                 echo "-=- execute unit tests -=-"
                 sh "mvn test"
+                junit 'target/surefire-reports/*.xml'
+                jacoco execPattern: 'target/jacoco.exec'
             }
         }
 
@@ -35,6 +38,7 @@ pipeline {
             steps {
                 echo "-=- packaging project -=-"
                 sh "mvn package -DskipUTs=true"
+                archiveArtifacts artifacts: 'target/*.war', fingerprint: true
             }
         }
 
@@ -45,18 +49,18 @@ pipeline {
             }
         }
 
-        stage('Deploy to Docker') {
+        stage('Run Docker image') {
             steps {
-                echo "-=- deploy service to Docker Swarm -=-"
-                //sh "docker service create -p 8888:8888 --name configservice --network microdemonet deors/deors-demos-microservices-configservice:latest"
-                sh "docker service update --container-label-add update_cause=\"CI-trigger\" --update-delay 30s --image deors/deors-demos-microservices-configservice:latest configservice"
+                echo "-=- run Docker image -=-"
+                sh "docker run --name ci-deors-demos-petclinic --detach --rm --network ci deors/deors-demos-petclinic:latest"
             }
         }
 
         stage('Integration tests') {
             steps {
                 echo "-=- execute integration tests -=-"
-                sh "mvn failsafe:integration-test failsafe:verify -Dtest.target.url=http://localhost:8888"
+                sh "mvn failsafe:integration-test failsafe:verify -DargLine=\"-Dtest.selenium.hub.url=http://selenium-hub:4444/wd/hub -Dtest.target.server.url=http://ci-deors-demos-petclinic:8080/petclinic\""
+                junit 'target/failsafe-reports/*.xml'
             }
         }
 
@@ -86,6 +90,13 @@ pipeline {
                 echo "-=- push Docker image -=-"
                 sh "mvn docker:push"
             }
+        }
+    }
+
+    post {
+        always {
+            echo "-=- remove deployment -=-"
+            sh "docker stop ci-deors-demos-petclinic"
         }
     }
 }
