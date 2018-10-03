@@ -1,8 +1,6 @@
 #!groovy
 
 pipeline {
-    //agent any
-
     agent {
         docker {
             image 'maven:3.5.4-jdk-8-alpine'
@@ -81,7 +79,9 @@ pipeline {
         stage('Code inspection & quality gate') {
             steps {
                 echo "-=- run code inspection & quality gate -=-"
-                sh "mvn sonar:sonar"
+                withSonarQubeEnv('sonarqube-local') {
+                    sh "mvn sonar:sonar"
+                }
             }
         }
 
