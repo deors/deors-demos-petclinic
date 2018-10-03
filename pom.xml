@@ -431,6 +431,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.version}</version>
                 <configuration>
                     <!--<argLine>${jacoco.itAgentConfig}</argLine>-->
                     <includes>
