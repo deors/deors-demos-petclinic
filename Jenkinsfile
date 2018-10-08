@@ -3,8 +3,8 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3.5.4-jdk-8-alpine'
-            args '--network ci --mount type=volume,source=maven_home,target=/root/.m2'
+            image 'maven:3.5.4-jdk-8'
+            args '--network ci --mount type=volume,source=ci-maven-home,target=/root/.m2'
         }
     }
 
