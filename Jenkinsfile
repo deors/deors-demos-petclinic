@@ -79,9 +79,7 @@ pipeline {
         stage('Code inspection & quality gate') {
             steps {
                 echo "-=- run code inspection & quality gate -=-"
-                withSonarQubeEnv('sonarqube-local') {
-                    sh "mvn sonar:sonar"
-                }
+                sh "mvn sonar:sonar -Dsonar.host.url=http://ci-sonarqube:9000/sonarqube"
             }
         }
 
