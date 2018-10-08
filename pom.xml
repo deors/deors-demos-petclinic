@@ -56,7 +56,7 @@
         <jacoco.utAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.utReport}</jacoco.utAgentConfig>
         <jacoco.itAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.itReport}</jacoco.itAgentConfig>
 
-        <jacoco-listeners.version>5.1.0.13090</jacoco-listeners.version>
+        <jacoco-listeners.version>5.7.0.15470</jacoco-listeners.version>
 
         <compiler.version>3.7.0</compiler.version>
         <surefire.version>2.20.1</surefire.version>
