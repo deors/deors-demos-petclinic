@@ -313,7 +313,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
+            <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>htmlunit-driver</artifactId>
             <version>${htmlunit.version}</version>
             <scope>test</scope>
@@ -394,6 +394,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>${spotify-docker.version}</version>
                 <configuration>
+                    <serverId>docker-hub</serverId>
                     <dockerDirectory>${project.basedir}</dockerDirectory>
                     <imageName>${docker.image.prefix}/${project.name}</imageName>
                     <imageTags>
