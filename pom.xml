@@ -765,6 +765,12 @@
                         <version>${jmeter.version}</version>
                         <configuration>
                             <testResultsTimestamp>false</testResultsTimestamp>
+                            <propertiesUser>
+                                <host>${jmeter.target.host}</host>
+                                <port>${jmeter.target.port}</port>
+                                <root>${jmeter.target.root}</root>
+                                <ownerId>${jmeter.target.ownerId}</ownerId>
+                            </propertiesUser>
                         </configuration>
                         <executions>
                             <execution>
