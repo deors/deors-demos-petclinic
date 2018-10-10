@@ -74,6 +74,7 @@ pipeline {
             steps {
                 echo "-=- run dependency vulnerability tests -=-"
                 sh "mvn dependency-check:check"
+                dependencyCheckPublisher failedTotalHigh: '25', unstableTotalHigh: '0', failedTotalNormal: '100', unstableTotalNormal: '0'
             }
         }
 
