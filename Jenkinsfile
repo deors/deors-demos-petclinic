@@ -29,6 +29,7 @@ pipeline {
             steps {
                 echo "-=- execute mutation tests -=-"
                 sh "mvn org.pitest:pitest-maven:mutationCoverage"
+                step([$class: 'PitPublisher', mutationStatsFile: 'target/pit-reports/**/mutations.xml', minimumKillRatio: 30])
             }
         }
 
@@ -74,7 +75,7 @@ pipeline {
             steps {
                 echo "-=- run dependency vulnerability tests -=-"
                 sh "mvn dependency-check:check"
-                dependencyCheckPublisher failedTotalHigh: '25', unstableTotalHigh: '0', failedTotalNormal: '100', unstableTotalNormal: '0'
+                dependencyCheckPublisher failedTotalHigh: '30', unstableTotalHigh: '25', failedTotalNormal: '110', unstableTotalNormal: '100'
             }
         }
 
