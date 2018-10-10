@@ -29,7 +29,6 @@ pipeline {
             steps {
                 echo "-=- execute mutation tests -=-"
                 sh "mvn org.pitest:pitest-maven:mutationCoverage"
-                step([$class: 'PitPublisher', mutationStatsFile: 'target/pit-reports/**/mutations.xml', minimumKillRatio: 30])
             }
         }
 
