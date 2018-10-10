@@ -2,4 +2,5 @@
 .project
 .settings
 .springBeans
+.java-version
 target
