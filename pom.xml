@@ -37,7 +37,7 @@
         <syndication.version>1.0.0</syndication.version>
         <jdom.version>1.1.0</jdom.version>
 
-        <hsqldb.version>1.8.0.9</hsqldb.version>
+        <hsqldb.version>2.4.1</hsqldb.version>
         <mysql.version>5.1.6</mysql.version>
         <postgresql.version>9.1-901.jdbc4</postgresql.version>
 
@@ -163,7 +163,7 @@
         <!-- HSQLDB JDBC Connector -->
         <dependency>
             <groupId>org.hsqldb</groupId>
-            <artifactId>com.springsource.org.hsqldb</artifactId>
+            <artifactId>hsqldb</artifactId>
             <version>${hsqldb.version}</version>
             <scope>runtime</scope>
         </dependency>
