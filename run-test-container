@@ -1,3 +1,0 @@
-#!/bin/bash
-docker run --name ci-deors-demos-petclinic --detach --rm --network ci --publish 58080:8080 deors/deors-demos-petclinic:latest
-

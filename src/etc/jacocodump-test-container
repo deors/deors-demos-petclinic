@@ -1,0 +1,2 @@
+#!/bin/bash
+java -jar target/dependency/jacococli.jar dump --address localhost --port 56300 --destfile target/jacoco-it.exec

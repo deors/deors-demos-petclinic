@@ -1,0 +1,3 @@
+#!/bin/bash
+docker exec -it ci-deors-demos-petclinic /bin/bash
+
