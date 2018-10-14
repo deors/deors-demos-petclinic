@@ -82,8 +82,13 @@ pipeline {
 
         stage('Code inspection & quality gate') {
             steps {
-                echo "-=- run code inspection & quality gate -=-"
-                sh "mvn sonar:sonar -Dsonar.host.url=http://ci-sonarqube:9000/sonarqube"
+                echo "-=- run code inspection & check quality gate -=-"
+                withSonarQubeEnv('ci-sonarqube') {
+                    sh "mvn sonar:sonar"
+                }
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
 
