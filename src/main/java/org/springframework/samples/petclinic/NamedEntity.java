@@ -9,20 +9,19 @@ package org.springframework.samples.petclinic;
  */
 public class NamedEntity extends BaseEntity {
 
-	private String name;
-	
+    private String name;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	@Override
-	public String toString() {
-		return this.getName();
-	}
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 
 }

@@ -1,4 +1,3 @@
-
 /**
  *
  * The classes in this package represent the JPA implementation
@@ -6,4 +5,3 @@
  *
  */
 package org.springframework.samples.petclinic.jpa;
-

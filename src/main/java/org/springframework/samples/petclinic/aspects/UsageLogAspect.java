@@ -18,37 +18,36 @@ import org.aspectj.lang.annotation.Before;
 @Aspect
 public class UsageLogAspect {
 
-	private int historySize = 100;
+    private int historySize = 100;
 
-	// Of course saving all names is not suitable for
-	// production use, but this is a simple example.
-	private List<String> namesRequested = new ArrayList<String>(this.historySize);
+    // Of course saving all names is not suitable for
+    // production use, but this is a simple example.
+    private List<String> namesRequested = new ArrayList<String>(this.historySize);
 
     /**
      * Default constructor.
      */
-	public UsageLogAspect() {
-		super();
-	}
+    public UsageLogAspect() {
+        super();
+    }
 
-	public synchronized void setHistorySize(int historySize) {
-		this.historySize = historySize;
-		this.namesRequested = new ArrayList<String>(historySize);
-	}
+    public synchronized void setHistorySize(int historySize) {
+        this.historySize = historySize;
+        this.namesRequested = new ArrayList<String>(historySize);
+    }
 
-	@Before("execution(* *.findOwners(String)) && args(name)")
-	public synchronized void logNameRequest(String name) {
-		// Not the most efficient implementation,
-		// but we're aiming to illustrate the power of
-		// @AspectJ AOP, not write perfect code here :-)
-		if (this.namesRequested.size() > this.historySize) {
-			this.namesRequested.remove(0);
-		}
-		this.namesRequested.add(name);
-	}
+    @Before("execution(* *.findOwners(String)) && args(name)")
+    public synchronized void logNameRequest(String name) {
+        // Not the most efficient implementation,
+        // but we're aiming to illustrate the power of
+        // @AspectJ AOP, not write perfect code here :-)
+        if (this.namesRequested.size() > this.historySize) {
+            this.namesRequested.remove(0);
+        }
+        this.namesRequested.add(name);
+    }
 
-	public synchronized List<String> getNamesRequested() {
-		return Collections.unmodifiableList(this.namesRequested);
-	}
-
+    public synchronized List<String> getNamesRequested() {
+        return Collections.unmodifiableList(this.namesRequested);
+    }
 }

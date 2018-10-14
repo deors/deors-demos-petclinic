@@ -26,13 +26,13 @@
     <tr>
       <td colspan="2" align="center">
         <spring:url value="{ownerId}/edit" var="editUrl">
-        	<spring:param name="ownerId" value="${owner.id}" />
+            <spring:param name="ownerId" value="${owner.id}" />
         </spring:url>
         <a href="${fn:escapeXml(editUrl)}">Edit Owner</a>
       </td>
       <td>
         <spring:url value="{ownerId}/pets/new" var="addUrl">
-        	<spring:param name="ownerId" value="${owner.id}" />
+            <spring:param name="ownerId" value="${owner.id}" />
         </spring:url>
         <a href="${fn:escapeXml(addUrl)}">Add New Pet</a>
       </td>
@@ -104,5 +104,5 @@
       </tr>
     </table>
   </c:forEach>
-  
+
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

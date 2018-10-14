@@ -23,15 +23,14 @@ import org.springframework.web.context.request.WebRequest;
  */
 public class ClinicBindingInitializer implements WebBindingInitializer {
 
-	@Autowired
-	private Clinic clinic;
+    @Autowired
+    private Clinic clinic;
 
-	public void initBinder(WebDataBinder binder, WebRequest request) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-		binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
-		binder.registerCustomEditor(PetType.class, new PetTypeEditor(this.clinic));
-	}
-
+    public void initBinder(WebDataBinder binder, WebRequest request) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
+        binder.registerCustomEditor(PetType.class, new PetTypeEditor(this.clinic));
+    }
 }

@@ -54,7 +54,7 @@ public class CallMonitoringAspect {
 
     @ManagedAttribute
     public long getCallTime() {
-        return (this.callCount > 0 ? this.accumulatedCallTime / this.callCount : 0);
+        return this.callCount > 0 ? this.accumulatedCallTime / this.callCount : 0;
     }
 
     @Around("within(@org.springframework.stereotype.Service *)")

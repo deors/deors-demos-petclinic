@@ -38,7 +38,6 @@ public class EditPetForm {
 
     private final Clinic clinic;
 
-
     @Autowired
     public EditPetForm(Clinic clinic) {
         this.clinic = clinic;

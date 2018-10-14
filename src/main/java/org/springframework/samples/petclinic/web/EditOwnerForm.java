@@ -32,7 +32,6 @@ public class EditOwnerForm {
 
     private final Clinic clinic;
 
-
     @Autowired
     public EditOwnerForm(Clinic clinic) {
         this.clinic = clinic;

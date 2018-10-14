@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,52 +32,50 @@ import org.springframework.samples.petclinic.Visit;
 import org.springframework.web.servlet.view.feed.AbstractAtomFeedView;
 
 /**
- * A view creating a Atom representation from a list of Visit objects. 
- * 
+ * A view creating a Atom representation from a list of Visit objects.
+ *
  * @author Alef Arendsen
  * @author Arjen Poutsma
  */
 public class VisitsAtomView extends AbstractAtomFeedView {
 
-	@Override
-	protected void buildFeedMetadata(Map<String, Object> model, Feed feed, HttpServletRequest request) {
-		feed.setId("tag:springsource.com");
-		feed.setTitle("Pet Clinic Visits");
-		@SuppressWarnings("unchecked")
-		List<Visit> visits = (List<Visit>) model.get("visits");
-		for (Visit visit : visits) {
-			Date date = visit.getDate();
-			if (feed.getUpdated() == null || date.compareTo(feed.getUpdated()) > 0) {
-				feed.setUpdated(date);
-			}
-		}
-	}
+    @Override
+    protected void buildFeedMetadata(Map<String, Object> model, Feed feed, HttpServletRequest request) {
+        feed.setId("tag:springsource.com");
+        feed.setTitle("Pet Clinic Visits");
+        @SuppressWarnings("unchecked")
+        List<Visit> visits = (List<Visit>) model.get("visits");
+        for (Visit visit : visits) {
+            Date date = visit.getDate();
+            if (feed.getUpdated() == null || date.compareTo(feed.getUpdated()) > 0) {
+                feed.setUpdated(date);
+            }
+        }
+    }
 
-	@Override
-	protected List<Entry> buildFeedEntries(Map<String, Object> model,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @Override
+    protected List<Entry> buildFeedEntries(Map<String, Object> model,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		@SuppressWarnings("unchecked")
-		List<Visit> visits = (List<Visit>) model.get("visits");
-		List<Entry> entries = new ArrayList<Entry>(visits.size());
+        @SuppressWarnings("unchecked")
+        List<Visit> visits = (List<Visit>) model.get("visits");
+        List<Entry> entries = new ArrayList<Entry>(visits.size());
 
-		for (Visit visit : visits) {
-			Entry entry = new Entry();
-			String date = String.format("%1$tY-%1$tm-%1$td", visit.getDate());
-			// see http://diveintomark.org/archives/2004/05/28/howto-atom-id#other
-			entry.setId(String.format("tag:springsource.com,%s:%d", date, visit.getId()));
-			entry.setTitle(String.format("%s visit on %s", visit.getPet().getName(), date));
-			entry.setUpdated(visit.getDate());
+        for (Visit visit : visits) {
+            Entry entry = new Entry();
+            String date = String.format("%1$tY-%1$tm-%1$td", visit.getDate());
+            // see http://diveintomark.org/archives/2004/05/28/howto-atom-id#other
+            entry.setId(String.format("tag:springsource.com,%s:%d", date, visit.getId()));
+            entry.setTitle(String.format("%s visit on %s", visit.getPet().getName(), date));
+            entry.setUpdated(visit.getDate());
 
-			Content summary = new Content();
-			summary.setValue(visit.getDescription());
-			entry.setSummary(summary);
+            Content summary = new Content();
+            summary.setValue(visit.getDescription());
+            entry.setSummary(summary);
 
-			entries.add(entry);
-		}
+            entries.add(entry);
+        }
 
-		return entries;
-
-	}
-	
+        return entries;
+    }
 }

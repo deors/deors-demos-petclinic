@@ -12,10 +12,9 @@ import org.springframework.validation.Errors;
  */
 public class VisitValidator {
 
-	public void validate(Visit visit, Errors errors) {
-		if (!StringUtils.hasLength(visit.getDescription())) {
-			errors.rejectValue("description", "required", "required");
-		}
-	}
-
+    public void validate(Visit visit, Errors errors) {
+        if (!StringUtils.hasLength(visit.getDescription())) {
+            errors.rejectValue("description", "required", "required");
+        }
+    }
 }

@@ -12,7 +12,7 @@
     <tr>
       <td>${vet.firstName} ${vet.lastName}</td>
       <td>
-	    <c:forEach var="specialty" items="${vet.specialties}">
+        <c:forEach var="specialty" items="${vet.specialties}">
           ${specialty.name}
         </c:forEach>
         <c:if test="${vet.nrOfSpecialties == 0}">none</c:if>

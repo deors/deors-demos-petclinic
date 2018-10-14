@@ -1,4 +1,3 @@
-
 package org.springframework.samples.petclinic.web;
 
 import java.text.SimpleDateFormat;
@@ -37,49 +36,49 @@ import org.springframework.web.context.request.WebRequest;
 @SessionAttributes("visit")
 public class AddVisitForm {
 
-	private final Clinic clinic;
+    private final Clinic clinic;
 
 
-	@Autowired
-	public AddVisitForm(Clinic clinic) {
-		this.clinic = clinic;
-	}
+    @Autowired
+    public AddVisitForm(Clinic clinic) {
+        this.clinic = clinic;
+    }
 
-	@InitBinder
-	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
-	}
+    @InitBinder
+    public void setAllowedFields(WebDataBinder dataBinder) {
+        dataBinder.setDisallowedFields("id");
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String setupForm(@PathVariable("petId") int petId, Model model) {
-		Pet pet = this.clinic.loadPet(petId);
-		Visit visit = new Visit();
-		pet.addVisit(visit);
-		model.addAttribute("visit", visit);
-		return "pets/visitForm";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String setupForm(@PathVariable("petId") int petId, Model model) {
+        Pet pet = this.clinic.loadPet(petId);
+        Visit visit = new Visit();
+        pet.addVisit(visit);
+        model.addAttribute("visit", visit);
+        return "pets/visitForm";
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(@ModelAttribute("visit") Visit visit, BindingResult result, SessionStatus status) {
-		new VisitValidator().validate(visit, result);
-		if (result.hasErrors()) {
-			return "pets/visitForm";
-		}
-		else {
-			this.clinic.storeVisit(visit);
-			status.setComplete();
-			return "redirect:/owners/" + visit.getPet().getOwner().getId();
-		}
-	}
+    @RequestMapping(method = RequestMethod.POST)
+    public String processSubmit(@ModelAttribute("visit") Visit visit, BindingResult result, SessionStatus status) {
+        new VisitValidator().validate(visit, result);
+        if (result.hasErrors()) {
+            return "pets/visitForm";
+        }
+        else {
+            this.clinic.storeVisit(visit);
+            status.setComplete();
+            return "redirect:/owners/" + visit.getPet().getOwner().getId();
+        }
+    }
 
-	/**
-	 * Added the binding initializer because MVC is annotation-based.
-	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder, WebRequest request) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-		binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
-	}
+    /**
+     * Added the binding initializer because MVC is annotation-based.
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder, WebRequest request) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
+    }
 }

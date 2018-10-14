@@ -18,6 +18,7 @@ package org.springframework.samples.petclinic;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,14 +31,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Vets {
 
-	private List<Vet> vets;
+    private List<Vet> vets;
 
-	@XmlElement
-	public List<Vet> getVetList() {
-		if (vets == null) {
-			vets = new ArrayList<Vet>();
-		}
-		return vets;
-	}
-
+    @XmlElement
+    public List<Vet> getVetList() {
+        if (vets == null) {
+            vets = new ArrayList<Vet>();
+        }
+        return vets;
+    }
 }

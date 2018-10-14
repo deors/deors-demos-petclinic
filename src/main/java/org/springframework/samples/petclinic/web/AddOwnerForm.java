@@ -1,6 +1,4 @@
-
 package org.springframework.samples.petclinic.web;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -32,44 +30,44 @@ import org.springframework.web.context.request.WebRequest;
 @SessionAttributes(types = Owner.class)
 public class AddOwnerForm {
 
-	private final Clinic clinic;
+    private final Clinic clinic;
 
 
-	@Autowired
-	public AddOwnerForm(Clinic clinic) {
-		this.clinic = clinic;
-	}
+    @Autowired
+    public AddOwnerForm(Clinic clinic) {
+        this.clinic = clinic;
+    }
 
-	@InitBinder
-	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
-	}
+    @InitBinder
+    public void setAllowedFields(WebDataBinder dataBinder) {
+        dataBinder.setDisallowedFields("id");
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String setupForm(Model model) {
-		Owner owner = new Owner();
-		model.addAttribute(owner);
-		return "owners/form";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String setupForm(Model model) {
+        Owner owner = new Owner();
+        model.addAttribute(owner);
+        return "owners/form";
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(@ModelAttribute Owner owner, BindingResult result, SessionStatus status) {
-		new OwnerValidator().validate(owner, result);
-		if (result.hasErrors()) {
-			return "owners/form";
-		}
-		else {
-			this.clinic.storeOwner(owner);
-			status.setComplete();
-			return "redirect:/owners/" + owner.getId();
-		}
-	}
+    @RequestMapping(method = RequestMethod.POST)
+    public String processSubmit(@ModelAttribute Owner owner, BindingResult result, SessionStatus status) {
+        new OwnerValidator().validate(owner, result);
+        if (result.hasErrors()) {
+            return "owners/form";
+        }
+        else {
+            this.clinic.storeOwner(owner);
+            status.setComplete();
+            return "redirect:/owners/" + owner.getId();
+        }
+    }
 
-	/**
-	 * Added the binding initializer because MVC is annotation-based.
-	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder, WebRequest request) {
-		binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
-	}
+    /**
+     * Added the binding initializer because MVC is annotation-based.
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder, WebRequest request) {
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
+    }
 }

@@ -1,4 +1,3 @@
-
 package org.springframework.samples.petclinic.web;
 
 import java.text.SimpleDateFormat;
@@ -39,55 +38,55 @@ import org.springframework.web.context.request.WebRequest;
 @SessionAttributes("pet")
 public class AddPetForm {
 
-	private final Clinic clinic;
+    private final Clinic clinic;
 
 
-	@Autowired
-	public AddPetForm(Clinic clinic) {
-		this.clinic = clinic;
-	}
+    @Autowired
+    public AddPetForm(Clinic clinic) {
+        this.clinic = clinic;
+    }
 
-	@ModelAttribute("types")
-	public Collection<PetType> populatePetTypes() {
-		return this.clinic.getPetTypes();
-	}
+    @ModelAttribute("types")
+    public Collection<PetType> populatePetTypes() {
+        return this.clinic.getPetTypes();
+    }
 
-	@InitBinder
-	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
-	}
+    @InitBinder
+    public void setAllowedFields(WebDataBinder dataBinder) {
+        dataBinder.setDisallowedFields("id");
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String setupForm(@PathVariable("ownerId") int ownerId, Model model) {
-		Owner owner = this.clinic.loadOwner(ownerId);
-		Pet pet = new Pet();
-		owner.addPet(pet);
-		model.addAttribute("pet", pet);
-		return "pets/form";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String setupForm(@PathVariable("ownerId") int ownerId, Model model) {
+        Owner owner = this.clinic.loadOwner(ownerId);
+        Pet pet = new Pet();
+        owner.addPet(pet);
+        model.addAttribute("pet", pet);
+        return "pets/form";
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result, SessionStatus status) {
-		new PetValidator().validate(pet, result);
-		if (result.hasErrors()) {
-			return "pets/form";
-		}
-		else {
-			this.clinic.storePet(pet);
-			status.setComplete();
-			return "redirect:/owners/" + pet.getOwner().getId();
-		}
-	}
+    @RequestMapping(method = RequestMethod.POST)
+    public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result, SessionStatus status) {
+        new PetValidator().validate(pet, result);
+        if (result.hasErrors()) {
+            return "pets/form";
+        }
+        else {
+            this.clinic.storePet(pet);
+            status.setComplete();
+            return "redirect:/owners/" + pet.getOwner().getId();
+        }
+    }
 
-	/**
-	 * Added the binding initializer because MVC is annotation-based.
-	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder, WebRequest request) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-		binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
-		binder.registerCustomEditor(PetType.class, new PetTypeEditor(this.clinic));
-	}
+    /**
+     * Added the binding initializer because MVC is annotation-based.
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder, WebRequest request) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
+        binder.registerCustomEditor(PetType.class, new PetTypeEditor(this.clinic));
+    }
 }

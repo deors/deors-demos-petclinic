@@ -16,16 +16,15 @@ import org.slf4j.LoggerFactory;
 @Aspect
 public abstract class AbstractTraceAspect {
 
-	private static final Logger logger = LoggerFactory.getLogger(AbstractTraceAspect.class);
-	
-	@Pointcut
-	public abstract void traced();
-	
-	@Before("traced()")
-	public void trace(JoinPoint.StaticPart jpsp) {
-		if (logger.isTraceEnabled()) {
-			logger.trace("Entering " + jpsp.getSignature().toLongString());
-		}
-	}
+    private static final Logger logger = LoggerFactory.getLogger(AbstractTraceAspect.class);
 
+    @Pointcut
+    public abstract void traced();
+
+    @Before("traced()")
+    public void trace(JoinPoint.StaticPart jpsp) {
+        if (logger.isTraceEnabled()) {
+            logger.trace("Entering " + jpsp.getSignature().toLongString());
+        }
+    }
 }
