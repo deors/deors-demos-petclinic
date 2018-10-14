@@ -35,7 +35,7 @@ pipeline {
         stage('Package') {
             steps {
                 echo "-=- packaging project -=-"
-                sh "mvn package -DskipUTs=true"
+                sh "mvn package -DskipTests"
                 archiveArtifacts artifacts: 'target/*.war', fingerprint: true
             }
         }
@@ -50,7 +50,7 @@ pipeline {
         stage('Run Docker image') {
             steps {
                 echo "-=- run Docker image -=-"
-                sh "docker run --name ci-deors-demos-petclinic --detach --rm --network ci deors/deors-demos-petclinic:latest"
+                sh "docker run --name ci-deors-demos-petclinic --detach --rm --network ci --expose 6300 --env JAVA_OPTS='-javaagent:/usr/local/tomcat/jacocoagent.jar=output=tcpserver,address=*,port=6300' deors/deors-demos-petclinic:latest"
             }
         }
 
@@ -58,7 +58,9 @@ pipeline {
             steps {
                 echo "-=- execute integration tests -=-"
                 sh "mvn failsafe:integration-test failsafe:verify -DargLine=\"-Dtest.selenium.hub.url=http://selenium-hub:4444/wd/hub -Dtest.target.server.url=http://ci-deors-demos-petclinic:8080/petclinic\""
+                sh "java -jar target/dependency/jacococli.jar dump --address ci-deors-demos-petclinic --port 6300 --destfile target/jacoco-it.exec"
                 junit 'target/failsafe-reports/*.xml'
+                jacoco execPattern: 'target/jacoco-it.exec'
             }
         }
 

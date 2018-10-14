@@ -5,5 +5,4 @@ docker run --name ci-deors-demos-petclinic \
   --expose 6300 \
   --publish 58080:8080 --publish 56300:6300\
   --env JAVA_OPTS="-javaagent:/usr/local/tomcat/jacocoagent.jar=output=tcpserver,address=*,port=6300" \
-  --mount type=bind,source=$PWD/target/dependency/jacocoagent.jar,target=/usr/local/tomcat/jacocoagent.jar \
   deors/deors-demos-petclinic:latest
