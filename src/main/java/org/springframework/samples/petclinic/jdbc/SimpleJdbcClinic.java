@@ -118,7 +118,7 @@ public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
                             public Integer mapRow(ResultSet rs, int row) throws SQLException {
                                 return Integer.valueOf(rs.getInt(1));
                             }},
-                        vet.getId().intValue());
+                        vet.getId());
                 for (int specialtyId : vetSpecialtiesIds) {
                     Specialty specialty = EntityUtils.getById(specialties, Specialty.class, specialtyId);
                     vet.addSpecialty(specialty);
@@ -293,7 +293,7 @@ public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
                         return visit;
                     }
                 },
-                pet.getId().intValue());
+                pet.getId());
         for (Visit visit : visits) {
             pet.addVisit(visit);
         }
@@ -307,7 +307,7 @@ public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
         final List<JdbcPet> pets = this.simpleJdbcTemplate.query(
                 "SELECT id, name, birth_date, type_id, owner_id FROM pets WHERE owner_id=?",
                 new JdbcPetRowMapper(),
-                owner.getId().intValue());
+                owner.getId());
         for (JdbcPet pet : pets) {
             owner.addPet(pet);
             pet.setType(EntityUtils.getById(getPetTypes(), PetType.class, pet.getTypeId()));
@@ -332,7 +332,7 @@ public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
      * {@link ParameterizedRowMapper} implementation mapping data from a
      * {@link ResultSet} to the corresponding properties of the {@link JdbcPet} class.
      */
-    private class JdbcPetRowMapper implements ParameterizedRowMapper<JdbcPet> {
+    private static class JdbcPetRowMapper implements ParameterizedRowMapper<JdbcPet> {
 
         /**
          * Default constructor.
