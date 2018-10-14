@@ -24,7 +24,7 @@ public abstract class AbstractTraceAspect {
     @Before("traced()")
     public void trace(JoinPoint.StaticPart jpsp) {
         if (logger.isTraceEnabled()) {
-            logger.trace("Entering " + jpsp.getSignature().toLongString());
+            logger.trace("Entering {}", jpsp.getSignature().toLongString());
         }
     }
 }
