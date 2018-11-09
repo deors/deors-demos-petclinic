@@ -12,8 +12,8 @@
     <servers>
         <server>
             <id>docker-hub</id>
-            <username>${env.DEORS_DOCKER_HUB_USR}</username>
-            <password>${env.DEORS_DOCKER_HUB_PSW}</password>
+            <username>${env.DOCKER_HUB_USR}</username>
+            <password>${env.DOCKER_HUB_PSW}</password>
         </server>
     </servers>
     <mirrors/>
