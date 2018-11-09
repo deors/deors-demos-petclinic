@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <interactiveMode>true</interactiveMode>
+    <offline>false</offline>
+    <pluginGroups>
+        <pluginGroup>org.apache.tomcat.maven</pluginGroup>
+    </pluginGroups>
+    <proxies/>
+    <servers>
+        <server>
+            <id>docker-hub</id>
+            <username>${env.DEORS_DOCKER_HUB_USR}</username>
+            <password>${env.DEORS_DOCKER_HUB_PSW}</password>
+        </server>
+    </servers>
+    <mirrors/>
+    <profiles>
+        <profile>
+            <id>public-repos</id>
+            <repositories>
+                <repository>
+                    <id>jboss.org</id>
+                    <url>https://repository.jboss.org</url>
+                </repository>
+                <repository>
+                    <id>datanucleus.org</id>
+                    <url>http://www.datanucleus.org/downloads/maven2</url>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>public-repos</activeProfile>
+    </activeProfiles>
+
+</settings>

@@ -13,6 +13,7 @@ pipeline {
         APP_NAME = "deors-demos-petclinic"
         APP_CONTEXT_ROOT = "petclinic"
         TEST_CONTAINER_NAME = "ci-${APP_NAME}-${BUILD_NUMBER}"
+        DEORS_DOCKER_HUB = credentials('deors-docker-hub')
     }
 
     stages {
