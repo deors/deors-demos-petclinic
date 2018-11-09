@@ -21,3 +21,32 @@ lifecycle during verify.
 binded into the Maven lifecycle during verify.
 - Dependency vulnerability scan with OWASP Dependency Check.
 - Quality analysis with SonarQube, including gathering results from the other tools.
+
+## Set up in Jenkins
+
+The continuous integration pipeline requires that a credential with id `deors-docker-hub`
+is configured in Jenkins. The `deors` prefix in the credential id refers to the `deors`
+org namespace which is targeted to push Docker images to Docker Hub.
+
+## Useful scripts
+
+The folder `src/scripts` contains several useful scripts to build and test the application
+locally:
+
+- `jacocodump-test-container`: Connects to an already running application and dumps code
+coverage information being gathered by JaCoCo.
+- `mvn-package`: Compiles, run unit tests and package the application.
+- `mvn-verify-cargo`: Runs the application using Cargo and and embedded Tomcat runtime,
+and runs Selenium integration tests and JMeter performance tests.
+- `mvn-verify-heroku`: Runs Selenium integration tests and JMeter performance tests on the
+application deployed to Heroku.
+- `mvn-verify-heroku`: Runs Selenium integration tests and JMeter performance tests on the
+application deployed to Heroku.
+- `mvn-verify-local`: Runs Selenium integration tests and JMeter performance tests on the
+application running locally (e.g. from IDE, from CLI with Cargo, as a Docker container,
+manually by any other means)
+- `mvn-verify-openshift`: Runs Selenium integration tests and JMeter performance tests on the
+application deployed to OpenShift Online.
+- `run-test-container`: Runs the application as a Docker container.
+- `ssh-test-container`: Connects to an already running application container via SSH.
+- `stop-test-container`: Stops (and removes) an already running application container.
