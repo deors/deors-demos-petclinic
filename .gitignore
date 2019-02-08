@@ -2,7 +2,6 @@
 .project
 .settings
 .springBeans
-.java-version
 .factorypath
 .vscode
 target
