@@ -231,7 +231,7 @@ public class NewPetFirstVisitIntegrationTestCase {
         // increase timeout to allow for app to be fully loaded
         WebElement findOwnerLink = (new WebDriverWait(driver, 25)).until(
             d -> {
-                driver.get(baseUrl);
+                d.get(baseUrl);
                 return d.findElement(By.linkText("Find owner"));
             });
 
