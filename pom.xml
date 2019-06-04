@@ -42,29 +42,29 @@
         <postgresql.version>9.1-901.jdbc4</postgresql.version>
 
         <junit.version>4.12</junit.version>
-        <easymock.version>3.4</easymock.version>
-        <selenium.version>3.13.0</selenium.version>
-        <htmlunit.version>2.29.0</htmlunit.version>
-        <pitest.version>1.3.2</pitest.version>
-        <jmeter.version>2.6.0</jmeter.version>
-        <dependency-check.version>3.3.2</dependency-check.version>
+        <easymock.version>3.6</easymock.version>
+        <selenium.version>3.141.59</selenium.version>
+        <htmlunit.version>2.33.3</htmlunit.version>
+        <pitest.version>1.4.5</pitest.version>
+        <jmeter.version>2.9.0</jmeter.version>
+        <dependency-check.version>5.0.0-M3</dependency-check.version>
 
-        <jacoco.version>0.8.0</jacoco.version>
+        <jacoco.version>0.8.3</jacoco.version>
         <jacoco.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar</jacoco.path>
         <jacoco.utReport>${project.build.directory}/jacoco.exec</jacoco.utReport>
         <jacoco.itReport>${project.build.directory}/jacoco-it.exec</jacoco.itReport>
         <jacoco.utAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.utReport}</jacoco.utAgentConfig>
         <jacoco.itAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.itReport}</jacoco.itAgentConfig>
 
-        <jacoco-listeners.version>5.7.0.15470</jacoco-listeners.version>
+        <jacoco-listeners.version>5.10.2.17019</jacoco-listeners.version>
 
-        <compiler.version>3.7.0</compiler.version>
-        <surefire.version>2.20.1</surefire.version>
-        <failsafe.version>2.20.1</failsafe.version>
-        <war.version>3.1.0</war.version>
-        <dependency.version>3.0.2</dependency.version>
+        <compiler.version>3.8.1</compiler.version>
+        <surefire.version>2.22.1</surefire.version>
+        <failsafe.version>2.22.1</failsafe.version>
+        <war.version>3.2.3</war.version>
+        <dependency.version>3.1.1</dependency.version>
 
-        <spotify-docker.version>1.1.1</spotify-docker.version>
+        <spotify-docker.version>1.2.0</spotify-docker.version>
         <docker.image.prefix>deors</docker.image.prefix>
 
         <cargo.version>1.6.4</cargo.version>
