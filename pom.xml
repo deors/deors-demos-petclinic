@@ -64,7 +64,7 @@
         <war.version>3.2.3</war.version>
         <dependency.version>3.1.1</dependency.version>
 
-        <spotify-docker.version>1.2.0</spotify-docker.version>
+        <spotify-docker.version>1.2.2</spotify-docker.version>
         <docker.image.prefix>deors</docker.image.prefix>
 
         <cargo.version>1.6.4</cargo.version>
