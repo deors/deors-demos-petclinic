@@ -49,14 +49,14 @@
         <jmeter.version>2.9.0</jmeter.version>
         <dependency-check.version>5.0.0-M3</dependency-check.version>
 
-        <jacoco.version>0.8.3</jacoco.version>
+        <jacoco.version>0.8.5</jacoco.version>
         <jacoco.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar</jacoco.path>
         <jacoco.utReport>${project.build.directory}/jacoco.exec</jacoco.utReport>
         <jacoco.itReport>${project.build.directory}/jacoco-it.exec</jacoco.itReport>
         <jacoco.utAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.utReport}</jacoco.utAgentConfig>
         <jacoco.itAgentConfig>-javaagent:${jacoco.path}=destfile=${jacoco.itReport}</jacoco.itAgentConfig>
 
-        <jacoco-listeners.version>5.10.2.17019</jacoco-listeners.version>
+        <jacoco-listeners.version>5.14.0.18788</jacoco-listeners.version>
 
         <compiler.version>3.8.1</compiler.version>
         <surefire.version>2.22.2</surefire.version>
