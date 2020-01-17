@@ -11,6 +11,7 @@ pipeline {
     environment {
         ORG_NAME = "deors"
         APP_NAME = "deors-demos-petclinic"
+        APP_VERSION = "1.0-SNAPSHOT"
         APP_CONTEXT_ROOT = "petclinic"
         APP_LISTENING_PORT = "8080"
         TEST_CONTAINER_NAME = "ci-${APP_NAME}-${BUILD_NUMBER}"
@@ -52,7 +53,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 echo "-=- build Docker image -=-"
-                sh "./mvnw docker:build"
+                sh "docker build -t ${ORG_NAME}/${APP_NAME}:${APP_VERSION} -t ${ORG_NAME}/${APP_NAME}:latest ."
             }
         }
 
@@ -111,7 +112,10 @@ pipeline {
         stage('Push Docker image') {
             steps {
                 echo "-=- push Docker image -=-"
-                sh "./mvnw docker:push"
+                withDockerRegistry([ credentialsId: "${ORG_NAME}-docker-hub", url: "" ]) {
+                    sh "docker push ${ORG_NAME}/${APP_NAME}:${APP_VERSION}"
+                    sh "docker tag ${ORG_NAME}/${APP_NAME}:${APP_VERSION} ${ORG_NAME}/${APP_NAME}:latest"
+                }
             }
         }
     }

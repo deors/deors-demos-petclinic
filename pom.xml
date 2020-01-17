@@ -67,9 +67,6 @@
         <war.version>3.2.3</war.version>
         <dependency.version>3.1.1</dependency.version>
 
-        <spotify-docker.version>1.2.2</spotify-docker.version>
-        <docker.image.prefix>deors</docker.image.prefix>
-
         <cargo.version>1.6.4</cargo.version>
 
         <tomcat.version>8.5.50</tomcat.version>
@@ -369,6 +366,14 @@
             <name>SpringSource Enterprise Bundle Repository - Snapshot Releases</name>
             <url>http://repository.springsource.com/maven/bundles/snapshot</url>
         </repository>
+        <repository>
+            <id>jboss.org</id>
+            <url>https://repository.jboss.org</url>
+        </repository>
+        <repository>
+            <id>datanucleus.org</id>
+            <url>http://www.datanucleus.org/downloads/maven2</url>
+        </repository>
     </repositories>
 
     <build>
@@ -422,27 +427,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${spotify-docker.version}</version>
-                <configuration>
-                    <serverId>docker-hub</serverId>
-                    <dockerDirectory>${project.basedir}</dockerDirectory>
-                    <imageName>${docker.image.prefix}/${project.name}</imageName>
-                    <imageTags>
-                        <imageTag>${project.version}</imageTag>
-                        <imageTag>latest</imageTag>
-                    </imageTags>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

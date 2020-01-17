@@ -9,31 +9,9 @@
         <pluginGroup>org.apache.tomcat.maven</pluginGroup>
     </pluginGroups>
     <proxies/>
-    <servers>
-        <server>
-            <id>docker-hub</id>
-            <username>${env.DOCKER_HUB_USR}</username>
-            <password>${env.DOCKER_HUB_PSW}</password>
-        </server>
-    </servers>
+    <servers/>
     <mirrors/>
-    <profiles>
-        <profile>
-            <id>public-repos</id>
-            <repositories>
-                <repository>
-                    <id>jboss.org</id>
-                    <url>https://repository.jboss.org</url>
-                </repository>
-                <repository>
-                    <id>datanucleus.org</id>
-                    <url>http://www.datanucleus.org/downloads/maven2</url>
-                </repository>
-            </repositories>
-        </profile>
-    </profiles>
-    <activeProfiles>
-        <activeProfile>public-repos</activeProfile>
-    </activeProfiles>
+    <profiles/>
+    <activeProfiles/>
 
 </settings>
