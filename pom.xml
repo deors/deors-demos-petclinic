@@ -14,6 +14,8 @@
     <description>The popular Spring Pet Clinic application, updated to work with Tomcat 7 and Spring 3</description>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <java.version>1.8</java.version>
 
         <servlet.version>2.5.0</servlet.version>
