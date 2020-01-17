@@ -46,7 +46,8 @@
         <selenium.version>3.141.59</selenium.version>
         <htmlunit.version>2.36.0</htmlunit.version>
         <pitest.version>1.4.11</pitest.version>
-        <jmeter.version>2.9.0</jmeter.version>
+        <jmeter-plugin.version>3.0.0</jmeter-plugin.version>
+        <jmeter.version>5.2.1</jmeter.version>
         <dependency-check.version>5.2.4</dependency-check.version>
 
         <jacoco.version>0.8.5</jacoco.version>
@@ -498,7 +499,7 @@
             <plugin>
                 <groupId>com.lazerycode.jmeter</groupId>
                 <artifactId>jmeter-maven-plugin</artifactId>
-                <version>${jmeter.version}</version>
+                <version>${jmeter-plugin.version}</version>
                 <configuration>
                     <testResultsTimestamp>false</testResultsTimestamp>
                     <propertiesUser>
@@ -508,6 +509,14 @@
                         <ownerId>${jmeter.target.ownerId}</ownerId>
                     </propertiesUser>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>configuration</id>
+                        <goals>
+                            <goal>configure</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.owasp</groupId>
