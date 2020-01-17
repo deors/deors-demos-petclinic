@@ -3,7 +3,7 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3.6.3-jdk-8'
+            image 'adoptopenjdk/openjdk8:jdk8u232-b09-debian'
             args '--network ci --mount type=volume,source=ci-maven-home,target=/root/.m2'
         }
     }
@@ -12,6 +12,7 @@ pipeline {
         ORG_NAME = "deors"
         APP_NAME = "deors-demos-petclinic"
         APP_CONTEXT_ROOT = "petclinic"
+        APP_LISTENING_PORT = "8080"
         TEST_CONTAINER_NAME = "ci-${APP_NAME}-${BUILD_NUMBER}"
         DOCKER_HUB = credentials("${ORG_NAME}-docker-hub")
     }
@@ -20,14 +21,14 @@ pipeline {
         stage('Compile') {
             steps {
                 echo "-=- compiling project -=-"
-                sh "mvn clean compile"
+                sh "./mvnw clean compile"
             }
         }
 
         stage('Unit tests') {
             steps {
                 echo "-=- execute unit tests -=-"
-                sh "mvn test"
+                sh "./mvnw test"
                 junit 'target/surefire-reports/*.xml'
                 jacoco execPattern: 'target/jacoco.exec'
             }
@@ -36,14 +37,14 @@ pipeline {
         stage('Mutation tests') {
             steps {
                 echo "-=- execute mutation tests -=-"
-                sh "mvn org.pitest:pitest-maven:mutationCoverage"
+                sh "./mvnw org.pitest:pitest-maven:mutationCoverage"
             }
         }
 
         stage('Package') {
             steps {
                 echo "-=- packaging project -=-"
-                sh "mvn package -DskipTests"
+                sh "./mvnw package -DskipTests"
                 archiveArtifacts artifacts: 'target/*.war', fingerprint: true
             }
         }
@@ -51,7 +52,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 echo "-=- build Docker image -=-"
-                sh "mvn docker:build"
+                sh "./mvnw docker:build"
             }
         }
 
@@ -65,7 +66,8 @@ pipeline {
         stage('Integration tests') {
             steps {
                 echo "-=- execute integration tests -=-"
-                sh "mvn failsafe:integration-test failsafe:verify -DargLine=\"-Dtest.selenium.hub.url=http://selenium-hub:4444/wd/hub -Dtest.target.server.url=http://${TEST_CONTAINER_NAME}:8080/${APP_CONTEXT_ROOT}\""
+                sh "curl --retry 5 --retry-connrefused --connect-timeout 5 --max-time 5 http://${TEST_CONTAINER_NAME}:${APP_LISTENING_PORT}/${APP_CONTEXT_ROOT}/actuator/health"
+                sh "./mvnw failsafe:integration-test failsafe:verify -DargLine=\"-Dtest.selenium.hub.url=http://selenium-hub:4444/wd/hub -Dtest.target.server.url=http://${TEST_CONTAINER_NAME}:${APP_LISTENING_PORT}/${APP_CONTEXT_ROOT}\""
                 sh "java -jar target/dependency/jacococli.jar dump --address ${TEST_CONTAINER_NAME} --port 6300 --destfile target/jacoco-it.exec"
                 junit 'target/failsafe-reports/*.xml'
                 jacoco execPattern: 'target/jacoco-it.exec'
@@ -75,7 +77,7 @@ pipeline {
         stage('Performance tests') {
             steps {
                 echo "-=- execute performance tests -=-"
-                sh "mvn jmeter:configure jmeter:jmeter jmeter:results -Djmeter.target.host=${TEST_CONTAINER_NAME} -Djmeter.target.port=8080 -Djmeter.target.root=${APP_CONTEXT_ROOT}"
+                sh "./mvnw jmeter:configure jmeter:jmeter jmeter:results -Djmeter.target.host=${TEST_CONTAINER_NAME} -Djmeter.target.port=${APP_LISTENING_PORT} -Djmeter.target.root=${APP_CONTEXT_ROOT}"
                 perfReport sourceDataFiles: 'target/jmeter/results/*.csv', errorUnstableThreshold: 0, errorFailedThreshold: 5, errorUnstableResponseTimeThreshold: 'petclinic.jtl:100'
             }
         }
@@ -83,7 +85,7 @@ pipeline {
         stage('Dependency vulnerability tests') {
             steps {
                 echo "-=- run dependency vulnerability tests -=-"
-                sh "mvn dependency-check:check"
+                sh "./mvnw dependency-check:check"
                 dependencyCheckPublisher failedTotalHigh: 30, unstableTotalHigh: 25, failedTotalMedium: 110, unstableTotalMedium: 100
             }
         }
@@ -92,7 +94,7 @@ pipeline {
             steps {
                 echo "-=- run code inspection & check quality gate -=-"
                 withSonarQubeEnv('ci-sonarqube') {
-                    sh "mvn sonar:sonar"
+                    sh "./mvnw sonar:sonar"
                 }
                 timeout(time: 10, unit: 'MINUTES') {
                     //waitForQualityGate abortPipeline: true
@@ -109,7 +111,7 @@ pipeline {
         stage('Push Docker image') {
             steps {
                 echo "-=- push Docker image -=-"
-                sh "mvn docker:push"
+                sh "./mvnw docker:push"
             }
         }
     }
