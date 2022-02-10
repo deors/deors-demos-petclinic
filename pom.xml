@@ -33,7 +33,7 @@
         <log4j.version>2.7</log4j.version>
         <commons-dbcp.version>1.2.2</commons-dbcp.version>
         <commons-pool.version>1.5.3</commons-pool.version>
-        <hibernate.version>3.3.2.GA</hibernate.version>
+        <hibernate.version>5.4.24.Final</hibernate.version>
         <hibernate-jpa.version>3.4.0.GA</hibernate-jpa.version>
         <toplink.version>2.0-41</toplink.version>
         <openjpa.version>1.1.0</openjpa.version>
