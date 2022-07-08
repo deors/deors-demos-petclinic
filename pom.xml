@@ -36,7 +36,7 @@
         <hibernate.version>3.3.2.GA</hibernate.version>
         <hibernate-jpa.version>3.4.0.GA</hibernate-jpa.version>
         <toplink.version>2.0-41</toplink.version>
-        <openjpa.version>1.1.0</openjpa.version>
+        <openjpa.version>1.2.3</openjpa.version>
         <rome.version>1.0</rome.version>
 
         <hsqldb.version>2.4.1</hsqldb.version>
