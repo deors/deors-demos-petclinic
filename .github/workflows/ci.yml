@@ -2,6 +2,7 @@ name: CI
 description: This workflow runs a Maven verify process with Selenium and JMeter tests with the application hosted in Jetty, Tomcat and WildFly.
 
 on:
+  workflow_dispatch
   push:
     branches:
       - main
