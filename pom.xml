@@ -73,7 +73,7 @@
         <tomcat.downloadUrl>https://archive.apache.org/dist/tomcat/tomcat-8/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.downloadUrl>
 
         <wildfly.version>10.1.0.Final</wildfly.version>
-        <wildfly.downloadUrl>http://download.jboss.org/wildfly/${wildfly.version}/wildfly-${wildfly.version}.zip</wildfly.downloadUrl>
+        <wildfly.downloadUrl>https://download.jboss.org/wildfly/${wildfly.version}/wildfly-${wildfly.version}.zip</wildfly.downloadUrl>
 
         <jetty.version>8.1.9.v20130131</jetty.version>
         <jetty.downloadUrl>https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-distribution/${jetty.version}/jetty-distribution-${jetty.version}.zip</jetty.downloadUrl>
