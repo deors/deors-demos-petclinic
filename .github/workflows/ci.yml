@@ -26,6 +26,7 @@ jobs:
       with:
         java-version: '8'
         distribution: 'temurin'
+        cache: 'maven'
 
     - name: Maven Verify
       run: ./mvnw verify -P cargo-${{ matrix.server }},selenium-tests,jmeter-tests
