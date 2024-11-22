@@ -1,0 +1,30 @@
+name: CI
+description: This workflow runs a Maven verify process with Selenium and JMeter tests with the application hosted in Jetty, Tomcat and WildFly.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci-maven:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        server: [jetty, tomcat, wildfly]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 8
+      uses: actions/setup-java@v4
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+
+    - name: Maven Verify
+      run: ./mvnw verify -P cargo-${{ matrix.server }},selenium-tests,jmeter-tests
