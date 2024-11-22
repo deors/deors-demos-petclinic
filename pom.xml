@@ -39,7 +39,7 @@
         <openjpa.version>1.1.0</openjpa.version>
         <rome.version>1.0</rome.version>
 
-        <hsqldb.version>2.4.1</hsqldb.version>
+        <hsqldb.version>2.7.1</hsqldb.version>
         <mysql.version>5.1.6</mysql.version>
         <postgresql.version>9.1-901.jdbc4</postgresql.version>
 
