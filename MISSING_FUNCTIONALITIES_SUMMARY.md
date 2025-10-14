@@ -309,7 +309,19 @@ DELETE /api/specialties/{id}      - Delete specialty
 | Phase 2: Reference Data | 1 week | 2 entities | HIGH |
 | Phase 3: REST API | 2-3 weeks | 6 REST controllers | MEDIUM |
 | Phase 4: Advanced Features | 3-4 weeks | Multiple features | LOW |
-| **Total** | **7-10 weeks** | **~40 functionalities** | - |
+| **Total** | **7-10 weeks** | **41 identified items** | - |
+
+**Assumptions**:
+- Single full-time developer with Spring MVC experience
+- Includes unit and integration testing
+- Excludes UI/UX design time
+- Does not include deployment/DevOps work
+
+**Adjustments**:
+- Experienced team: -30% (5-7 weeks)
+- Junior developers: +50% (10-15 weeks)
+- Part-time work: Double the timeline
+- Team of 2-3: -40% with proper coordination (4-6 weeks)
 
 ---
 
@@ -317,8 +329,9 @@ DELETE /api/specialties/{id}      - Delete specialty
 
 **Current State**: 
 - 1 entity fully complete (Owner)
-- 2 entities mostly complete (Pet)
-- 3 entities incomplete or read-only (Visit, Vet, PetType)
+- 1 entity mostly complete (Pet)
+- 1 entity incomplete (Visit)
+- 2 entities read-only (Vet, PetType)
 - 1 entity with no management (Specialty)
 - 0 REST API endpoints
 
@@ -328,6 +341,16 @@ DELETE /api/specialties/{id}      - Delete specialty
 - Advanced search and filtering
 - Complete test coverage
 
-**Gap**: ~40 missing functionalities across all layers (service, controller, REST API)
+**Identified Gaps**: 
+- **Service Layer**: 13 missing methods
+- **Web Layer**: 35 missing endpoints (estimated)
+- **REST API**: 36+ endpoints needed
+- **Total Unique Items**: 41 specific functionalities identified in this analysis
+
+**Note on Count**: The "41 functionalities" represents unique, identifiable items found during this analysis:
+- 13 service methods
+- ~28 web endpoints not overlapping with service methods
+- This does not include REST API which would add 36+ more endpoints
+- Some items may be implemented together (e.g., a form GET and POST), reducing actual work items
 
 For detailed analysis, see: [CRUD_ANALYSIS.md](./CRUD_ANALYSIS.md)

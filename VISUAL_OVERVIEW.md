@@ -253,26 +253,32 @@ Service Implementations:
 
 ```
 Total Entities:             6
-Fully Complete:             1  (Owner)
-Mostly Complete:            1  (Pet)
-Incomplete:                 1  (Visit)
-Read-Only:                  2  (Vet, PetType)
-No Management:              1  (Specialty)
+  Fully Complete:           1  (Owner)
+  Mostly Complete:          1  (Pet)
+  Incomplete:               1  (Visit)
+  Read-Only:                2  (Vet, PetType)
+  No Management:            1  (Specialty)
+  Note: Categories are mutually exclusive, sum = 6
 
 Web Endpoints:
   Implemented:             18
-  Missing:                 35+
+  Missing:                 35+ (estimated)
 
 Service Methods:
   Implemented:             12
-  Missing:                 13+
+  Missing:                 13+ (minimum identified)
 
 REST API Endpoints:
   Implemented:              0
-  Missing:                 36+ (6 resources × 6 operations)
+  Missing:                 36+ (6 resources × 6 operations minimum)
 
-Total Missing Items:       ~40 functionalities
+Total Missing Items:       41 specific functionalities identified
+                          (13+ service methods + 35+ web endpoints - overlap)
+                          Additional REST API layer would add 36+ more
+
 Estimated Effort:          7-10 weeks for complete implementation
+                          (assumes single full-time developer, includes testing)
+                          Adjustments: -30% for experienced team, +50% for junior developers
 ```
 
 ---
