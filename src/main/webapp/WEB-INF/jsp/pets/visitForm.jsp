@@ -54,12 +54,23 @@
   <tr>
     <th>Date</th>
     <th>Description</th>
+    <th></th>
   </tr>
-  <c:forEach var="visit" items="${visit.pet.visits}">
-    <c:if test="${!visit['new']}">
+  <c:forEach var="previousVisit" items="${visit.pet.visits}">
+    <c:if test="${!previousVisit['new']}">
       <tr>
-        <td><fmt:formatDate value="${visit.date}" pattern="yyyy-MM-dd"/></td>
-        <td>${visit.description}</td>
+        <td><fmt:formatDate value="${previousVisit.date}" pattern="yyyy-MM-dd"/></td>
+        <td>${previousVisit.description}</td>
+        <td>
+          <spring:url value="/owners/{ownerId}/pets/{petId}/visits/{visitId}/edit" var="deleteUrl">
+            <spring:param name="ownerId" value="${visit.pet.owner.id}"/>
+            <spring:param name="petId" value="${visit.pet.id}"/>
+            <spring:param name="visitId" value="${previousVisit.id}"/>
+          </spring:url>
+          <form:form action="${deleteUrl}" method="delete" style="display:inline;">
+            <input id="deletevisit-${previousVisit.id}" type="submit" value="Delete"/>
+          </form:form>
+        </td>
       </tr>
     </c:if>
   </c:forEach>

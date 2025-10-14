@@ -353,6 +353,29 @@ public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
     }
 
     @Override
+    public Visit loadVisit(int id) throws DataAccessException {
+        Visit visit;
+        try {
+            visit = this.simpleJdbcTemplate.queryForObject(
+                    "SELECT id, visit_date, description, pet_id FROM visits WHERE id=?",
+                    new ParameterizedRowMapper<Visit>() {
+                        public Visit mapRow(ResultSet rs, int row) throws SQLException {
+                            Visit visit = new Visit();
+                            visit.setId(rs.getInt("id"));
+                            visit.setDate(rs.getTimestamp("visit_date"));
+                            visit.setDescription(rs.getString("description"));
+                            return visit;
+                        }
+                    },
+                    id);
+        }
+        catch (EmptyResultDataAccessException ex) {
+            throw new ObjectRetrievalFailureException(Visit.class, id, "", ex);
+        }
+        return visit;
+    }
+
+    @Override
     public void deleteVisit(int id) throws DataAccessException {
         this.simpleJdbcTemplate.update("DELETE FROM visits WHERE id=?", id);
     }

@@ -65,11 +65,23 @@
             <thead>
               <th>Visit Date</th>
               <th>Description</th>
+              <th></th>
             </thead>
             <c:forEach var="visit" items="${pet.visits}">
               <tr>
                 <td><fmt:formatDate value="${visit.date}" pattern="yyyy-MM-dd"/></td>
                 <td>${visit.description}</td>
+                <td>
+                  <spring:url value="{ownerId}/pets/{petId}/visits/{visitId}/edit" var="deleteVisitUrl">
+                    <spring:param name="ownerId" value="${owner.id}"/>
+                    <spring:param name="petId" value="${pet.id}"/>
+                    <spring:param name="visitId" value="${visit.id}"/>
+                  </spring:url>
+                  <form method="post" action="${fn:escapeXml(deleteVisitUrl)}" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <input id="deletevisit-${visit.id}" type="submit" value="Delete"/>
+                  </form>
+                </td>
               </tr>
             </c:forEach>
           </table>
