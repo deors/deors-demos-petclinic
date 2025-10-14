@@ -225,6 +225,19 @@ public abstract class AbstractClinicTests extends AbstractTransactionalJUnit4Spr
     }
 
     @Test
+    public void updateVisit() throws Exception {
+        Pet p7 = this.clinic.loadPet(7);
+        Visit visit = p7.getVisits().iterator().next();
+        int visitId = visit.getId();
+        String oldDescription = visit.getDescription();
+        visit.setDescription(oldDescription + "X");
+        this.clinic.storeVisit(visit);
+        p7 = this.clinic.loadPet(7);
+        visit = EntityUtils.getById(p7.getVisits(), Visit.class, visitId);
+        assertEquals(oldDescription + "X", visit.getDescription());
+    }
+
+    @Test
     public void deletePet() throws Exception {
         Owner o6 = this.clinic.loadOwner(6);
         Pet pet = new Pet();

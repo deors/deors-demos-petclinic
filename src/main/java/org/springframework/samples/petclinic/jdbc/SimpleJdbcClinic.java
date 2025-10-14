@@ -241,7 +241,10 @@ public class SimpleJdbcClinic implements Clinic, SimpleJdbcClinicMBean {
             visit.setId(newKey.intValue());
         }
         else {
-            throw new UnsupportedOperationException("Visit update not supported");
+            this.simpleJdbcTemplate.update(
+                    "UPDATE visits SET visit_date=:visit_date, description=:description, " +
+                    "pet_id=:pet_id WHERE id=:id",
+                    createVisitParameterSource(visit));
         }
     }
 
