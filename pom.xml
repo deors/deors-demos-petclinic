@@ -16,7 +16,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <java.version>1.8</java.version>
+        <java.version>25</java.version>
 
         <servlet.version>2.5</servlet.version>
         <jsp.version>2.0</jsp.version>
@@ -61,7 +61,7 @@
 
         <jacoco-listeners.version>5.14.0.18788</jacoco-listeners.version>
 
-        <compiler.version>3.8.1</compiler.version>
+        <compiler.version>3.13.0</compiler.version>
         <surefire.version>2.22.2</surefire.version>
         <failsafe.version>2.22.2</failsafe.version>
         <war.version>3.2.3</war.version>
