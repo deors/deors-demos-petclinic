@@ -18,7 +18,8 @@ A Maven profile is also provided to show how these tests can be binded into the 
 lifecycle during verify.
 - Integration test coverage with JaCoCo.
 - Load tests with JMeter. A Maven profile is also provided to show how these tests can be
-binded into the Maven lifecycle during verify.
+binded into the Maven lifecycle during verify. JMeter test parameters (host, port, root,
+ownerId, and threads) can be configured via Maven properties (e.g., `-Djmeter.target.threads=50`).
 - Dependency vulnerability scan with OWASP Dependency Check.
 - Quality analysis with SonarQube, including gathering results from the other tools.
 
@@ -50,3 +51,25 @@ application deployed to OpenShift Online.
 - `run-test-container`: Runs the application as a Docker container.
 - `ssh-test-container`: Connects to an already running application container via SSH.
 - `stop-test-container`: Stops (and removes) an already running application container.
+
+## Configuring JMeter tests
+
+JMeter performance tests can be configured via Maven properties. The following properties are available:
+
+- `jmeter.target.host`: Target application hostname (default: `localhost`)
+- `jmeter.target.port`: Target application port (default: `58080`)
+- `jmeter.target.root`: Application context root (default: `petclinic`)
+- `jmeter.target.ownerId`: Owner ID for test data (default: `9`)
+- `jmeter.target.threads`: Number of parallel threads for load testing (default: `100`)
+
+Example usage with custom thread count:
+
+```bash
+./mvnw clean verify -P cargo-tomcat,jmeter-tests -Djmeter.target.threads=50
+```
+
+Example usage with multiple custom parameters:
+
+```bash
+./mvnw clean verify -P cargo-tomcat,jmeter-tests -Djmeter.target.host=testserver -Djmeter.target.port=8080 -Djmeter.target.threads=200
+```
