@@ -83,6 +83,7 @@
         <jmeter.target.port>58080</jmeter.target.port>
         <jmeter.target.root>petclinic</jmeter.target.root>
         <jmeter.target.ownerId>9</jmeter.target.ownerId>
+        <jmeter.target.threads>100</jmeter.target.threads>
     </properties>
 
     <dependencies>
@@ -414,6 +415,7 @@
                         <port>${jmeter.target.port}</port>
                         <root>${jmeter.target.root}</root>
                         <ownerId>${jmeter.target.ownerId}</ownerId>
+                        <threads>${jmeter.target.threads}</threads>
                     </propertiesUser>
                 </configuration>
                 <executions>
@@ -717,6 +719,7 @@
                                 <port>${jmeter.target.port}</port>
                                 <root>${jmeter.target.root}</root>
                                 <ownerId>${jmeter.target.ownerId}</ownerId>
+                                <threads>${jmeter.target.threads}</threads>
                             </propertiesUser>
                         </configuration>
                         <executions>
