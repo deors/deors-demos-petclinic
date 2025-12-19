@@ -140,7 +140,8 @@ public class CreateNewOwnerBulkIntegrationTestCase {
 
         driver.get(baseUrl + "/owners/new");
 
-        (new WebDriverWait(driver, 25)).until(
+        // timeout increased to 60 seconds for Wildfly initialization
+        (new WebDriverWait(driver, 60)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/new"));
 
         driver.findElement(By.id("firstName")).sendKeys(owner.getFirstName());

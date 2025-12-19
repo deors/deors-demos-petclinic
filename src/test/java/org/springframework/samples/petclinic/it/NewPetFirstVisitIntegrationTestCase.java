@@ -229,7 +229,8 @@ public class NewPetFirstVisitIntegrationTestCase {
         // wildfly returns 404 page when not loaded
         // so we have to navigate to home page until loaded
         // increase timeout to allow for app to be fully loaded
-        WebElement findOwnerLink = (new WebDriverWait(driver, 25)).until(
+        // timeout increased to 60 seconds for Wildfly initialization
+        WebElement findOwnerLink = (new WebDriverWait(driver, 60)).until(
             d -> {
                 d.get(baseUrl);
                 return d.findElement(By.linkText("Find owner"));

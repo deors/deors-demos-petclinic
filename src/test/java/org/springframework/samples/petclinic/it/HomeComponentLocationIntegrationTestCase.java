@@ -108,7 +108,8 @@ public class HomeComponentLocationIntegrationTestCase {
         driver.get(baseUrl);
 
         // wait for the application to get fully loaded
-        (new WebDriverWait(driver, 25)).until(
+        // timeout increased to 60 seconds for Wildfly initialization
+        (new WebDriverWait(driver, 60)).until(
             d -> d.findElement(By.linkText("Find owner")));
 
         logger.info("looking for elements in root of DOM");

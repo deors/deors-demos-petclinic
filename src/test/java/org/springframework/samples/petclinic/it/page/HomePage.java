@@ -47,8 +47,9 @@ public class HomePage {
      */
     private WebElement getFindOwnerLink() {
 
+        // timeout increased to 60 seconds for Wildfly initialization
         WebElement findOwnerLink =
-            (new WebDriverWait(driver, 5)).until(
+            (new WebDriverWait(driver, 60)).until(
                 d -> d.findElement(findOwnersCommand));
         return findOwnerLink;
     }
