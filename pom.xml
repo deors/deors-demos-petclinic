@@ -30,7 +30,7 @@
         <spring.version>3.2.18.RELEASE</spring.version>
         <aspectj.version>1.6.8</aspectj.version>
         <slf4j.version>1.7.23</slf4j.version>
-        <log4j.version>2.17.1</log4j.version>
+        <log4j.version>2.25.3</log4j.version>
         <commons-dbcp.version>1.2.2</commons-dbcp.version>
         <commons-pool.version>1.5.3</commons-pool.version>
         <hibernate.version>3.3.2.GA</hibernate.version>
