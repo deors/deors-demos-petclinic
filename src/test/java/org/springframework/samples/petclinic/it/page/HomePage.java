@@ -50,7 +50,7 @@ public class HomePage {
     private WebElement getFindOwnerLink() {
 
         WebElement findOwnerLink =
-            (new WebDriverWait(driver, TIMEOUT)).until(
+            (new WebDriverWait(driver, TIMEOUT * 10)).until(
                 d -> d.findElement(findOwnersCommand));
         return findOwnerLink;
     }
@@ -70,7 +70,7 @@ public class HomePage {
         // click on the link to the find owners page
         getFindOwnerLink().click();
 
-        (new WebDriverWait(driver, TIMEOUT * 10)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/search"));
 
         logger.debug("\t-- -- afger moving to find owners page current URL is:" + driver.getCurrentUrl());
