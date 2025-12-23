@@ -31,13 +31,18 @@ public class HomePage {
     }
 
     public void load() {
-        logger.info("\t-- loading home page: " + driver.getCurrentUrl());
+        logger.info("\t-- loading home page: " + baseUrl);
 
-        driver.get(baseUrl);
-
-        // wait until the page is loaded
-        (new WebDriverWait(driver, TIMEOUT * 10)).until(
-            d -> d.findElement(findOwnersCommand));
+        // wait for the application to get fully loaded
+        // wildfly returns 404 page when not loaded
+        // so we have to navigate to home page until loaded
+        // by looking at a specific element in the body
+        // increase timeout to allow for app to be fully loaded
+        WebElement findOwnerLink = (new WebDriverWait(driver, TIMEOUT * 10)).until(
+            d -> {
+                d.get(baseUrl);
+                return d.findElement(By.linkText("Find owner"));
+            });
     }
 
     public String getPageTitle() {
@@ -80,7 +85,7 @@ public class HomePage {
         (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/search"));
 
-        logger.debug("\t-- -- afger moving to find owners page current URL is:" + driver.getCurrentUrl());
+        logger.debug("\t-- -- after moving to find owners page current URL is:" + driver.getCurrentUrl());
 
         return new FindOwnersPage(driver, baseUrl);
     }
