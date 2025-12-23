@@ -1,3 +1,3 @@
-FROM tomcat:8.5.50-jdk8-openjdk
+FROM tomcat:11.0-jdk25-temurin
 COPY target/dependency/jacocoagent.jar /usr/local/tomcat/jacocoagent.jar
 COPY target/petclinic.war /usr/local/tomcat/webapps/petclinic.war

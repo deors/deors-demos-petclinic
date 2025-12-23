@@ -1,7 +1,9 @@
 # deors-demos-petclinic
 
-The 'classic' Spring Pet Clinic application, updated to work with Tomcat 7+ and Spring 3,
+The 'classic' Spring Pet Clinic application, updated to work with Tomcat 11+ and Spring 3,
 with exemplar lifecycle automation configuration.
+
+**Java 25 Support**: This application has been updated to support Java 25. All build configurations, Docker images, and CI/CD pipelines have been configured to use Java 25.
 
 This fork includes:
 
