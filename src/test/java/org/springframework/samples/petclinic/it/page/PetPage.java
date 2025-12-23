@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.springframework.samples.petclinic.it.SeleniumIntegrationTestBase.TIMEOUT;
+
 /**
  * @author vicente.gonzalez
  *
@@ -113,7 +115,7 @@ public class PetPage {
         driver.findElement(birthDate).sendKeys(petBirthDate);
         driver.findElement(addPetCommand).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
                 && !d.getCurrentUrl().contains("pets/new"));
 
@@ -131,7 +133,7 @@ public class PetPage {
 
         driver.findElement(deletePetCommand).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
 
         logger.debug("\t-- -- after deleting pet : current driver is:" + driver.getCurrentUrl());

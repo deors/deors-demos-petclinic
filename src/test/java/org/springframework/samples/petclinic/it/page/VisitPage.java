@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.springframework.samples.petclinic.it.SeleniumIntegrationTestBase.TIMEOUT;
+
 /**
  * @author vicente.gonzalez
  *
@@ -113,7 +115,7 @@ public class VisitPage {
         driver.findElement(descriptionField).sendKeys(description);
         driver.findElement(addVisitCommand).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
                 && !d.getCurrentUrl().contains("pets/new"));
 

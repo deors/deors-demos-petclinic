@@ -30,6 +30,8 @@ public class HomeComponentLocationIntegrationTestCase {
 
     private static String TARGET_SERVER_URL;
 
+    private static int TIMEOUT;
+    
     @BeforeClass
     public static void initEnvironment() {
 
@@ -53,6 +55,13 @@ public class HomeComponentLocationIntegrationTestCase {
             "http://localhost:58080/petclinic");
 
         logger.info("using target server at: " + TARGET_SERVER_URL);
+
+        TIMEOUT = Integer.parseInt(getConfigurationProperty(
+            "TIMEOUT",
+            "test.timeout.seconds",
+            "5"));
+
+        logger.info("using timeout (seconds): " + TIMEOUT);
     }
 
     private static String getConfigurationProperty(String envKey, String sysKey, String defValue) {
@@ -108,7 +117,7 @@ public class HomeComponentLocationIntegrationTestCase {
         driver.get(baseUrl);
 
         // wait for the application to get fully loaded
-        (new WebDriverWait(driver, 25)).until(
+        (new WebDriverWait(driver, TIMEOUT * 10)).until(
             d -> d.findElement(By.linkText("Find owner")));
 
         logger.info("looking for elements in root of DOM");

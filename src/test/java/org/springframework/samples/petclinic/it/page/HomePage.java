@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.springframework.samples.petclinic.it.SeleniumIntegrationTestBase.TIMEOUT;
+
 public class HomePage {
 
     private static final Logger logger = LoggerFactory.getLogger(HomePage.class);
@@ -48,7 +50,7 @@ public class HomePage {
     private WebElement getFindOwnerLink() {
 
         WebElement findOwnerLink =
-            (new WebDriverWait(driver, 5)).until(
+            (new WebDriverWait(driver, TIMEOUT)).until(
                 d -> d.findElement(findOwnersCommand));
         return findOwnerLink;
     }
@@ -68,7 +70,7 @@ public class HomePage {
         // click on the link to the find owners page
         getFindOwnerLink().click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT * 10)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/search"));
 
         logger.debug("\t-- -- afger moving to find owners page current URL is:" + driver.getCurrentUrl());

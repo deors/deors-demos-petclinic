@@ -42,6 +42,8 @@ public class NewPetFirstVisitIntegrationTestCase {
 
     private static String TARGET_SERVER_URL;
 
+    private static int TIMEOUT;
+
     @BeforeClass
     public static void initEnvironment() {
 
@@ -93,6 +95,14 @@ public class NewPetFirstVisitIntegrationTestCase {
             "http://localhost:58080/petclinic");
 
         logger.info("using target server at: " + TARGET_SERVER_URL);
+
+        TIMEOUT = Integer.parseInt(getConfigurationProperty(
+            "TIMEOUT",
+            "test.timeout.seconds",
+            "5"));
+
+        logger.info("using timeout (seconds): " + TIMEOUT);
+
     }
 
     private static String getConfigurationProperty(String envKey, String sysKey, String defValue) {
@@ -229,7 +239,7 @@ public class NewPetFirstVisitIntegrationTestCase {
         // wildfly returns 404 page when not loaded
         // so we have to navigate to home page until loaded
         // increase timeout to allow for app to be fully loaded
-        WebElement findOwnerLink = (new WebDriverWait(driver, 25)).until(
+        WebElement findOwnerLink = (new WebDriverWait(driver, TIMEOUT * 10)).until(
             d -> {
                 d.get(baseUrl);
                 return d.findElement(By.linkText("Find owner"));
@@ -237,20 +247,20 @@ public class NewPetFirstVisitIntegrationTestCase {
 
         findOwnerLink.click();
 
-        (new WebDriverWait(driver, 50)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/search"));
 
         driver.findElement(By.id("lastName")).clear();
         driver.findElement(By.id("lastName")).sendKeys("Schroeder");
         driver.findElement(By.id("findowners")).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
 
         assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));
         driver.findElement(By.linkText("Add New Pet")).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().equals(baseUrl + "/owners/9/pets/new"));
 
         driver.findElement(By.id("name")).clear();
@@ -259,7 +269,7 @@ public class NewPetFirstVisitIntegrationTestCase {
         driver.findElement(By.id("birthDate")).sendKeys("2011-10-02");
         driver.findElement(By.id("addpet")).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
                 && !d.getCurrentUrl().contains("pets/new"));
 
@@ -268,7 +278,7 @@ public class NewPetFirstVisitIntegrationTestCase {
         assertTrue(driver.findElement(By.id("main")).getText().contains("2011-10-02"));
         driver.findElement(By.linkText("Add Visit")).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
                 && d.getCurrentUrl().contains("visits/new"));
 
@@ -278,7 +288,7 @@ public class NewPetFirstVisitIntegrationTestCase {
         driver.findElement(By.id("description")).sendKeys("rabies shot");
         driver.findElement(By.id("addvisit")).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9")
                 && !d.getCurrentUrl().contains("visits/new"));
 
@@ -288,13 +298,13 @@ public class NewPetFirstVisitIntegrationTestCase {
         assertTrue(driver.findElement(By.id("main")).getText().contains("rabies shot"));
         driver.findElement(By.linkText("Edit Pet")).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
                 && d.getCurrentUrl().contains("edit"));
 
         driver.findElement(By.id("deletepet")).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().equals(baseUrl + "/owners/9"));
 
         assertTrue(driver.findElement(By.id("main")).getText().contains("David Schroeder"));

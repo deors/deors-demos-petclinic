@@ -38,6 +38,8 @@ public class CreateNewOwnerBulkIntegrationTestCase {
 
     private static String TEST_DATA_FILE_NAME;
 
+    private static int TIMEOUT;
+
     @BeforeClass
     public static void initEnvironment() {
 
@@ -68,6 +70,13 @@ public class CreateNewOwnerBulkIntegrationTestCase {
             "/test-data.csv");
 
         logger.info("using test data at: " + TEST_DATA_FILE_NAME);
+
+        TIMEOUT = Integer.parseInt(getConfigurationProperty(
+            "TIMEOUT",
+            "test.timeout.seconds",
+            "5"));
+
+        logger.info("using timeout (seconds): " + TIMEOUT);
     }
 
     private static String getConfigurationProperty(String envKey, String sysKey, String defValue) {
@@ -140,7 +149,7 @@ public class CreateNewOwnerBulkIntegrationTestCase {
 
         driver.get(baseUrl + "/owners/new");
 
-        (new WebDriverWait(driver, 25)).until(
+        (new WebDriverWait(driver, TIMEOUT * 10)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/new"));
 
         driver.findElement(By.id("firstName")).sendKeys(owner.getFirstName());
@@ -151,7 +160,7 @@ public class CreateNewOwnerBulkIntegrationTestCase {
 
         driver.findElement(By.id("addowner")).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/")
                 && !d.getCurrentUrl().contains("/new"));
 

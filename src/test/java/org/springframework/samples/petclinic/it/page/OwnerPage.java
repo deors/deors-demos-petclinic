@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.springframework.samples.petclinic.it.SeleniumIntegrationTestBase.TIMEOUT;
+
 /**
  * Abstraction for OwnerPage
  *
@@ -130,7 +132,7 @@ public class OwnerPage {
 
         driver.findElement(addNewPetCommand).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().equals(baseUrl + "/owners/9/pets/new"));
 
         logger.debug("\t-- -- after navigate to add new pet: current driver is:" + driver.getCurrentUrl());
@@ -153,7 +155,7 @@ public class OwnerPage {
 
         driver.findElement(editPetCommand).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
                 && d.getCurrentUrl().contains("edit"));
 
@@ -176,7 +178,7 @@ public class OwnerPage {
 
         driver.findElement(addVisitCommand).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
             && d.getCurrentUrl().contains("visits/new"));
 
@@ -199,7 +201,7 @@ public class OwnerPage {
 
         driver.findElement(addVisitCommand).click();
 
-        (new WebDriverWait(driver, 5)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
             d -> d.getCurrentUrl().startsWith(baseUrl + "/owners/9/pets")
                 && d.getCurrentUrl().contains("visits/new"));
 

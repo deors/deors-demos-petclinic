@@ -22,6 +22,8 @@ public class SeleniumIntegrationTestBase {
 
     protected static String TARGET_SERVER_URL;
 
+    public static int TIMEOUT;
+
     @BeforeClass
     public static void initEnvironment() {
 
@@ -54,6 +56,11 @@ public class SeleniumIntegrationTestBase {
             "TARGET_SERVER_URL", "test.target.server.url", "http://localhost:58080/petclinic");
 
         logger.info("using target server at: " + TARGET_SERVER_URL);
+
+        TIMEOUT = Integer.parseInt(getConfigurationProperty(
+            "TIMEOUT", "test.timeout.seconds", "5"));
+
+        logger.info("using timeout (seconds): " + TIMEOUT);
     }
 
     private static String getConfigurationProperty(String envKey, String sysKey, String defValue) {
