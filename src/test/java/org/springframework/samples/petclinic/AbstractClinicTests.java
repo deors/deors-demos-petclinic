@@ -260,4 +260,23 @@ public abstract class AbstractClinicTests extends AbstractTransactionalJUnit4Spr
         } catch (ObjectRetrievalFailureException e) {
         }
     }
+
+    @Test
+    public void deleteVisit() throws Exception {
+        Owner owner = this.clinic.loadOwner(1);
+        Pet pet = owner.getPets().get(0);
+        Visit visit = new Visit();
+        visit.setDate(new Date());
+        visit.setDescription("Test visit for deletion");
+        pet.addVisit(visit);
+        this.clinic.storeVisit(visit);
+        int visitId = visit.getId();
+
+        this.clinic.deleteVisit(visitId);
+        try {
+            this.clinic.loadVisit(visitId);
+            fail("visit should have been removed");
+        } catch (ObjectRetrievalFailureException e) {
+        }
+    }
 }
