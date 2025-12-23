@@ -127,9 +127,9 @@ public class NewPetFirstVisitPageObjectIntegrationTestCase
 
     public void testNewPetFirstVisit(final WebDriver driver, final String baseUrl) {
 
-        driver.get(baseUrl);
-
         HomePage homePage = new HomePage(driver, baseUrl);
+
+        homePage.load();
 
         FindOwnersPage findOwnersPage = homePage.navigateToFindOwners();
 

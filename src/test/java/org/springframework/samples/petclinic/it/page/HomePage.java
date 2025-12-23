@@ -28,7 +28,16 @@ public class HomePage {
     public HomePage(WebDriver driver, final String baseUrl) {
         this.driver = driver;
         this.baseUrl = baseUrl;
-        logger.info("\t-- home page: " + driver.getCurrentUrl());
+    }
+
+    public void load() {
+        logger.info("\t-- loading home page: " + driver.getCurrentUrl());
+
+        driver.get(baseUrl);
+
+        // wait until the page is loaded
+        (new WebDriverWait(driver, TIMEOUT * 10)).until(
+            d -> d.findElement(findOwnersCommand));
     }
 
     public String getPageTitle() {
@@ -49,9 +58,7 @@ public class HomePage {
      */
     private WebElement getFindOwnerLink() {
 
-        WebElement findOwnerLink =
-            (new WebDriverWait(driver, TIMEOUT * 10)).until(
-                d -> d.findElement(findOwnersCommand));
+        WebElement findOwnerLink = driver.findElement(findOwnersCommand);
         return findOwnerLink;
     }
 
