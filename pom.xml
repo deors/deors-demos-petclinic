@@ -28,20 +28,20 @@
         <jpa.version>1.0</jpa.version>
 
         <spring.version>3.2.18.RELEASE</spring.version>
-        <aspectj.version>1.6.8</aspectj.version>
-        <slf4j.version>1.7.23</slf4j.version>
+        <aspectj.version>1.9.21</aspectj.version>
+        <slf4j.version>1.7.36</slf4j.version>
         <log4j.version>2.25.4</log4j.version>
-        <commons-dbcp.version>1.2.2</commons-dbcp.version>
-        <commons-pool.version>1.5.3</commons-pool.version>
+        <commons-dbcp.version>1.4</commons-dbcp.version>
+        <commons-pool.version>1.6</commons-pool.version>
         <hibernate.version>3.3.2.GA</hibernate.version>
         <hibernate-jpa.version>3.4.0.GA</hibernate-jpa.version>
         <toplink.version>2.0-41</toplink.version>
-        <openjpa.version>1.1.0</openjpa.version>
+        <openjpa.version>1.2.3</openjpa.version>
         <rome.version>1.0</rome.version>
 
-        <hsqldb.version>2.4.1</hsqldb.version>
-        <mysql.version>5.1.6</mysql.version>
-        <postgresql.version>9.1-901.jdbc4</postgresql.version>
+        <hsqldb.version>2.7.3</hsqldb.version>
+        <mysql.version>8.0.33</mysql.version>
+        <postgresql.version>42.7.4</postgresql.version>
 
         <junit.version>4.13.1</junit.version>
         <easymock.version>4.1</easymock.version>
@@ -50,9 +50,9 @@
         <pitest.version>1.4.11</pitest.version>
         <jmeter-plugin.version>3.0.0</jmeter-plugin.version>
         <jmeter.version>5.2.1</jmeter.version>
-        <dependency-check.version>5.2.4</dependency-check.version>
+        <dependency-check.version>10.0.4</dependency-check.version>
 
-        <jacoco.version>0.8.5</jacoco.version>
+        <jacoco.version>0.8.12</jacoco.version>
         <jacoco.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar</jacoco.path>
         <jacoco.utReport>${project.build.directory}/jacoco.exec</jacoco.utReport>
         <jacoco.itReport>${project.build.directory}/jacoco-it.exec</jacoco.itReport>
@@ -170,7 +170,7 @@
         </dependency>
         <!-- PostgreSQL JDB Connector -->
         <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
             <scope>runtime</scope>
@@ -181,6 +181,14 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+        <!-- Override vulnerable transitive dependency from hibernate-core:
+             commons-collections 3.1 is affected by CVE-2015-6420 and CVE-2015-7501
+             (critical deserialization vulnerabilities); 3.2.2 fixes these issues -->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.2</version>
         </dependency>
 
         <!-- JPA -->
