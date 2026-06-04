@@ -58,7 +58,7 @@ public class HibernateClinic implements Clinic {
     @SuppressWarnings("unchecked")
     public Collection<Owner> findOwners(String lastName) {
         return sessionFactory.getCurrentSession().createQuery("from Owner owner where owner.lastName like :lastName")
-                .setString("lastName", lastName + "%").list();
+                .setParameter("lastName", lastName + "%").list();
     }
 
     @Transactional(readOnly = true)
@@ -72,22 +72,27 @@ public class HibernateClinic implements Clinic {
     }
 
     public void storeOwner(Owner owner) {
-        // Note: Hibernate3's merge operation does not reassociate the object
-        // with the current Hibernate Session. Instead, it will always copy the
-        // state over to a registered representation of the entity. In case of a
-        // new entity, it will register a copy as well, but will not update the
-        // id of the passed-in object. To still update the ids of the original
-        // objects too, we need to register Spring's
-        // IdTransferringMergeEventListener on our SessionFactory.
-        sessionFactory.getCurrentSession().merge(owner);
+        boolean isNew = owner.isNew();
+        Owner merged = (Owner) sessionFactory.getCurrentSession().merge(owner);
+        if (isNew) {
+            owner.setId(merged.getId());
+        }
     }
 
     public void storePet(Pet pet) {
-        sessionFactory.getCurrentSession().merge(pet);
+        boolean isNew = pet.isNew();
+        Pet merged = (Pet) sessionFactory.getCurrentSession().merge(pet);
+        if (isNew) {
+            pet.setId(merged.getId());
+        }
     }
 
     public void storeVisit(Visit visit) {
-        sessionFactory.getCurrentSession().merge(visit);
+        boolean isNew = visit.isNew();
+        Visit merged = (Visit) sessionFactory.getCurrentSession().merge(visit);
+        if (isNew) {
+            visit.setId(merged.getId());
+        }
     }
 
     public void deletePet(int id) throws DataAccessException {

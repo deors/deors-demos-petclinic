@@ -20,13 +20,4 @@ import org.junit.Ignore;
 @Ignore
 public class OpenJpaEntityManagerClinicTests extends EntityManagerClinicTests {
 
-    @Override
-    protected String[] getConfigPaths() {
-        return new String[] {
-            "applicationContext-jpaCommon.xml",
-            "applicationContext-openJpaAdapter.xml",
-            "applicationContext-entityManager.xml"
-        };
-    }
-
 }

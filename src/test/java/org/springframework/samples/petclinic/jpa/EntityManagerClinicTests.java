@@ -2,7 +2,12 @@ package org.springframework.samples.petclinic.jpa;
 
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.aspects.UsageLogAspect;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  * <p>
@@ -17,23 +22,21 @@ import org.springframework.samples.petclinic.aspects.UsageLogAspect;
  * @author Rod Johnson
  * @author Juergen Hoeller
  */
+@ContextConfiguration(locations = {
+        "applicationContext-jpaCommon.xml",
+        "applicationContext-hibernateAdapter.xml",
+        "applicationContext-entityManager.xml"
+}, inheritLocations = false)
 public class EntityManagerClinicTests extends AbstractJpaClinicTests {
 
 	private UsageLogAspect usageLogAspect;
 
+	@Autowired
 	public void setUsageLogAspect(UsageLogAspect usageLogAspect) {
 		this.usageLogAspect = usageLogAspect;
 	}
 
-	@Override
-	protected String[] getConfigPaths() {
-		return new String[] {
-			"applicationContext-jpaCommon.xml",
-			"applicationContext-toplinkAdapter.xml",
-			"applicationContext-entityManager.xml"
-		};
-	}
-
+	@Test
 	public void testUsageLogAspectIsInvoked() {
 		String name1 = "Schuurman";
 		String name2 = "Greenwood";

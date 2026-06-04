@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.samples.petclinic.Clinic;
 import org.springframework.samples.petclinic.Owner;
 import org.springframework.samples.petclinic.Pet;
@@ -56,57 +57,82 @@ public class EntityManagerClinic implements Clinic {
 
     @Transactional(readOnly = true)
     public Owner loadOwner(int id) {
-        return this.em.find(Owner.class, id);
+        Owner owner = this.em.find(Owner.class, id);
+        if (owner == null) {
+            throw new ObjectRetrievalFailureException(Owner.class, id);
+        }
+        return owner;
     }
 
     @Transactional(readOnly = true)
     public Pet loadPet(int id) {
-        return this.em.find(Pet.class, id);
+        Pet pet = this.em.find(Pet.class, id);
+        if (pet == null) {
+            throw new ObjectRetrievalFailureException(Pet.class, id);
+        }
+        return pet;
     }
 
     public void storeOwner(Owner owner) {
-        // Consider returning the persistent object here, for exposing
-        // a newly assigned id using any persistence provider...
-        Owner merged = this.em.merge(owner);
+        if (owner.isNew()) {
+            this.em.persist(owner);
+        }
+        else if (!this.em.contains(owner)) {
+            this.em.merge(owner);
+        }
         this.em.flush();
-        owner.setId(merged.getId());
     }
 
     public void storePet(Pet pet) {
-        // Consider returning the persistent object here, for exposing
-        // a newly assigned id using any persistence provider...
-        Pet merged = this.em.merge(pet);
+        if (pet.isNew()) {
+            this.em.persist(pet);
+        }
+        else if (!this.em.contains(pet)) {
+            this.em.merge(pet);
+        }
         this.em.flush();
-        pet.setId(merged.getId());
     }
 
     public void storeVisit(Visit visit) {
-        // Consider returning the persistent object here, for exposing
-        // a newly assigned id using any persistence provider...
-        Visit merged = this.em.merge(visit);
+        if (visit.isNew()) {
+            this.em.persist(visit);
+        }
+        else if (!this.em.contains(visit)) {
+            this.em.merge(visit);
+        }
         this.em.flush();
-        visit.setId(merged.getId());
     }
 
     public void deletePet(int id) throws DataAccessException {
         Pet pet = loadPet(id);
+        Owner owner = pet.getOwner();
+        if (owner != null) {
+            owner.getPetsInternal().remove(pet);
+        }
         this.em.remove(pet);
+        this.em.flush();
     }
 
     @Transactional(readOnly = true)
     public Visit loadVisit(int id) {
-        return this.em.find(Visit.class, id);
+        Visit visit = this.em.find(Visit.class, id);
+        if (visit == null) {
+            throw new ObjectRetrievalFailureException(Visit.class, id);
+        }
+        return visit;
     }
 
     @Override
     public void deleteVisit(int id) throws DataAccessException {
         Visit visit = loadVisit(id);
         this.em.remove(visit);
+        this.em.flush();
     }
 
     @Override
     public void deleteOwner(int id) throws DataAccessException {
         Owner owner = loadOwner(id);
         this.em.remove(owner);
+        this.em.flush();
     }
 }

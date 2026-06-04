@@ -7,7 +7,7 @@
 		<constructor-arg ref="sessionFactory"/>
 	</bean>
 
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
 		p:dataSource-ref="dataSource" p:mappingResources="petclinic.hbm.xml">
 		<property name="hibernateProperties">
 			<props>
@@ -15,16 +15,9 @@
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 			</props>
 		</property>
-		<property name="eventListeners">
-			<map>
-				<entry key="merge">
-					<bean class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener" />
-				</entry>
-			</map>
-		</property>
 	</bean>
 
-	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"
 		p:sessionFactory-ref="sessionFactory" />
 
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />

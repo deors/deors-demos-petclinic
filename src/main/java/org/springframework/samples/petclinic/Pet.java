@@ -51,11 +51,11 @@ public class Pet extends NamedEntity {
         return this.owner;
     }
 
-    protected void setVisitsInternal(Set<Visit> visits) {
+    public void setVisitsInternal(Set<Visit> visits) {
         this.visits = visits;
     }
 
-    protected Set<Visit> getVisitsInternal() {
+    public Set<Visit> getVisitsInternal() {
         if (this.visits == null) {
             this.visits = new HashSet<Visit>();
         }

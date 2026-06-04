@@ -24,11 +24,11 @@ public class Vet extends Person {
     private Set<Specialty> specialties;
 
 
-    protected void setSpecialtiesInternal(Set<Specialty> specialties) {
+    public void setSpecialtiesInternal(Set<Specialty> specialties) {
         this.specialties = specialties;
     }
 
-    protected Set<Specialty> getSpecialtiesInternal() {
+    public Set<Specialty> getSpecialtiesInternal() {
         if (this.specialties == null) {
             this.specialties = new HashSet<Specialty>();
         }

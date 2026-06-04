@@ -82,14 +82,8 @@
 				<temporal>DATE</temporal>
 			</basic>
 			<many-to-one name="owner" fetch="EAGER">
-				<cascade>
-					<cascade-all/>
-				</cascade>
 			</many-to-one>
 			<many-to-one name="type" fetch="EAGER">
-				<cascade>
-					<cascade-all/>
-				</cascade>
 			</many-to-one>
 			<one-to-many name="visitsInternal" target-entity="Visit" mapped-by="pet" fetch="EAGER">
 				<cascade>
@@ -112,9 +106,6 @@
 				<temporal>DATE</temporal>
 			</basic>
 			<many-to-one name="pet" fetch="EAGER">
-				<cascade>
-					<cascade-all/>
-				</cascade>
 			</many-to-one>
 		</attributes>
 	</entity>

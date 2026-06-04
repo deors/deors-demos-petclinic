@@ -10,7 +10,6 @@ import org.springframework.samples.petclinic.Clinic;
 import org.springframework.samples.petclinic.PetType;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.support.WebBindingInitializer;
-import org.springframework.web.context.request.WebRequest;
 
 /**
  * Shared WebBindingInitializer for PetClinic's custom editors.
@@ -26,7 +25,8 @@ public class ClinicBindingInitializer implements WebBindingInitializer {
     @Autowired
     private Clinic clinic;
 
-    public void initBinder(WebDataBinder binder, WebRequest request) {
+    @Override
+    public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));

@@ -55,11 +55,11 @@ public class Owner extends Person {
         this.pets = new HashSet<Pet>(pets);
     }
 
-    protected void setPetsInternal(Set<Pet> pets) {
+    public void setPetsInternal(Set<Pet> pets) {
         this.pets = pets;
     }
 
-    protected Set<Pet> getPetsInternal() {
+    public Set<Pet> getPetsInternal() {
         if (this.pets == null) {
             this.pets = new HashSet<Pet>();
         }

@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.jpa;
 
+import org.springframework.test.context.ContextConfiguration;
+
 /**
  * <p>
  * Tests for the DAO variant based on the shared EntityManager approach, using
@@ -12,15 +14,11 @@ package org.springframework.samples.petclinic.jpa;
  *
  * @author Juergen Hoeller
  */
+@ContextConfiguration(locations = {
+        "applicationContext-jpaCommon.xml",
+        "applicationContext-hibernateAdapter.xml",
+        "applicationContext-entityManager.xml"
+}, inheritLocations = false)
 public class HibernateEntityManagerClinicTests extends EntityManagerClinicTests {
-
-	@Override
-	protected String[] getConfigPaths() {
-		return new String[] {
-			"applicationContext-jpaCommon.xml",
-			"applicationContext-hibernateAdapter.xml",
-			"applicationContext-entityManager.xml"
-		};
-	}
 
 }
