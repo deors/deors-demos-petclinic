@@ -55,10 +55,12 @@ public class Owner extends Person {
         this.pets = new HashSet<Pet>(pets);
     }
 
+    // Public for ORM property access in JPA XML mappings.
     public void setPetsInternal(Set<Pet> pets) {
         this.pets = pets;
     }
 
+    // Public for ORM property access in JPA XML mappings.
     public Set<Pet> getPetsInternal() {
         if (this.pets == null) {
             this.pets = new HashSet<Pet>();

@@ -51,10 +51,12 @@ public class Pet extends NamedEntity {
         return this.owner;
     }
 
+    // Public for ORM property access in JPA XML mappings.
     public void setVisitsInternal(Set<Visit> visits) {
         this.visits = visits;
     }
 
+    // Public for ORM property access in JPA XML mappings.
     public Set<Visit> getVisitsInternal() {
         if (this.visits == null) {
             this.visits = new HashSet<Visit>();

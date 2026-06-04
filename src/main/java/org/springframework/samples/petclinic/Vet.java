@@ -24,10 +24,12 @@ public class Vet extends Person {
     private Set<Specialty> specialties;
 
 
+    // Public for ORM property access in JPA XML mappings.
     public void setSpecialtiesInternal(Set<Specialty> specialties) {
         this.specialties = specialties;
     }
 
+    // Public for ORM property access in JPA XML mappings.
     public Set<Specialty> getSpecialtiesInternal() {
         if (this.specialties == null) {
             this.specialties = new HashSet<Specialty>();

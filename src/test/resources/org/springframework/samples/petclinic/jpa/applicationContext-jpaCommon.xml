@@ -10,12 +10,12 @@
 			http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<context:property-placeholder location="classpath:/jdbc.properties" />
+	<context:property-placeholder location="classpath:/jdbc.properties,classpath:/org/springframework/samples/petclinic/jpa/jpa-jdbc.properties" />
 
 	<tx:annotation-driven />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
-			p:driverClassName="${jdbc.driverClassName}" p:url="jdbc:hsqldb:mem:petclinic-jpa"
+			p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}"
 			p:username="${jdbc.username}" p:password="${jdbc.password}"/>
 
 	<jdbc:initialize-database data-source="dataSource">

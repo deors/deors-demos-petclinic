@@ -74,33 +74,45 @@ public class EntityManagerClinic implements Clinic {
     }
 
     public void storeOwner(Owner owner) {
+        Owner managedOwner = owner;
         if (owner.isNew()) {
             this.em.persist(owner);
         }
         else if (!this.em.contains(owner)) {
-            this.em.merge(owner);
+            managedOwner = this.em.merge(owner);
         }
         this.em.flush();
+        if (owner.isNew()) {
+            owner.setId(managedOwner.getId());
+        }
     }
 
     public void storePet(Pet pet) {
+        Pet managedPet = pet;
         if (pet.isNew()) {
             this.em.persist(pet);
         }
         else if (!this.em.contains(pet)) {
-            this.em.merge(pet);
+            managedPet = this.em.merge(pet);
         }
         this.em.flush();
+        if (pet.isNew()) {
+            pet.setId(managedPet.getId());
+        }
     }
 
     public void storeVisit(Visit visit) {
+        Visit managedVisit = visit;
         if (visit.isNew()) {
             this.em.persist(visit);
         }
         else if (!this.em.contains(visit)) {
-            this.em.merge(visit);
+            managedVisit = this.em.merge(visit);
         }
         this.em.flush();
+        if (visit.isNew()) {
+            visit.setId(managedVisit.getId());
+        }
     }
 
     public void deletePet(int id) throws DataAccessException {
@@ -125,6 +137,10 @@ public class EntityManagerClinic implements Clinic {
     @Override
     public void deleteVisit(int id) throws DataAccessException {
         Visit visit = loadVisit(id);
+        Pet pet = visit.getPet();
+        if (pet != null) {
+            pet.getVisitsInternal().remove(visit);
+        }
         this.em.remove(visit);
         this.em.flush();
     }
