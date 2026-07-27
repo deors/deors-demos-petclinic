@@ -41,7 +41,7 @@
 
         <hsqldb.version>2.5.2</hsqldb.version>
         <mysql.version>8.0.33</mysql.version>
-        <postgresql.version>42.7.11</postgresql.version>
+        <postgresql.version>42.7.12</postgresql.version>
 
         <junit.version>4.13.1</junit.version>
         <easymock.version>4.1</easymock.version>
